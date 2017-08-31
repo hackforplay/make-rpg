@@ -1,0 +1,46 @@
+{
+	".source.js": {
+		"const_string": {
+			"prefix": "const(文字)",
+			"body": "const 名前 = 'ここに書いた文字に名前をつける';",
+			"leftLabel": "文字の変数",
+			"description": "その文字に名前をつける。同じ名前は２度使えないので、名前は書き換えよう"
+		},
+		"const_number": {
+			"prefix": "const(数字)",
+			"body": "const 名前 = 0;",
+			"leftLabel": "数字の変数",
+			"description": "その数字に名前をつける。同じ名前は２度使えないので、名前は書き換えよう"
+		},
+		"const_bool": {
+			"prefix": "const(真偽)",
+			"body": "const 名前 = true;",
+			"leftLabel": "真偽の変数",
+			"description": "true または false に名前をつける。同じ名前は２度使えないので、名前は書き換えよう"
+		},
+		"if": {
+			"prefix": "if",
+			"body": "if (true) {\n\t\n}",
+			"leftLabel": "イフ",
+			"description": "コンストの中身が true または 0以外の数字 かどうかを調べる"
+		},
+		"for": {
+			"prefix": "for",
+			"body": "for (let i = 0; i < 10; i++) {\n\t\n}",
+			"leftLabel": "フォー",
+			"description": "コードの実行を繰り返す。 0 と 10 のとき、10回繰り返す"
+		},
+		"function": {
+			"prefix": "function",
+			"body": "function 名前() {\n\t\n}",
+			"leftLabel": "ファンクション",
+			"description": "コードの実行に名前をつけて、「名前();」で呼び出せるようにする"
+		},
+		"arrowfunc": {
+			"prefix": "arrowfunc",
+			"body": "const 名前 = () => {\n\t\n};",
+			"leftLabel": "アローファンクション",
+			"description": "ファンクションより短く書ける。functionより色々と単純になっている"
+		}
+	}
+}

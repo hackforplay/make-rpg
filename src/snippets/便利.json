@@ -1,0 +1,40 @@
+{
+	".source.js": {
+		"alert": {
+			"prefix": "alert",
+			"body": "alert('ここに文字を入れる');",
+			"leftLabel": "アラート",
+			"description": "好きな文字でダイアログを出せる"
+		},
+		"confirm": {
+			"prefix": "confirm",
+			"body": "if (confirm('ここに文字を入れる')) {\n\t// YESのとき\n} else {\n\t// NOのとき\n}",
+			"leftLabel": "質問",
+			"description": "好きな質問文でダイアログを出して、その結果によってコードを実行できる"
+		},
+		"log": {
+			"prefix": "log",
+			"body": "console.log('ここに文字を入れる')",
+			"leftLabel": "ログ",
+			"description": "開発者用の画面(F12)に文字を出すことができる。普通の画面からは見えない"
+		},
+		"error": {
+			"prefix": "error",
+			"body": "console.error('ここに文字を入れる')",
+			"leftLabel": "エラーログ",
+			"description": "開発者用の画面(F12)に赤い文字を出すことができる。普通の画面からは見えない"
+		},
+		"import": {
+			"prefix": "import",
+			"body": "import from 'インポートするファイルの名前';",
+			"leftLabel": "インポート",
+			"description": "別のファイルを読み込んで、そのファイルに書かれたコードも実行する"
+		},
+		"export": {
+			"prefix": "export",
+			"body": "export default 別のファイルで使いたい変数;",
+			"leftLabel": "エクスポート",
+			"description": "このファイルが別のファイルからインポートされる時、変数をひとつ送る"
+		}
+	}
+}

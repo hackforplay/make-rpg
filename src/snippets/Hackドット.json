@@ -1,0 +1,60 @@
+{
+	".source.js": {
+		"log": {
+			"prefix": "Hacklog",
+			"body": "Hack.log('');",
+			"leftLabel": "ログ",
+			"description": "ゲーム画面に好きな文字や数字を出せる",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/ログ"
+		},
+		"score": {
+			"prefix": "Hackscore",
+			"body": "Hack.score",
+			"leftLabel": "スコア",
+			"description": "ゲームの現在のスコアが入っている。　Hack.score += 1; でスコアを1増やせる",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/スコア"
+		},
+		"gameclear": {
+			"prefix": "Hackgameclear",
+			"body": "Hack.gameclear();",
+			"leftLabel": "ゲームクリア",
+			"description": "ゲームクリアにする。すでにゲームオーバーになっている場合をのぞく",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/ゲームクリア"
+		},
+		"gameover": {
+			"prefix": "Hackgameover",
+			"body": "Hack.gameover();",
+			"leftLabel": "ゲームオーバー",
+			"description": "ゲームオーバーにする。すでにゲームクリアになっている場合をのぞく",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/ゲームオーバー"
+		},
+		"Attack": {
+			"prefix": "HackAttack",
+			"body": "Hack.Attack(7, 5, 1);",
+			"leftLabel": "アタック",
+			"description": "そのマスにダメージを与える。マップの(7, 5)にいるキャラクターに1のダメージを与える",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/アタック"
+		},
+		"changeMap": {
+			"prefix": "HackchangeMap",
+			"body": "Hack.changeMap('map2');",
+			"leftLabel": "マップ移動",
+			"description": "マップを移動する。マップ「map2」があればそこに移動する",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/マップ移動"
+		},
+		"clearLog": {
+			"prefix": "HackclearLog",
+			"body": "Hack.clearLog();",
+			"leftLabel": "ログ消去",
+			"description": "ログを全て消去する",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/ログ消去"
+		},
+		"isPlaying": {
+			"prefix": "HackisPlaying",
+			"body": "if (Hack.isPlaying) {\n\t// プレイ中\n} else {\n\t// 終了している\n}",
+			"leftLabel": "プレイ中か",
+			"description": "ゲームが終了していないか調べる。ゲームクリアかゲームオーバーしたら終了と判断する",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/プレイ中か"
+		}
+	}
+}

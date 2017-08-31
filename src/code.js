@@ -1,0 +1,2 @@
+// ゲームクリア
+Hack.gameclear();

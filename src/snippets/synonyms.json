@@ -1,0 +1,209 @@
+{
+	".source.js": {
+		"きし": {
+			"prefix": "_kきし",
+			"body": "_kきし",
+			"description": ""
+		},
+		"あんこくきし": {
+			"prefix": "_aあんこくきし",
+			"body": "_aあんこくきし",
+			"description": ""
+		},
+		"スライム": {
+			"prefix": "_sスライム",
+			"body": "_sスライム",
+			"description": ""
+		},
+		"いもむし": {
+			"prefix": "_iいもむし",
+			"body": "_iいもむし",
+			"description": ""
+		},
+		"くも": {
+			"prefix": "_kくも",
+			"body": "_kくも",
+			"description": ""
+		},
+		"こうもり": {
+			"prefix": "_kこうもり",
+			"body": "_kこうもり",
+			"description": ""
+		},
+		"ドラゴン": {
+			"prefix": "_dドラゴン",
+			"body": "_dドラゴン",
+			"description": ""
+		},
+		"ミノタウルス": {
+			"prefix": "_mミノタウルス",
+			"body": "_mミノタウルス",
+			"description": ""
+		},
+		"男の子": {
+			"prefix": "_o男の子",
+			"body": "_o男の子",
+			"description": ""
+		},
+		"女の子": {
+			"prefix": "_o女の子",
+			"body": "_o女の子",
+			"description": ""
+		},
+		"女の人": {
+			"prefix": "_o女の人",
+			"body": "_o女の人",
+			"description": ""
+		},
+		"魔道書": {
+			"prefix": "_m魔道書",
+			"body": "_m魔道書",
+			"description": ""
+		},
+		"ばくえん": {
+			"prefix": "_bばくえん",
+			"body": "_bばくえん",
+			"description": ""
+		},
+		"ウロボロス": {
+			"prefix": "_uウロボロス",
+			"body": "_uウロボロス",
+			"description": ""
+		},
+		"ビーム": {
+			"prefix": "_bビーム",
+			"body": "_bビーム",
+			"description": ""
+		},
+		"くだりかいだん": {
+			"prefix": "_kくだりかいだん",
+			"body": "_kくだりかいだん",
+			"description": ""
+		},
+		"のぼりかいだん": {
+			"prefix": "_nのぼりかいだん",
+			"body": "_nのぼりかいだん",
+			"description": ""
+		},
+		"ワープ": {
+			"prefix": "_wワープ",
+			"body": "_wワープ",
+			"description": ""
+		},
+		"しろ": {
+			"prefix": "_sしろ",
+			"body": "_sしろ",
+			"description": ""
+		},
+		"はな": {
+			"prefix": "_hはな",
+			"body": "_hはな",
+			"description": ""
+		},
+		"ルビー": {
+			"prefix": "_rルビー",
+			"body": "_rルビー",
+			"description": ""
+		},
+		"わな": {
+			"prefix": "_wわな",
+			"body": "_wわな",
+			"description": ""
+		},
+		"わなかかった": {
+			"prefix": "_wわなかかった",
+			"body": "_wわなかかった",
+			"description": ""
+		},
+		"ハート": {
+			"prefix": "_hハート",
+			"body": "_hハート",
+			"description": ""
+		},
+		"木": {
+			"prefix": "_k木",
+			"body": "_k木",
+			"description": ""
+		},
+		"わ": {
+			"prefix": "_iいわ",
+			"body": "_iいわ",
+			"description": ""
+		},
+		"つちかべ": {
+			"prefix": "_tつちかべ",
+			"body": "_tつちかべ",
+			"description": ""
+		},
+		"いしかべ": {
+			"prefix": "_iいしかべ",
+			"body": "_iいしかべ",
+			"description": ""
+		},
+		"たからばこ": {
+			"prefix": "_tたからばこ",
+			"body": "_tたからばこ",
+			"description": ""
+		},
+		"たからばこひらいた": {
+			"prefix": "_tたからばこひらいた",
+			"body": "_tたからばこひらいた",
+			"description": ""
+		},
+		"ドクロ": {
+			"prefix": "_dドクロ",
+			"body": "_dドクロ",
+			"description": ""
+		},
+		"うんこ": {
+			"prefix": "_uうんこ",
+			"body": "_uうんこ",
+			"description": ""
+		},
+		"つぼ": {
+			"prefix": "_tつぼ",
+			"body": "_tつぼ",
+			"description": ""
+		},
+		"ダイヤモンド": {
+			"prefix": "_dダイヤモンド",
+			"body": "_dダイヤモンド",
+			"description": ""
+		},
+		"まほうじん": {
+			"prefix": "_mまほうじん",
+			"body": "_mまほうじん",
+			"description": ""
+		},
+		"まほうじんひかった": {
+			"prefix": "_mまほうじんひかった",
+			"body": "_mまほうじんひかった",
+			"description": ""
+		},
+		"コイン": {
+			"prefix": "_kコイン",
+			"body": "_kコイン",
+			"description": ""
+		},
+		"サファイア": {
+			"prefix": "_sサファイア",
+			"body": "_sサファイア",
+			"description": ""
+		},
+		"ほし": {
+			"prefix": "_hほし",
+			"body": "_hほし",
+			"description": ""
+		},
+		"かぎ": {
+			"prefix": "_kかぎ",
+			"body": "_kかぎ",
+			"description": ""
+		},
+		"ばく": {
+			"prefix": "_bばく",
+			"body": "_bばく",
+			"description": ""
+		}
+	}
+}

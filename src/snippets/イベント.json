@@ -1,0 +1,81 @@
+{
+	".source.js": {
+		"onとまるとき": {
+			"prefix": "onとまるとき",
+			"body": "onとまるとき = () => {\n\t\n};",
+			"leftLabel": "止まったとき",
+			"description": "item.walk() や item.attack() などが終わって、動きが止まったときに発生するイベント",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/止まったとき"
+		},
+		"onあるくとき": {
+			"prefix": "onあるくとき",
+			"body": "onあるくとき = () => {\n\t\n};",
+			"leftLabel": "歩くとき",
+			"description": "item.walk() をコールした後、歩き始めたときに発生するイベント",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/歩くとき"
+		},
+		"onこうげきするとき": {
+			"prefix": "onこうげきするとき",
+			"body": "onこうげきするとき = () => {\n\t\n};",
+			"leftLabel": "攻撃するとき",
+			"description": "item.attack() をコールした後、攻撃し始めるときに発生するイベント",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/攻撃するとき"
+		},
+		"onたおれたとき": {
+			"prefix": "onたおれたとき",
+			"body": "onたおれたとき = () => {\n\t\n};",
+			"leftLabel": "倒れたとき",
+			"description": "item.hp が0以下になったときに発生するイベント",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/倒れたとき"
+		},
+		"onこうげきされたとき": {
+			"prefix": "onこうげきされたとき",
+			"body": "onこうげきされたとき = () => {\n\t\n};",
+			"leftLabel": "攻撃されたとき",
+			"description": "他のモンスターなどから攻撃されたときに発生するイベント",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/攻撃されたとき"
+		},
+		"onふれはじめた": {
+			"prefix": "onふれはじめた",
+			"body": "onふれはじめた = () => {\n\t\n};",
+			"leftLabel": "触れたとき",
+			"description": "collisionFlag が false のとき、他のものと触れたときに発生するイベント",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/触れたとき"
+		},
+		"onぶつかった": {
+			"prefix": "onぶつかった",
+			"body": "onぶつかった = () => {\n\t\n};",
+			"leftLabel": "ぶつかったとき",
+			"description": "collisionFlag が true のとき、他のものとぶつかったときに発生するイベント",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/ぶつかったとき"
+		},
+		"onHPかわった": {
+			"prefix": "onHPかわった",
+			"body": "onHPかわった = () => {\n\t\n};",
+			"leftLabel": "体力が変わったとき",
+			"description": "item.hp が変化したときに発生するイベント",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/体力が変わったとき"
+		},
+		"Hack.onscorechange": {
+			"prefix": "Hack.onscorechange",
+			"body": "Hack.onscorechange = () => {\n\t\n};",
+			"leftLabel": "スコアが変わったとき",
+			"description": "Hack.score が変化したときに発生するイベント",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/スコアが変わったとき"
+		},
+		"Hack.ongameclear": {
+			"prefix": "Hack.ongameclear",
+			"body": "Hack.ongameclear = () => {\n\t\n};",
+			"leftLabel": "ゲームクリアしたとき",
+			"description": "ゲームクリアしたときに発生するイベント",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/ゲームクリアしたとき"
+		},
+		"Hack.ongameover": {
+			"prefix": "Hack.ongameover",
+			"body": "Hack.ongameover = () => {\n\t\n};",
+			"leftLabel": "ゲームオーバーになったとき",
+			"description": "ゲームオーバーになったときに発生するイベント",
+			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/ゲームオーバーになったとき"
+		}
+	}
+}
