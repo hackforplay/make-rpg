@@ -1,0 +1,22 @@
+{
+  "name": "make-rpg",
+  "version": "1.0.0",
+  "description": "The kit to create new game in HackforPlay",
+  "main": "index.js",
+  "scripts": {
+    "test": "exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hackforplay/make-rpg.git"
+  },
+  "keywords": [
+    "HackforPlay"
+  ],
+  "author": "teramotodaiki",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hackforplay/make-rpg/issues"
+  },
+  "homepage": "https://github.com/hackforplay/make-rpg#readme"
+}
