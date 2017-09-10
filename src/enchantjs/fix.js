@@ -1,16 +1,27 @@
 import {
 	Event,
 	EventTarget,
-
 	Node,
-
-	Group
+	Group,
+	Tween,
+	Easing
 } from 'enchantjs/enchant';
 
 
-const initializeEvent = Event.prototype.initialize;
+// Easing を文字列で指定できるようにする
+const initializeTween = Tween.prototype.initialize;
+Tween.prototype.initialize = function $initialize(params) {
+
+	if (typeof params.easing === 'string') {
+		params.easing = Easing[params.easing.toUpperCase()];
+	}
+
+	initializeTween.call(this, params);
+};
+
 
 // Event の第二引数に props を追加する
+const initializeEvent = Event.prototype.initialize;
 Event.prototype.initialize = function $initialize(name, props) {
 
 	initializeEvent.call(this, name);
