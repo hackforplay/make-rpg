@@ -332,24 +332,12 @@ const main = async function() {
 
 	};
 
+	// 2D のカメラを削除する
+	Hack.cameraGroup.remove();
 
+	Hack.world.on('postrender', () => {
 
-	// ノードのレンダリングに割り込む機能
-
-	const InterruptRenderer = {
-		observe(target, render, type) {
-			var renderer = enchant.CanvasRenderer.instance;
-			// addEventListener == unshift
-			renderer.listener.on(type, (node) => {
-				if (target() !== node) return;
-				render(renderer.override || enchant.Core.instance.rootScene._layers.Canvas.context);
-			});
-		}
-	};
-
-
-	InterruptRenderer.observe(() => Hack.map.scene, (context) => {
-
+		const context = game.rootScene._layers.Canvas.context;
 
 
 		context.fillStyle = '#19b7ff';
@@ -376,9 +364,7 @@ const main = async function() {
 		context.drawImage(canvas, 0, 0, game.width, game.height);
 
 
-	}, 'renderEnd');
-
-
+	});
 
 
 	// 2D のレンダリングを行わない
