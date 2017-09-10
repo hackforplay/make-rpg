@@ -63,7 +63,7 @@ game.on('awake', () => {
 	// カメラグループ
 	const cameraGroup = new Group();
 	cameraGroup.name = 'CameraGroup';
-	cameraGroup.order = 90;
+	cameraGroup.order = 100;
 
 	Hack.cameraGroup = cameraGroup;
 	game.rootScene.addChild(cameraGroup);
@@ -80,7 +80,7 @@ game.on('awake', () => {
 	// コントローラーグループ
 	const controllerGroup = new enchant.Group();
 	controllerGroup.name = 'ControllerGroup';
-	controllerGroup.order = 200;
+	controllerGroup.order = 300;
 
 
 	Hack.controllerGroup = controllerGroup;
@@ -122,7 +122,7 @@ game.on('awake', () => {
 	// DOMGroup
 	const domGroup = new Group();
 	domGroup.name = 'DOMGroup';
-	domGroup.order = 300;
+	domGroup.order = 500;
 	Hack.domGroup = domGroup;
 	// _element が存在すると DOM layer に追加される
 	domGroup._element = {};

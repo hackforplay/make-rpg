@@ -330,7 +330,7 @@ Hack.overlay = function() {
 	// Hack.menuGroup でアクセスできる
 	const menuGroup = new enchant.Group();
 	menuGroup.name = 'MenuGroup';
-	menuGroup.order = 100;
+	menuGroup.order = 200;
 
 
 	menuGroup.on('enterframe', function() {
