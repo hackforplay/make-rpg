@@ -269,6 +269,7 @@ class Camera extends Sprite {
 
 	render() {
 
+		const context = this.image.context;
 
 		var center = this.getCenter();
 
@@ -282,21 +283,10 @@ class Camera extends Sprite {
 		var r = rect;
 
 
-		// ctx.strokeRect(r.x, r.y, r.width, r.height);
-
-
-		this.dispatchEvent((function() {
-
-			var e = new enchant.Event(enchant.Event.RENDER);
-
-			e.rect = r;
-
-
-			return e;
-
-		})());
-
-
+		if (this.background) {
+			context.fillStyle = this.background;
+			context.fillRect(0, 0, this.w, this.h);
+		}
 
 		this.image.context.drawImage(
 			Hack.map._surface._element,
@@ -304,32 +294,17 @@ class Camera extends Sprite {
 			r.x, r.y, r.width, r.height,
 			0, 0, this.w, this.h);
 
-		/*
-
-		this.dispatchEvent(new Event('postrender', {
-			texture: this.image,
-			context: this.image.context,
-			rect: r,
-		}));
-
-		*/
-
-
-		this.image.context.fillStyle = 'red';
-		this.image.context.fillRect(0, 0, 100, 100);
-
-
+		if (this.border) {
+			context.strokeStyle = this.borderColor;
+			context.lineWidth = this.borderLineWidth;
+			context.strokeRect(0, 0, this.w, this.h);
+		}
 
 	}
 
 }
 
 Camera.collection = [];
-
-
-Camera.background = '#000';
-
-
 
 // カメラを並べる
 Camera.arrange = function(x, y, border, filter) {
