@@ -1,4 +1,4 @@
-import 'enchantjs/enchant';
+import { Node } from 'enchantjs/enchant';
 import 'enchantjs/ui.enchant';
 import 'hackforplay/rpg-kit-main';
 
@@ -7,8 +7,6 @@ import EventEmitter from 'mod/EventEmitter3';
 const clamp = function(value, min, max) {
 	return Math.max(min, Math.min(max, value));
 };
-
-
 
 enchant.Map.prototype.cvsRender = function cvsRender(ctx) {
 
@@ -22,8 +20,6 @@ enchant.Map.prototype.cvsRender = function cvsRender(ctx) {
 		ctx.restore();
 	}
 };
-
-
 
 enchant.Map.prototype.redraw = function(x, y, width, height) {
 
@@ -128,7 +124,6 @@ enchant.CanvasRenderer.instance.render = function(context, node, event) {
 };
 
 
-
 var init = window.RPGMap.prototype.initialize;
 window.RPGMap.prototype.initialize = function(ux, uy, x, y) {
 
@@ -143,7 +138,6 @@ window.RPGMap.prototype.initialize = function(ux, uy, x, y) {
 
 };
 
-
 enchant.CanvasRenderer.instance.listener.on('renderStart', (node) => {
 
 
@@ -155,10 +149,10 @@ enchant.CanvasRenderer.instance.listener.on('renderStart', (node) => {
 });
 
 
-const Camera = enchant.Class.create(enchant.Node, {
+class Camera extends Node {
 
-	initialize(x, y, w, h) {
-		enchant.Node.call(this);
+	constructor(x, y, w, h) {
+		super();
 
 
 		this.width = w || game.width;
@@ -169,15 +163,29 @@ const Camera = enchant.Class.create(enchant.Node, {
 
 		this.background = '#000';
 
+
+
+
+		this.enabled = true;
+		this.target = null;
+		this.center = null;
+		this.clip = true;
+		this.clipScaleFunction = Math.min;
+		this.clamp = true;
+		this.scale = 1.0;
+		// デフォルトの画面にシーンを描画するか
+		this.rootCanvasRendering = false;
+		this.border = false;
+		this.borderColor = '#000';
+		this.borderLineWidth = 1;
+
+
+
 		Camera.collection.push(this);
-	},
+
+	}
 
 
-	enabled: true,
-
-	target: null,
-
-	center: null,
 
 	resize(width, height) {
 
@@ -202,9 +210,9 @@ const Camera = enchant.Class.create(enchant.Node, {
 		})());
 
 		return this;
-	},
+	}
 
-	getCenter: function() {
+	getCenter() {
 		if (this.center) return this.center;
 
 		if (this.target) {
@@ -243,12 +251,10 @@ const Camera = enchant.Class.create(enchant.Node, {
 			y: 0
 		};
 
-	},
-
-	clipScaleFunction: Math.min,
+	}
 
 
-	getScale: function() {
+	getScale() {
 
 		var scale = this.scale;
 
@@ -264,11 +270,11 @@ const Camera = enchant.Class.create(enchant.Node, {
 
 
 		return scale;
-	},
+	}
 
 
 	// 描画範囲を取得する
-	getRenderRect: function() {
+	getRenderRect() {
 		var center = this.getCenter();
 
 		var x = center.x;
@@ -297,10 +303,8 @@ const Camera = enchant.Class.create(enchant.Node, {
 
 		return rect;
 
-	},
+	}
 
-
-	clamp: true,
 
 	// 描画範囲を画面に収める
 	clampRect(rect) {
@@ -349,15 +353,15 @@ const Camera = enchant.Class.create(enchant.Node, {
 
 
 		return rect;
-	},
+	}
 
-	_rectScale: function(rect, scale) {
+	_rectScale(rect, scale) {
 		rect.x *= scale;
 		rect.y *= scale;
 		rect.width *= scale;
 		rect.height *= scale;
 		return rect;
-	},
+	}
 
 
 	// カメラ上の座標を計算する
@@ -377,39 +381,27 @@ const Camera = enchant.Class.create(enchant.Node, {
 		};
 
 		return this._rectScale(rect, 1.0 / scale);
-	},
+	}
 
 
-	getVisionSize: function() {
+	getVisionSize() {
 		return {
 			width: this.width * this.getScale(),
 			height: this.height * this.getScale()
 		};
-	},
+	}
 
-	scale: 1.0,
 
 	zoom(value) {
 		this.scale /= value;
-	},
+	}
 
-
-	// デフォルトの画面にシーンを描画するか
-	rootCanvasRendering: false,
-
-
-	border: false,
-	borderColor: '#000',
-	borderLineWidth: 1,
 
 	borderStyle(lineWidth, color) {
 		this.border = true;
 		this.borderLineWidth = lineWidth;
 		this.borderColor = color;
-	},
-
-
-	clip: true,
+	}
 
 
 	render() {
@@ -502,7 +494,7 @@ const Camera = enchant.Class.create(enchant.Node, {
 
 	}
 
-});
+}
 
 Camera.collection = [];
 
