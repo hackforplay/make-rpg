@@ -95,6 +95,23 @@ game.on('awake', () => {
 	Hack.world = world;
 	game.rootScene.addChild(world);
 
+	// ワールドが描画される前に描画先をマップのサーフェイスに差し替える
+	world.on('prerender', ({ canvasRenderer }) => {
+		canvasRenderer.targetSurface = Hack.map._surface;
+	});
+
+	// ワールドが描画されたら描画先をデフォルトのキャンバスに差し替える
+	world.on('postrender', ({ canvasRenderer }) => {
+
+		canvasRenderer.targetSurface = game.rootScene._layers.Canvas;
+
+		// カメラに描画する
+		for (const camera of Camera.collection) {
+			camera.render();
+		}
+
+	});
+
 	const overlayGroup = new Group();
 	overlayGroup.name = 'OverlayGroup';
 	overlayGroup.order = 1000;
