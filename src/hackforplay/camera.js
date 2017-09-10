@@ -499,44 +499,6 @@ class Camera extends Node {
 Camera.collection = [];
 
 
-
-// 1f 前のキャプチャ画像を保持する機能
-Camera.prototype.record = function() {
-
-	// 既に録画しているなら
-	if (this.recordCanvas) return;
-
-	this.recording = true;
-
-	this.recordCanvas = new enchant.Surface(this.width, this.height);
-
-
-	this.on(enchant.Event.RESIZE, function() {
-		this.recordCanvas = new enchant.Surface(this.width, this.height);
-	});
-
-	this.on(enchant.Event.RENDER, function(e) {
-
-		if (!this.recording) return;
-
-		var r = e.rect;
-
-		var ctx = this.recordCanvas.context;
-
-		ctx.drawImage(Hack.map._surface._element, r.x, r.y, r.width, r.height, 0, 0, this.width, this.height);
-
-	});
-
-
-};
-
-Camera.prototype.recordStop = function() {
-
-	this.recording = false;
-
-};
-
-
 Camera.background = '#000';
 
 
