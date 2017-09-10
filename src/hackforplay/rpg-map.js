@@ -46,6 +46,7 @@ const RPGMap = enchant.Class.create(EventTarget, {
 		this.fmap.name = 'FMap';
 		this.scene.name = 'MapScene';
 
+		this._surface = new enchant.Surface(tileWidth * mapWidth, tileHeight * mapHeight);
 
 	},
 

@@ -118,6 +118,13 @@ class RPGObject extends Sprite {
 		return Math.floor((this.y - this.offset.y + 16) / 32);
 	}
 
+	get center() {
+		return {
+			x: this.x - this.offset.x + 16,
+			y: this.y - this.offset.y + 16
+		}
+	}
+
 	geneticUpdate() {
 		if (!Hack.isPlaying) return;
 		// enter frame
