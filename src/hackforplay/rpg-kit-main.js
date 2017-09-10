@@ -52,7 +52,30 @@ Hack.on('load', function() {
 	}
 });
 
-game.on('awake', function() {
+import { Group } from 'enchantjs/enchant';
+import Camera from 'hackforplay/camera';
+
+
+import { CanvasRenderer } from 'enchantjs/enchant';
+
+game.on('awake', () => {
+
+	// カメラグループ
+	const cameraGroup = new Group();
+	cameraGroup.name = 'CameraGroup';
+	cameraGroup.order = 90;
+
+	Hack.cameraGroup = cameraGroup;
+	game.rootScene.addChild(cameraGroup);
+
+	// デフォルトのカメラを作成する
+	const camera = Hack.camera = Camera.main = new Camera();
+
+	// ゲーム開始時にデフォルトのカメラのターゲットが存在しないならプレイヤーを割り当てる
+	game.on('load', () => {
+		if (!camera.target) camera.target = Hack.player;
+	});
+
 
 	// コントローラーグループ
 	const controllerGroup = new enchant.Group();
@@ -64,14 +87,28 @@ game.on('awake', function() {
 
 	game.rootScene.addChild(controllerGroup);
 
-	controllerGroup.order = 20;
 
 
 	// マップ関連の親
-	const world = new enchant.Group();
+	const world = new Group();
 	world.name = 'World';
 	Hack.world = world;
 	game.rootScene.addChild(world);
+
+	const overlayGroup = new Group();
+	overlayGroup.name = 'OverlayGroup';
+	overlayGroup.order = 1000;
+	Hack.overlayGroup = overlayGroup;
+	game.rootScene.addChild(overlayGroup);
+
+
+
+	const messageGroup = new Group();
+	messageGroup.name = 'MessageGroup';
+	messageGroup.order = 300;
+	Hack.messageGroup = messageGroup;
+	game.rootScene.addChild(messageGroup);
+
 
 
 	const pad = new Pad();

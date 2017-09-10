@@ -61,7 +61,7 @@ Hack.textarea = (function() {
 	this._element.classList.add('log');
 
 	game.on('load', function(event) {
-		game.rootScene.addChild(Hack.textarea);
+		Hack.messageGroup.addChild(Hack.textarea);
 	});
 
 	Object.defineProperty(this, 'text', {
@@ -260,7 +260,7 @@ Hack.overlay = function() {
 		return this;
 
 	}).call(Hack.createSprite(game.width, game.height, {
-		defaultParentNode: game.rootScene
+		defaultParentNode: Hack.overlayGroup
 	}), arguments);
 };
 
@@ -305,7 +305,7 @@ Hack.overlay = function() {
 				x: 157 - game.rootScene.x,
 				y: 320 - game.rootScene.y,
 				image: game.assets['hackforplay/new_button_retry.png'],
-				defaultParentNode: game.rootScene,
+				defaultParentNode: Hack.overlayGroup,
 				ontouchend: function() {
 					// [RETRY] がクリックされたとき
 					feeles.reload(false);
