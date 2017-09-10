@@ -16,8 +16,10 @@ Event.prototype.initialize = function $initialize(name, props) {
 
 	if (!props) return;
 
-	Object.defineProperties(this, props)
-
+	for (const [key, value] of Object.entries(props)) {
+		this[key] = value;
+	}
+	
 };
 
 
