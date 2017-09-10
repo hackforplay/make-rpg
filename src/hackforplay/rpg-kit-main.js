@@ -1,7 +1,5 @@
 import 'hackforplay/enchantjs-kit';
-import 'hackforplay/enchantjs-fix';
 import 'mod/stop';
-import 'mod/wait-enterframe';
 
 import 'hackforplay/hack';
 import 'hackforplay/rpg-kit-rpgobjects';

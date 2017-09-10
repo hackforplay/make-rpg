@@ -1,6 +1,5 @@
 import enchant from 'enchantjs/enchant';
 import 'hackforplay/enchantjs-kit';
-import 'hackforplay/enchantjs-fix';
 import 'hackforplay/hack';
 import 'hackforplay/rpg-kit-rpgobjects';
 import 'hackforplay/rpg-kit-color';
