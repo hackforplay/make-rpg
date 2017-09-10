@@ -23,7 +23,7 @@ game.onload = async() => {
 
 	// gameOnLoad より先に実行するイベント
 	// lifelabel などが gameOnLoad 時に参照できない対策
-	game.dispatchEvent(new enchant.Event('initialize'));
+	game.dispatchEvent(new enchant.Event('awake'));
 
 	gameOnLoad();
 

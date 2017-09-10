@@ -52,7 +52,7 @@ Hack.on('load', function() {
 	}
 });
 
-game.on('initialize', function() {
+game.on('awake', function() {
 
 	// コントローラーグループ
 	const controllerGroup = new enchant.Group();
