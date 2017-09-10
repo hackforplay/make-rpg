@@ -572,6 +572,10 @@
       item1.target = player; // カメラの中心にいるターゲット
       item1.borderStyle(4, 'red'); // まわりのワク
       item1.zoom(0.5); // ズームのわりあい
+  - label: 左右はんてん
+    code: |
+      // カメラのヨコの大きさを -1 倍すると左右はんてんする
+      Camera.main.tl.scaleTo(-1, 1, 30, 'QUAD_EASEINOUT');
   - label: じかんせいげん
     code: |
       feeles.setTimeout(() => {
