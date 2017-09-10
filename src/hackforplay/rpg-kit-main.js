@@ -119,12 +119,15 @@ game.on('awake', () => {
 	game.rootScene.addChild(overlayGroup);
 
 
+	// DOMGroup
+	const domGroup = new Group();
+	domGroup.name = 'DOMGroup';
+	domGroup.order = 300;
+	Hack.domGroup = domGroup;
+	// _element が存在すると DOM layer に追加される
+	domGroup._element = {};
+	game.rootScene.addChild(domGroup);
 
-	const messageGroup = new Group();
-	messageGroup.name = 'MessageGroup';
-	messageGroup.order = 300;
-	Hack.messageGroup = messageGroup;
-	game.rootScene.addChild(messageGroup);
 
 
 

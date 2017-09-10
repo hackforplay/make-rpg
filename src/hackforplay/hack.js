@@ -60,8 +60,8 @@ Hack.textarea = (function() {
 	this._element.setAttribute('disabled', 'disabled');
 	this._element.classList.add('log');
 
-	game.on('load', function(event) {
-		Hack.messageGroup.addChild(Hack.textarea);
+	game.on('awake', () => {
+		Hack.domGroup.addChild(Hack.textarea);
 	});
 
 	Object.defineProperty(this, 'text', {
