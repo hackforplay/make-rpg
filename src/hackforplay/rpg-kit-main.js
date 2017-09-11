@@ -1,7 +1,5 @@
 import 'hackforplay/enchantjs-kit';
-import 'hackforplay/enchantjs-fix';
 import 'mod/stop';
-import 'mod/wait-enterframe';
 
 import 'hackforplay/hack';
 import 'hackforplay/rpg-kit-rpgobjects';
@@ -54,26 +52,83 @@ Hack.on('load', function() {
 	}
 });
 
-game.on('initialize', function() {
+import { Group } from 'enchantjs/enchant';
+import Camera from 'hackforplay/camera';
+
+
+import { CanvasRenderer } from 'enchantjs/enchant';
+
+game.on('awake', () => {
+
+	// カメラグループ
+	const cameraGroup = new Group();
+	cameraGroup.name = 'CameraGroup';
+	cameraGroup.order = 100;
+
+	Hack.cameraGroup = cameraGroup;
+	game.rootScene.addChild(cameraGroup);
+
+	// デフォルトのカメラを作成する
+	const camera = Hack.camera = Camera.main = new Camera();
+
+	// ゲーム開始時にデフォルトのカメラのターゲットが存在しないならプレイヤーを割り当てる
+	game.on('load', () => {
+		if (!camera.target) camera.target = Hack.player;
+	});
+
 
 	// コントローラーグループ
 	const controllerGroup = new enchant.Group();
 	controllerGroup.name = 'ControllerGroup';
-	controllerGroup.order = 200;
+	controllerGroup.order = 300;
 
 
 	Hack.controllerGroup = controllerGroup;
 
 	game.rootScene.addChild(controllerGroup);
 
-	controllerGroup.order = 20;
 
 
 	// マップ関連の親
-	const world = new enchant.Group();
+	const world = new Group();
 	world.name = 'World';
 	Hack.world = world;
 	game.rootScene.addChild(world);
+
+	// ワールドが描画される前に描画先をマップのサーフェイスに差し替える
+	world.on('prerender', ({ canvasRenderer }) => {
+		canvasRenderer.targetSurface = Hack.map._surface;
+	});
+
+	// ワールドが描画されたら描画先をデフォルトのキャンバスに差し替える
+	world.on('postrender', ({ canvasRenderer }) => {
+
+		canvasRenderer.targetSurface = game.rootScene._layers.Canvas;
+
+		// カメラに描画する
+		for (const camera of Camera.collection) {
+			camera.render();
+		}
+
+	});
+
+	const overlayGroup = new Group();
+	overlayGroup.name = 'OverlayGroup';
+	overlayGroup.order = 1000;
+	Hack.overlayGroup = overlayGroup;
+	game.rootScene.addChild(overlayGroup);
+
+
+	// DOMGroup
+	const domGroup = new Group();
+	domGroup.name = 'DOMGroup';
+	domGroup.order = 500;
+	Hack.domGroup = domGroup;
+	// _element が存在すると DOM layer に追加される
+	domGroup._element = {};
+	game.rootScene.addChild(domGroup);
+
+
 
 
 	const pad = new Pad();

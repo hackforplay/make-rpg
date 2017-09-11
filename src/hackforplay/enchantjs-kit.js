@@ -1,6 +1,6 @@
 import 'enchantjs/enchant';
 import 'enchantjs/ui.enchant';
-import './enchantjs-fix';
+import 'enchantjs/fix';
 
 // enchant.js wrapper for HackforPlay
 // v1.0

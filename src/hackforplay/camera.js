@@ -1,183 +1,75 @@
-import 'enchantjs/enchant';
+import {
+	Core,
+	Node,
+	Event,
+	Sprite,
+	Surface,
+	Group
+} from 'enchantjs/enchant';
 import 'enchantjs/ui.enchant';
+import 'enchantjs/fix';
 import 'hackforplay/rpg-kit-main';
-
-import EventEmitter from 'mod/EventEmitter3';
 
 const clamp = function(value, min, max) {
 	return Math.max(min, Math.min(max, value));
 };
 
 
+class Camera extends Sprite {
 
-enchant.Map.prototype.cvsRender = function cvsRender(ctx) {
+	constructor(x, y, w, h) {
+		super(w, h);
 
-	if (this.width !== 0 && this.height !== 0) {
-		var core = enchant.Core.instance;
-		this.updateBuffer();
-		ctx.save();
-		ctx.setTransform(1, 0, 0, 1, 0, 0);
-		var cvs = this._context.canvas;
-		ctx.drawImage(cvs, 0, 0 /* , core.width, core.height */ );
-		ctx.restore();
-	}
-};
+		// this.opacity = 0.5;
 
+		w = w || game.width;
+		h = h || game.height;
 
+		this.image = new Surface(w, h);
 
-enchant.Map.prototype.redraw = function(x, y, width, height) {
-
-	x = 0;
-	y = 0;
-	width = this.width;
-	height = this.height;
-
-	var core = enchant.Core.instance;
-	var surface = new enchant.Surface(width, height);
-	this._surface = surface;
-	var canvas = surface._element;
-	canvas.style.position = 'absolute';
-	if (enchant.ENV.RETINA_DISPLAY && core.scale === 2) {
-		canvas.width = width * 2;
-		canvas.height = height * 2;
-		this._style.webkitTransformOrigin = '0 0';
-		this._style.webkitTransform = 'scale(0.5)';
-	} else {
-		canvas.width = width;
-		canvas.height = height;
-	}
-	this._context = canvas.getContext('2d');
-
-
-	if (this._image == null) {
-		return;
-	}
-	var image, tileWidth, tileHeight, dx, dy;
-	if (this._doubledImage) {
-		image = this._doubledImage;
-		tileWidth = this._tileWidth * 2;
-		tileHeight = this._tileHeight * 2;
-		dx = -this._offsetX * 2;
-		dy = -this._offsetY * 2;
-		x *= 2;
-		y *= 2;
-		width *= 2;
-		height *= 2;
-	} else {
-		image = this._image;
-		tileWidth = this._tileWidth;
-		tileHeight = this._tileHeight;
-		dx = -this._offsetX;
-		dy = -this._offsetY;
-	}
-	var row = image.width / tileWidth | 0;
-	var col = image.height / tileHeight | 0;
-	var left = Math.max((x + dx) / tileWidth | 0, 0);
-	var top = Math.max((y + dy) / tileHeight | 0, 0);
-	var right = Math.ceil((x + dx + width) / tileWidth);
-	var bottom = Math.ceil((y + dy + height) / tileHeight);
-
-	var source = image._element;
-	var context = this._context;
-	var canvas = context.canvas;
-
-
-	context.clearRect(x, y, width, height);
-	for (var i = 0, len = this._data.length; i < len; i++) {
-		var data = this._data[i];
-		var r = Math.min(right, data[0].length);
-		var b = Math.min(bottom, data.length);
-		for (y = top; y < b; y++) {
-			for (x = left; x < r; x++) {
-				var n = data[y][x];
-				if (0 <= n && n < row * col) {
-					var sx = (n % row) * tileWidth;
-					var sy = (n / row | 0) * tileHeight;
-					context.drawImage(source, sx, sy, tileWidth, tileHeight,
-						x * tileWidth - dx, y * tileHeight - dy, tileWidth, tileHeight);
-				}
-			}
-		}
-	}
-
-}
-
-enchant.Event.RESIZE = 'resize';
-enchant.Event.RENDERED = 'rendered';
-
-
-enchant.CanvasRenderer.prototype.listener = new EventEmitter();
-enchant.CanvasRenderer.prototype.override = null;
-
-enchant.CanvasRenderer.instance.render = function(context, node, event) {
-
-	// safari 対策
-	if (!node.scene && !node._scene) return;
-
-	context = this.override || context;
-
-	// render start
-	this.listener.emit('renderStart', node);
-
-	enchant.CanvasRenderer.prototype.render.call(this, context, node, event);
-
-	// render end
-	this.listener.emit('renderEnd', node);
-
-	node.dispatchEvent(new enchant.Event(enchant.Event.RENDERED));
-};
-
-
-
-var init = window.RPGMap.prototype.initialize;
-window.RPGMap.prototype.initialize = function(ux, uy, x, y) {
-
-	init.apply(this, arguments);
-
-	// FIX PATCH
-	x = x !== undefined ? x : 15;
-	y = y !== undefined ? y : 10;
-	// ---- tera
-
-	this._surface = new enchant.Surface(ux * x, uy * y);
-
-};
-
-
-enchant.CanvasRenderer.instance.listener.on('renderStart', (node) => {
-
-
-
-	if (!Hack.map || node !== enchant.Core.instance.rootScene._layers.Canvas) return;
-
-	enchant.CanvasRenderer.instance.override = Hack.map._surface.context;
-
-});
-
-
-const Camera = enchant.Class.create(enchant.Node, {
-
-	initialize(x, y, w, h) {
-		enchant.Node.call(this);
-
-
-		this.width = w || game.width;
-		this.height = h || game.height;
+		this.w = w;
+		this.h = h;
 
 		this.x = x || 0;
 		this.y = y || 0;
 
+
 		this.background = '#000';
 
+
+		this.enabled = true;
+		this.target = null;
+		this.center = null;
+		this.clip = true;
+		this.clipScaleFunction = Math.min;
+		this.clamp = true;
+		this.scale = 1.0;
+		// デフォルトの画面にシーンを描画するか
+		this.rootCanvasRendering = false;
+		this.border = false;
+		this.borderColor = '#000';
+		this.borderLineWidth = 1;
+
 		Camera.collection.push(this);
-	},
+
+		Hack.cameraGroup.addChild(this);
+
+	}
 
 
-	enabled: true,
+	get w() { return this.width; }
+	get h() { return this.height; }
 
-	target: null,
+	set w(value) {
+		this.width = value;
+		this.image._element.width = value;
+	}
 
-	center: null,
+	set h(value) {
+		this.height = value;
+		this.image._element.height = value;
+	}
+
 
 	resize(width, height) {
 
@@ -202,33 +94,22 @@ const Camera = enchant.Class.create(enchant.Node, {
 		})());
 
 		return this;
-	},
+	}
 
-	getCenter: function() {
+	getCenter() {
+
+		// center 固定
 		if (this.center) return this.center;
 
-		if (this.target) {
-
-			if (this.target instanceof RPGObject) {
-
-				return {
-
-					x: this.target.x - this.target.offset.x + 16,
-					y: this.target.y - this.target.offset.y + 16
-
-				};
-
-			}
-
-			return {
-				x: this.target.x,
-				y: this.target.y
-			};
+		// target
+		if (this.target && this.target instanceof RPGObject) {
+			return this.target.center;
 		}
 
+		// マップの中心
 		if (Hack.map) {
 
-			var map = Hack.map;
+			const map = Hack.map;
 
 			return {
 				x: map.width / 2,
@@ -237,38 +118,26 @@ const Camera = enchant.Class.create(enchant.Node, {
 
 		}
 
+		console.error('Camera#getCenter');
+	}
 
-		return {
-			x: 0,
-			y: 0
-		};
+	getScale() {
 
-	},
+		// クリップしない
+		if (!this.clipScaleFunction) return this.scale;
 
-	clipScaleFunction: Math.min,
+		const x = Hack.map.width / this.w;
+		const y = Hack.map.height / this.h;
 
+		const clip = this.clipScaleFunction(x, y);
+		if (this.scale > clip) return clip;
 
-	getScale: function() {
-
-		var scale = this.scale;
-
-		if (this.clipScaleFunction) {
-
-			var x = Hack.map.width / this.width;
-			var y = Hack.map.height / this.height;
-			var clip = this.clipScaleFunction(x, y);
-
-			if (scale > clip) scale = clip;
-
-		}
-
-
-		return scale;
-	},
+		return this.scale;
+	}
 
 
 	// 描画範囲を取得する
-	getRenderRect: function() {
+	getRenderRect() {
 		var center = this.getCenter();
 
 		var x = center.x;
@@ -297,16 +166,13 @@ const Camera = enchant.Class.create(enchant.Node, {
 
 		return rect;
 
-	},
+	}
 
-
-	clamp: true,
 
 	// 描画範囲を画面に収める
 	clampRect(rect) {
 
-		var w = this.getVisionSize().width;
-		var h = this.getVisionSize().height;
+		const { w, h } = this.getVisionSize();
 
 		var over = false;
 
@@ -349,15 +215,15 @@ const Camera = enchant.Class.create(enchant.Node, {
 
 
 		return rect;
-	},
+	}
 
-	_rectScale: function(rect, scale) {
+	_rectScale(rect, scale) {
 		rect.x *= scale;
 		rect.y *= scale;
 		rect.width *= scale;
 		rect.height *= scale;
 		return rect;
-	},
+	}
 
 
 	// カメラ上の座標を計算する
@@ -377,193 +243,68 @@ const Camera = enchant.Class.create(enchant.Node, {
 		};
 
 		return this._rectScale(rect, 1.0 / scale);
-	},
+	}
 
 
-	getVisionSize: function() {
+	getVisionSize() {
+		const scale = this.getScale();
 		return {
-			width: this.width * this.getScale(),
-			height: this.height * this.getScale()
+			w: this.w * scale,
+			h: this.h * scale
 		};
-	},
+	}
 
-	scale: 1.0,
 
 	zoom(value) {
 		this.scale /= value;
-	},
+	}
 
-
-	// デフォルトの画面にシーンを描画するか
-	rootCanvasRendering: false,
-
-
-	border: false,
-	borderColor: '#000',
-	borderLineWidth: 1,
 
 	borderStyle(lineWidth, color) {
 		this.border = true;
 		this.borderLineWidth = lineWidth;
 		this.borderColor = color;
-	},
-
-
-	clip: true,
+	}
 
 
 	render() {
 
-		var ctx = enchant.Core.instance.rootScene._layers.Canvas.context;
+		const context = this.image.context;
 
 		var center = this.getCenter();
+
+		if (!center) return;
+
 		var x = center.x;
 		var y = center.y;
 
-
-		if (this.rootCanvasRendering) {
-			ctx.drawImage(Hack.map._surface._element, 0, 0);
-		}
-
-
-		/*
-		ctx.beginPath();
-		ctx.arc(x, y, 60, 0, Math.PI*2, false);
-		ctx.stroke();
-		*/
 
 		var rect = this.getRenderRect();
 		var r = rect;
 
 
-		// ctx.strokeRect(r.x, r.y, r.width, r.height);
-
-		ctx.save();
-
-		ctx.translate(this.x, this.y);
-
-		if (this.clip) {
-			ctx.beginPath();
-			ctx.rect(0, 0, this.width, this.height);
-			ctx.clip();
-		}
-
-		this.dispatchEvent((function() {
-
-			var e = new enchant.Event(enchant.Event.RENDER);
-
-			e.rect = r;
-
-			e.context = ctx;
-
-			return e;
-
-		})());
-
-
 		if (this.background) {
-
-			ctx.fillStyle = this.background;
-			ctx.fillRect(0, 0, this.width, this.height);
-
+			context.fillStyle = this.background;
+			context.fillRect(0, 0, this.w, this.h);
 		}
 
+		this.image.context.drawImage(
+			Hack.map._surface._element,
 
-
-		ctx.drawImage(Hack.map._surface._element, r.x, r.y, r.width, r.height, 0, 0, this.width, this.height);
-
+			r.x, r.y, r.width, r.height,
+			0, 0, this.w, this.h);
 
 		if (this.border) {
-			ctx.strokeStyle = this.borderColor;
-			ctx.lineWidth = this.borderLineWidth;
-			ctx.strokeRect(0, 0, this.width, this.height);
+			context.strokeStyle = this.borderColor;
+			context.lineWidth = this.borderLineWidth;
+			context.strokeRect(0, 0, this.w, this.h);
 		}
-
-		this.dispatchEvent((function() {
-
-			var e = new enchant.Event(enchant.Event.RENDERED);
-
-			e.rect = r;
-
-			e.context = ctx;
-			return e;
-
-		})());
-
-
-
-		if (this.clip) {
-			ctx.beginPath();
-			ctx.rect(0, 0, game.width, game.height);
-			ctx.clip();
-		}
-
-		ctx.restore();
 
 	}
 
-});
+}
 
 Camera.collection = [];
-
-
-
-// 1f 前のキャプチャ画像を保持する機能
-Camera.prototype.record = function() {
-
-	// 既に録画しているなら
-	if (this.recordCanvas) return;
-
-	this.recording = true;
-
-	this.recordCanvas = new enchant.Surface(this.width, this.height);
-
-
-	this.on(enchant.Event.RESIZE, function() {
-		this.recordCanvas = new enchant.Surface(this.width, this.height);
-	});
-
-	this.on(enchant.Event.RENDER, function(e) {
-
-		if (!this.recording) return;
-
-		var r = e.rect;
-
-		var ctx = this.recordCanvas.context;
-
-		ctx.drawImage(Hack.map._surface._element, r.x, r.y, r.width, r.height, 0, 0, this.width, this.height);
-
-	});
-
-
-};
-
-Camera.prototype.recordStop = function() {
-
-	this.recording = false;
-
-};
-
-
-Camera.background = '#000';
-
-
-enchant.CanvasRenderer.instance.listener.on('renderEnd', function(node) {
-	if (!Hack.map || node !== Hack.map.scene) return;
-
-	enchant.CanvasRenderer.instance.override = null;
-	enchant.Core.instance.rootScene._layers.Canvas.context.fillStyle = Camera.background;
-	enchant.Core.instance.rootScene._layers.Canvas.context.fillRect(0, 0, game.width, game.height);
-
-
-	Camera.collection.forEach(function(camera) {
-
-		camera.render();
-
-	});
-
-});
-
 
 // カメラを並べる
 Camera.arrange = function(x, y, border, filter) {
@@ -605,17 +346,8 @@ Camera.arrange = function(x, y, border, filter) {
 
 Camera.layout = Camera.arrange;
 
-var camera = new Camera();
-camera.resize(game.width, game.height);
-Hack.camera = camera;
-
-game.on('load', function() {
-
-	// ターゲットが指定されていない場合はHack.playerになる
-	Hack.camera.target = Hack.camera.target || Hack.player;
-
-});
-
 
 window.Camera = Camera;
 Camera.main = Hack.camera;
+
+export default Camera;
