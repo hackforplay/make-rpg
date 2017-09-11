@@ -58,40 +58,28 @@ class Camera extends Sprite {
 
 
 	get w() { return this.width; }
+	set w(value) { this.width = value; }
+
 	get h() { return this.height; }
+	set h(value) { this.height = value; }
 
-	set w(value) {
-		this.width = value;
-		this.image._element.width = value;
-	}
+	resize(w, h) {
 
-	set h(value) {
-		this.height = value;
-		this.image._element.height = value;
-	}
+		w = Math.ceil(w);
+		h = Math.ceil(h);
 
+		if (this.w === w && this.h === h) return;
 
-	resize(width, height) {
+		this._width = w;
+		this._height = h;
 
-		width = Math.ceil(width);
-		height = Math.ceil(height);
+		if (this.image && w && h) {
+			this.image._element.width = w;
+			this.image._element.height = h;
+			console.log(w, h);
+		}
 
-		if (this.width === width && this.height === height) return;
-
-		var previousWidth = this.width;
-		var previousHeight = this.height;
-
-		this.width = width;
-		this.height = height;
-
-
-		this.dispatchEvent((function() {
-
-			var e = new enchant.Event(enchant.Event.RESIZE);
-
-			return e;
-
-		})());
+		this.dispatchEvent(new Event(Event.RESIZE));
 
 		return this;
 	}
@@ -300,6 +288,11 @@ class Camera extends Sprite {
 			context.strokeRect(0, 0, this.w, this.h);
 		}
 
+	}
+
+	_computeFramePosition() {
+		super._computeFramePosition();
+		this.resize(this.w, this.h);
 	}
 
 }
