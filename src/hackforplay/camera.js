@@ -44,15 +44,14 @@ class Camera extends Sprite {
 		this.clipScaleFunction = Math.min;
 		this.clamp = true;
 		this.scale = 1.0;
-		// デフォルトの画面にシーンを描画するか
-		this.rootCanvasRendering = false;
+
 		this.border = false;
 		this.borderColor = '#000';
 		this.borderLineWidth = 1;
 
-		Camera.collection.push(this);
 
 		Hack.cameraGroup.addChild(this);
+		Camera.collection.push(this);
 
 	}
 
@@ -76,7 +75,6 @@ class Camera extends Sprite {
 		if (this.image && w && h) {
 			this.image._element.width = w;
 			this.image._element.height = h;
-			console.log(w, h);
 		}
 
 		this.dispatchEvent(new Event(Event.RESIZE));
@@ -288,6 +286,13 @@ class Camera extends Sprite {
 			context.strokeRect(0, 0, this.w, this.h);
 		}
 
+	}
+
+	remove() {
+		super.remove();
+		Camera.collection = Camera.collection.filter((camera) => {
+			return camera !== this;
+		});
 	}
 
 	_computeFramePosition() {
