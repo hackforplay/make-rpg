@@ -22,41 +22,41 @@ Skills:
     description: プレイヤーがビームを使えるようにする。 player の部分を item1 などにかえれば、他のキャラクターがビームを使えるようにもできる
     descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG/wiki/ビーム'
     code: |
-      // ビーム
+      // beam
       player.on(('▼ Events', 'becomeattack'), (event) => {
-        const 使い手 = event.target;
-        const ビーム = new RPGObject();
-        ビーム.mod(('▼ Costumes', Hack.assets.beam));
-        ビーム.on(('▼ Events', 'triggerenter'), (event) => {
-          if (event.hit !== 使い手) {
-            Hack.Attack(event.mapX, event.mapY, 使い手.atk);
-            ビーム.destroy();
+        const user = event.target;
+        const beam = new RPGObject();
+        beam.mod(('▼ Costumes', Hack.assets.beam));
+        beam.on(('▼ Events', 'triggerenter'), (event) => {
+          if (event.hit !== user) {
+            Hack.Attack(event.mapX, event.mapY, user.atk);
+            beam.destroy();
           }
         });
-        使い手.shoot(ビーム, 使い手.forward, 10);
+        user.shoot(beam, user.forward, 10);
       });
   - label: ばくだん
     image: trimmed/map-29-0.png
     description: プレイヤーがばくだんを使えるようにする。 player の部分を item1 などにかえれば、他のキャラクターがばくだんを使えるようにもできる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ばくだん'
     code: |
-      // ばくだん
+      // bomb
       player.on(('▼ Events', 'becomeattack'), (event) => {
-        const 使い手 = event.target;
-        const ばくだん = new RPGObject();
-        ばくだん.mod(('▼ Costumes', Hack.assets.bomb));
-        ばくだん.locate(使い手.mapX, 使い手.mapY);
-        ばくだん.setTimeout(() => {
-          const ばくえん = new RPGObject();
-          ばくえん.mod(('▼ Costumes', Hack.assets.explosion));
-          ばくえん.locate(ばくだん.mapX, ばくだん.mapY);
-          ばくえん.velocityY = -1;
-          ばくえん.collisionFlag = false;
-          ばくえん.on(('▼ Events', 'triggerenter'), (event) => {
-            Hack.Attack.call(ばくえん, event.mapX, event.mapY, 使い手.atk);
+        const user = event.target;
+        const bomb = new RPGObject();
+        bomb.mod(('▼ Costumes', Hack.assets.bomb));
+        bomb.locate(user.mapX, user.mapY);
+        bomb.setTimeout(() => {
+          const explosion = new RPGObject();
+          explosion.mod(('▼ Costumes', Hack.assets.explosion));
+          explosion.locate(bomb.mapX, bomb.mapY);
+          explosion.velocityY = -1;
+          explosion.collisionFlag = false;
+          explosion.on(('▼ Events', 'triggerenter'), (event) => {
+            Hack.Attack.call(explosion, event.mapX, event.mapY, user.atk);
           });
-          ばくえん.destroy(20);
-          ばくだん.destroy();
+          explosion.destroy(20);
+          bomb.destroy();
         }, 90);
       });
   - label: カラーチェンジ

@@ -51,10 +51,10 @@ Monsters:
       });
       item1.endless(async(self, count) => {
 
-        const ターゲット = player;
+        const traget = player;
 
-        const moveX = 32 * Math.sign(ターゲット.mapX - self.mapX);
-        const moveY = 32 * Math.sign(ターゲット.mapY - self.mapY);
+        const moveX = 32 * Math.sign(traget.mapX - self.mapX);
+        const moveY = 32 * Math.sign(traget.mapY - self.mapY);
         self.forward = [moveX, moveY];
 
         await self.walk(); // あるく
@@ -102,19 +102,19 @@ Monsters:
 
         await self.wait(); // 少しやすむ
 
-        const ばくえん = new RPGObject();
-        ばくえん.mod(('▼ Costumes', Hack.assets.explosion));
-        ばくえん.collisionFlag = false;
-        self.shoot(ばくえん, self.forward, 6);
+        const explosion = new RPGObject();
+        explosion.mod(('▼ Costumes', Hack.assets.explosion));
+        explosion.collisionFlag = false;
+        self.shoot(explosion, self.forward, 6);
         const fx = self.forward.x,
           fy = self.forward.y;
-        ばくえん.moveBy(fx * random(64, 96), fy * random(64, 96));
-        ばくえん.velocityX += random(-0.99, 1);
-        ばくえん.velocityY += random(-0.99, 1);
-        ばくえん.scale(random(0.99, 1.5));
-        ばくえん.force(-fx * random(0, 0.199), -fy * random(0, 0.199));
-        ばくえん.destroy(20);
-        ばくえん.on(('▼ Events', 'triggerenter'), (event) => {
+        explosion.moveBy(fx * random(64, 96), fy * random(64, 96));
+        explosion.velocityX += random(-0.99, 1);
+        explosion.velocityY += random(-0.99, 1);
+        explosion.scale(random(0.99, 1.5));
+        explosion.force(-fx * random(0, 0.199), -fy * random(0, 0.199));
+        explosion.destroy(20);
+        explosion.on(('▼ Events', 'triggerenter'), (event) => {
           if (event.hit !== self) {
             Hack.Attack(event.mapX, event.mapY, self.atk);
           }
