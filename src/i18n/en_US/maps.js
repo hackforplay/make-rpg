@@ -15,7 +15,7 @@ function maps() {
 	`);
 	Hack.maps.map1 = map1;
 
-	/*+ マップ */
+	/*+ Maps */
 
 }
 

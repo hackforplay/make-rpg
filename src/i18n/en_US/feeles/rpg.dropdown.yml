@@ -1,4 +1,4 @@
-スキン:
+Costumes:
   - body: _kきし
     label: きしのスキン
   - body: _aあんこくきし
@@ -81,7 +81,7 @@
     label: かぎのスキン
   - body: _bばくだん
     label: ばくだんのスキン
-イベント:
+Events:
   - body: '''とまるとき'''
     label: item.walk() や item.attack() などが終わって、動きが止まったときに発生するイベント
   - body: '''あるくとき'''
@@ -98,7 +98,7 @@
     label: collisionFlag が true のとき、他のものとぶつかったときに発生するイベント
   - body: '''HPかわった'''
     label: item.hp が変化したときに発生するイベント
-フラグ:
+Flags:
   - body: 'true'
     label: オン
   - body: 'false'

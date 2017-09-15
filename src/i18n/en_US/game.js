@@ -6,13 +6,13 @@ async function gameFunc() {
 	Hack.changeMap('map1'); // Load map1 
 
 	self.player = new Player(); // Create a player 
-	player.mod(('▼ スキン', _kきし)); // Costume of player
+	player.mod(('▼ Costumes', _kきし)); // Costume of player
 	player.locate(3, 5); // Location of player when start
-	/*+ スキル */
+	/*+ Skills */
 
 
 
-	/*+ モンスター アイテム せっち システム */
+	/*+ Monsters Items Objects Systems */
 }
 
 export default gameFunc;

@@ -1,11 +1,11 @@
-ルールついか:
+Rules:
   - label: スコア１以上で
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
     code: |
       if (Hack.score >= 1) {
         // スコアがいくつか以上のとき
 
-        /*+ すること ルールついか */
+        /*+ Doings Rules */
       }
   - label: スコア１以下で
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
@@ -13,7 +13,7 @@
       if (Hack.score <= 1) {
         // スコアがいくつか以下のとき
 
-        /*+ すること ルールついか */
+        /*+ Doings Rules */
       }
   - label: HP１以上で
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
@@ -21,7 +21,7 @@
       if (player.hp >= 1) {
         // HP がいくつか以上のとき
 
-        /*+ すること ルールついか */
+        /*+ Doings Rules */
       }
   - label: HP１以下で
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
@@ -29,7 +29,7 @@
       if (player.hp <= 1) {
         // HP がいくつか以下のとき
 
-        /*+ すること ルールついか */
+        /*+ Doings Rules */
       }
   - label: キー押したら
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
@@ -37,7 +37,7 @@
       if (('▼ キー', Key.space).clicked) {
         // キー 押したとき
 
-        /*+ すること ルールついか */
+        /*+ Doings Rules */
       }
   - label: キー押してる間
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
@@ -45,7 +45,7 @@
       if (('▼ キー', Key.space).pressed) {
         // キーを押している間ずっと
 
-        /*+ すること ルールついか */
+        /*+ Doings Rules */
       }
   - label: キーはなしたら
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
@@ -53,9 +53,9 @@
       if (('▼ キー', Key.space).released) {
         // キーをはなしたとき
 
-        /*+ すること ルールついか */
+        /*+ Doings Rules */
       }
-すること:
+Doings:
   - label: ゲームクリア
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
     code: |

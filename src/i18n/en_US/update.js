@@ -10,7 +10,7 @@ function update() {
 		player.destroy(); // Remove player
 	}
 
-	/*+ ルールついか */
+	/*+ Rules */
 }
 
 export default update;

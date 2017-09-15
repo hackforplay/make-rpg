@@ -1,4 +1,4 @@
-スキル:
+Skills:
   - label: 体力 UP
     description: プレイヤーの体力を 10 UP する。player の部分を item1 などにかえれば、他のキャラクターがビームを使えるようにもできる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/体力 UP'
@@ -23,11 +23,11 @@
     descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG/wiki/ビーム'
     code: |
       // ビーム
-      player.on(('▼ イベント', 'こうげきするとき'), (event) => {
+      player.on(('▼ Events', 'こうげきするとき'), (event) => {
         const 使い手 = event.target;
         const ビーム = new RPGObject();
-        ビーム.mod(('▼ スキン', _bビーム));
-        ビーム.on(('▼ イベント', 'ふれはじめた'), (event) => {
+        ビーム.mod(('▼ Skins', _bビーム));
+        ビーム.on(('▼ Events', 'ふれはじめた'), (event) => {
           if (event.hit !== 使い手) {
             Hack.Attack(event.mapX, event.mapY, 使い手.atk);
             ビーム.destroy();
@@ -41,18 +41,18 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ばくだん'
     code: |
       // ばくだん
-      player.on(('▼ イベント', 'こうげきするとき'), (event) => {
+      player.on(('▼ Events', 'こうげきするとき'), (event) => {
         const 使い手 = event.target;
         const ばくだん = new RPGObject();
-        ばくだん.mod(('▼ スキン', _bばくだん));
+        ばくだん.mod(('▼ Skins', _bばくだん));
         ばくだん.locate(使い手.mapX, 使い手.mapY);
         ばくだん.setTimeout(() => {
           const ばくえん = new RPGObject();
-          ばくえん.mod(('▼ スキン', _bばくえん));
+          ばくえん.mod(('▼ Skins', _bばくえん));
           ばくえん.locate(ばくだん.mapX, ばくだん.mapY);
           ばくえん.velocityY = -1;
           ばくえん.collisionFlag = false;
-          ばくえん.on(('▼ イベント', 'ふれはじめた'), (event) => {
+          ばくえん.on(('▼ Events', 'ふれはじめた'), (event) => {
             Hack.Attack.call(ばくえん, event.mapX, event.mapY, 使い手.atk);
           });
           ばくえん.destroy(20);
@@ -64,7 +64,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/カラーチェンジ'
     code: |
       // 色をかえる
-      player.color = ('▼ カラー', 'black');
+      player.color = ('▼ Colors', 'black');
   - label: さいしょの向き
     description: プレイヤーの向きをかえる。player の部分を item1 などにかえれば、他のキャラクターの向きをかえられる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/さいしょの向き'
@@ -84,6 +84,6 @@
       // 自動せいぎょ
       player.endless(async (self, count) => {
 
-        /*+ じどう*/
+        /*+ Actions*/
 
       });
