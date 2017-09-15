@@ -2,12 +2,10 @@ import enchant from 'enchantjs/enchant';
 import RPGObject from './object';
 import Key from 'mod/key';
 
+class Player extends RPGObject {
+	constructor() {
+		super();
 
-const Player = enchant.Class.create(RPGObject, {
-
-	initialize() {
-
-		RPGObject.call(this);
 
 		this.mod(Hack.assets.knight);
 
@@ -27,7 +25,7 @@ const Player = enchant.Class.create(RPGObject, {
 			attack: 'space'
 		};
 
-	},
+	}
 
 	checkInput(type) {
 		const input = Array.isArray(this.input[type]) ? this.input[type] : [this.input[type]];
@@ -36,7 +34,7 @@ const Player = enchant.Class.create(RPGObject, {
 		}).reduce(function(a, b) {
 			return a + b;
 		});
-	},
+	}
 
 	onenterframe() {
 
@@ -59,7 +57,7 @@ const Player = enchant.Class.create(RPGObject, {
 		}
 
 
-	},
+	}
 
 
 	enterCheck() {
@@ -70,7 +68,7 @@ const Player = enchant.Class.create(RPGObject, {
 			item.dispatchEvent(new Event('playerenter'));
 			this.enteredStack.push(item);
 		}, this);
-	},
+	}
 
 
 	stayCheck() {
@@ -85,7 +83,8 @@ const Player = enchant.Class.create(RPGObject, {
 			}
 		}, this);
 	}
-});
+
+}
 
 
 export default Player;
