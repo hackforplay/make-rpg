@@ -344,10 +344,6 @@ const main = async function() {
 	});
 
 
-	// 2D のレンダリングを行わない
-	if (!RPG3D.render2D) {
-		RPGObject.prototype.cvsRender = function() {};
-	}
 
 	var sp = 3;
 	var an = 0;
