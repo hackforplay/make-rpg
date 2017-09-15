@@ -5,7 +5,7 @@ Monsters:
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/スライム'
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _sスライム));
+      item1.mod(('▼ Costumes', Hack.assets.slime));
       item1.hp = 3;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -21,7 +21,7 @@ Monsters:
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/イモムシ'
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _iいもむし));
+      item1.mod(('▼ Costumes', Hack.assets.insect));
       item1.hp = 2;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -42,7 +42,7 @@ Monsters:
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/コウモリ'
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _kこうもり));
+      item1.mod(('▼ Costumes', Hack.assets.bat));
       item1.hp = 3;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -71,7 +71,7 @@ Monsters:
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ウロボロス'
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _uウロボロス));
+      item1.mod(('▼ Costumes', Hack.assets.ouroboros));
       item1.hp = 10;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -89,7 +89,7 @@ Monsters:
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ドラゴン'
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _dドラゴン));
+      item1.mod(('▼ Costumes', Hack.assets.dragon));
       item1.hp = 10;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -103,7 +103,7 @@ Monsters:
         await self.wait(); // 少しやすむ
 
         const ばくえん = new RPGObject();
-        ばくえん.mod(('▼ Costumes', _bばくえん));
+        ばくえん.mod(('▼ Costumes', Hack.assets.explosion));
         ばくえん.collisionFlag = false;
         self.shoot(ばくえん, self.forward, 6);
         const fx = self.forward.x,
@@ -128,7 +128,7 @@ Monsters:
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ミノタウルス'
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _mミノタウルス));
+      item1.mod(('▼ Costumes', Hack.assets.minotaur));
       item1.hp = 10;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -143,7 +143,7 @@ Items:
   - label: ハート
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _hハート));
+      item1.mod(('▼ Costumes', Hack.assets.heart));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ Events', 'のった'), () => {
         player.hp += 1;
@@ -155,7 +155,7 @@ Items:
   - label: コイン
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _kコイン));
+      item1.mod(('▼ Costumes', Hack.assets.coin));
       item1.locate(7, 5, 'map1');
       item1.velocity(1, 0);
       item1.force(0, 0.5);
@@ -169,7 +169,7 @@ Items:
   - label: スター
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _hほし));
+      item1.mod(('▼ Costumes', Hack.assets.star));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ Events', 'のった'), () => {
         player.damageTime = 100;
@@ -181,7 +181,7 @@ Items:
   - label: ふしぎなカギ
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _kかぎ));
+      item1.mod(('▼ Costumes', Hack.assets.key));
       item1.locate(random(0, 15), random(0, 10), 'map1');
       item1.on(('▼ Events', 'のった'), () => {
         Hack.log('カチャリ という おと が きこえた');
@@ -193,7 +193,7 @@ Items:
   - label: ダイヤモンド
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _dダイヤモンド));
+      item1.mod(('▼ Costumes', Hack.assets.diamond));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ Events', 'のった'), () => {
         item1.destroy();
@@ -205,7 +205,7 @@ Items:
   - label: 色付きハート
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _hハート));
+      item1.mod(('▼ Costumes', Hack.assets.heart));
       item1.locate(7, 5, 'map1');
       item1.color = ('▼ Colors', 'white');
     image: trimmed/colorful.png
@@ -214,7 +214,7 @@ Items:
   - label: 魔道書
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _m魔道書));
+      item1.mod(('▼ Costumes', Hack.assets.enchantBookItem));
       item1.locate(7, 5);
       item1.on(('▼ Events', 'のった'), () => {
         // 魔道書のコードをひらく
@@ -229,7 +229,7 @@ Objects:
   - label: 下りかいだん
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _kくだりかいだん));
+      item1.mod(('▼ Costumes', Hack.assets.downStair));
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ Events', 'のった'), () => {
@@ -241,7 +241,7 @@ Objects:
   - label: ワープ
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _wワープ));
+      item1.mod(('▼ Costumes', Hack.assets.warp));
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ Events', 'のった'), () => {
@@ -253,7 +253,7 @@ Objects:
   - label: しろ
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _sしろ));
+      item1.mod(('▼ Costumes', Hack.assets.castle));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ Events', 'のった'), () => {
         // ゲームクリア
@@ -267,7 +267,7 @@ Objects:
   - label: お花
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _hはな));
+      item1.mod(('▼ Costumes', Hack.assets.flower));
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.collisionFlag = false;
@@ -280,7 +280,7 @@ Objects:
   - label: 木
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _k木));
+      item1.mod(('▼ Costumes', Hack.assets.tree));
       item1.locate(7, 5, 'map1');
       item1.hp = 1;
     image: trimmed/map-26-0.png
@@ -289,12 +289,12 @@ Objects:
   - label: バクダン岩
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _iいわ));
+      item1.mod(('▼ Costumes', Hack.assets.rock));
       item1.locate(7, 5, 'map1');
       item1.atk = 99;
       item1.on(('▼ Events', 'こうげきされた'), () => {
         const item2 = new RPGObject();
-        item2.mod(('▼ Costumes', _bばくえん));
+        item2.mod(('▼ Costumes', Hack.assets.explosion));
         item2.locate(7, 5, 'map1');
         item2.velocityY = -1;
         item2.collisionFlag = false;
@@ -310,7 +310,7 @@ Objects:
   - label: ふしぎなかべ
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _tつちかべ));
+      item1.mod(('▼ Costumes', Hack.assets.clayWall));
       item1.locate(7, 5, 'map1');
       item1.opacity = 0.5;
     image: trimmed/map-17-0.png
@@ -319,7 +319,7 @@ Objects:
   - label: しゃべるかべ
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _iいしかべ));
+      item1.mod(('▼ Costumes', Hack.assets.stoneWall));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ Events', 'こうげきされた'), () => {
         Hack.log('どうだ　おれさまは　かたいだろう！');
@@ -330,11 +330,11 @@ Objects:
   - label: たからばこ
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _tたからばこ));
+      item1.mod(('▼ Costumes', Hack.assets.box));
       item1.locate(7, 5, 'map1');
       item1.onこうげきされた = () => {
         delete item1.onこうげきされた;
-        item1.mod(('▼ Costumes', _tたからばこひらいた));
+        item1.mod(('▼ Costumes', Hack.assets.openedBox));
       };
     image: trimmed/map-21-0.png
     description: まえで こうげきすると かぱっとひらく (た)からばこ。なかに なにか いれられると いいんだどね
@@ -342,7 +342,7 @@ Objects:
   - label: タタリ
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _dドクロ));
+      item1.mod(('▼ Costumes', Hack.assets.skull));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ Events', 'のった'), () => {
         player.hp = 0;
@@ -356,7 +356,7 @@ Objects:
   - label: ツボ
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _tつぼ));
+      item1.mod(('▼ Costumes', Hack.assets.pot));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ Events', 'こうげきされた'), () => {
         // ランダムなアイテムをだす
@@ -381,7 +381,7 @@ Objects:
   - label: 女の人
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _o女の人));
+      item1.mod(('▼ Costumes', Hack.assets.woman));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ Events', 'ぶつかった'), () => {
         Hack.log('こんにちは。ここは 1F です');
@@ -392,7 +392,7 @@ Objects:
   - label: 男の子
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _o男の子));
+      item1.mod(('▼ Costumes', Hack.assets.boy));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ Events', 'ぶつかった'), () => {
         item1.turn();
@@ -409,16 +409,16 @@ Objects:
   - label: わな
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _wわな));
+      item1.mod(('▼ Costumes', Hack.assets.trap));
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ Events', 'のった'), () => {
-        item1.mod(('▼ Costumes', _wわなかかった));
+        item1.mod(('▼ Costumes', Hack.assets.usedTrap));
         player.hp -= 1;
         player.damageTime = 30;
       });
       item1.on(('▼ Events', 'onおりた'), () => {
-        item1.mod(('▼ Costumes', _wわな));
+        item1.mod(('▼ Costumes', Hack.assets.trap));
       });
     image: trimmed/map-22-0.png
     descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG,/wiki/トゲトゲ'
@@ -426,7 +426,7 @@ Objects:
   - label: 上りかいだん
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _nのぼりかいだん));
+      item1.mod(('▼ Costumes', Hack.assets.upStair));
       item1.locate(7, 5, 'map2');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ Events', 'のった'), () => {
@@ -438,11 +438,11 @@ Objects:
   - label: じげんばくだん
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _bばくだん));
+      item1.mod(('▼ Costumes', Hack.assets.bomb));
       item1.locate(7, 5, 'map1');
       item1.setTimeout(() => {
         const item2 = new RPGObject();
-        item2.mod(('▼ Costumes', _bばくえん));
+        item2.mod(('▼ Costumes', Hack.assets.explosion));
         item2.locate(7, 5);
         item2.velocityY = -1;
         item2.collisionFlag = false;
@@ -458,12 +458,12 @@ Objects:
   - label: まほうじん
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _mまほうじん));
+      item1.mod(('▼ Costumes', Hack.assets.magic));
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ Events', 'のった'), () => {
         if (Hack.score >= 7) {
-          item1.mod(('▼ Costumes', _mまほうじんひかった));
+          item1.mod(('▼ Costumes', Hack.assets.usedMagic));
         }
       });
     image: trimmed/map-16-9.png
@@ -472,13 +472,13 @@ Objects:
   - label: スコアでひらく たからばこ
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _tたからばこ));
+      item1.mod(('▼ Costumes', Hack.assets.box));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ Events', 'こうげきされた'), () => {
         if (Hack.score < 5) {
           Hack.log('たからばこは びくともしない ');
         } else {
-          item1.mod(('▼ Costumes', _tたからばこひらいた));
+          item1.mod(('▼ Costumes', Hack.assets.openedBox));
           Hack.log('ガチャ！たからばこが あいた！');
           // 出てくるもの　→
         }
@@ -489,7 +489,7 @@ Objects:
   - label: お花屋さん
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _o女の子));
+      item1.mod(('▼ Costumes', Hack.assets.girl));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ Events', 'ぶつかった'), () => {
         if (Hack.score < 100) {
@@ -499,7 +499,7 @@ Objects:
           Hack.score -= 100;
           // おはな
           const item2 = new RPGObject();
-          item2.mod(('▼ Costumes', _hはな));
+          item2.mod(('▼ Costumes', Hack.assets.flower));
           item2.locate(item1.mapX, item1.mapY + 1, 'map1');
           item2.layer = RPGMap.Layer.Under;
           item2.on(('▼ Events', 'のった'), () => {
@@ -511,14 +511,14 @@ Objects:
     description: おはなを うっている 女の子
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/おはなやさん'
   - label: ルーレット
-    code: "const item1 = new RPGObject();\nitem1.mod(('▼ Costumes', _rルビー));\nitem1.locate(7, 5, 'map1');\nitem1.うごいている = ('▼ Flags', false);\nitem1.on(('▼ Events', 'こうげきされた'), (event) => {\nconst self = event.target;\n// うごいているかどうかを逆にする\nself.うごいているか = !self.うごいているか;\n\nif (self.うごいているか) {\n\t// ルーレット開始\n\tself.start(self.ルーレットプログラム);\n}\n});\n// ルーレットがストップしたとき\nitem1.on('ストップ', (event) => {\nconst スキン = event.スキン;\n\n// スコアのプログラム\nif (スキン === _rルビー) {\n\tHack.score += 1; // rubyなら、SCORE + 1\n}\nif (スキン === _dドクロ) {\n\tHack.score -= 1; // skullなら、SCORE - 1\n}\n});\nitem1.ルーレットプログラム = async(self, count, next) => {\n\n  await self.wait(0.1);\n\n  const スキン = random([\n  \t_rルビー,\n  \t_dドクロ,\n  \t_uうんこ\n  ]);\n  self.mod(スキン);\n\n  if (!item1.うごいているか) {\n  \t// 止めたいとき\n  \tconst event = new Event('ストップ');\n  \tevent.スキン = スキン;\n  \tself.dispatchEvent(event);\n  \t// ストップ\n  \treturn;\n  }\n\n  // くりかえし\n  next();\n};\n"
+    code: "const item1 = new RPGObject();\nitem1.mod(('▼ Costumes', Hack.assets.ruby));\nitem1.locate(7, 5, 'map1');\nitem1.うごいている = ('▼ Flags', false);\nitem1.on(('▼ Events', 'こうげきされた'), (event) => {\nconst self = event.target;\n// うごいているかどうかを逆にする\nself.うごいているか = !self.うごいているか;\n\nif (self.うごいているか) {\n\t// ルーレット開始\n\tself.start(self.ルーレットプログラム);\n}\n});\n// ルーレットがストップしたとき\nitem1.on('ストップ', (event) => {\nconst スキン = event.スキン;\n\n// スコアのプログラム\nif (スキン === _rルビー) {\n\tHack.score += 1; // rubyなら、SCORE + 1\n}\nif (スキン === _dドクロ) {\n\tHack.score -= 1; // skullなら、SCORE - 1\n}\n});\nitem1.ルーレットプログラム = async(self, count, next) => {\n\n  await self.wait(0.1);\n\n  const スキン = random([\n  \t_rルビー,\n  \t_dドクロ,\n  \t_uうんこ\n  ]);\n  self.mod(スキン);\n\n  if (!item1.うごいているか) {\n  \t// 止めたいとき\n  \tconst event = new Event('ストップ');\n  \tevent.スキン = スキン;\n  \tself.dispatchEvent(event);\n  \t// ストップ\n  \treturn;\n  }\n\n  // くりかえし\n  next();\n};\n"
     image: trimmed/map-28-2.png
     description: こうげきすると、ルーレットがはじまる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ルーレット'
   - label: ばくえん
     code: |
       const item1 = new RPGObject();
-      item1.mod(('▼ Costumes', _bばくえん));
+      item1.mod(('▼ Costumes', Hack.assets.explosion));
       item1.locate(7, 5, 'map1');
       item1.velocityY = -1;
       item1.collisionFlag = false;
@@ -536,7 +536,7 @@ Systems:
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/プレイヤー２'
     code: |
       const item1 = new Player();
-      item1.mod(('▼ Costumes', _aあんこくきし)); // 見た目
+      item1.mod(('▼ Costumes', Hack.assets.darknight)); // 見た目
       item1.locate(7, 5); // はじめの位置
       item1.hp = 3; // 2P の HP
       item1.atk = 1; // 2P の こうげき力

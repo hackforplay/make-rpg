@@ -26,7 +26,7 @@ Skills:
       player.on(('▼ Events', 'こうげきするとき'), (event) => {
         const 使い手 = event.target;
         const ビーム = new RPGObject();
-        ビーム.mod(('▼ Skins', _bビーム));
+        ビーム.mod(('▼ Costumes', Hack.assets.beam));
         ビーム.on(('▼ Events', 'ふれはじめた'), (event) => {
           if (event.hit !== 使い手) {
             Hack.Attack(event.mapX, event.mapY, 使い手.atk);
@@ -44,11 +44,11 @@ Skills:
       player.on(('▼ Events', 'こうげきするとき'), (event) => {
         const 使い手 = event.target;
         const ばくだん = new RPGObject();
-        ばくだん.mod(('▼ Skins', _bばくだん));
+        ばくだん.mod(('▼ Costumes', Hack.assets.bomb));
         ばくだん.locate(使い手.mapX, 使い手.mapY);
         ばくだん.setTimeout(() => {
           const ばくえん = new RPGObject();
-          ばくえん.mod(('▼ Skins', _bばくえん));
+          ばくえん.mod(('▼ Costumes', Hack.assets.explosion));
           ばくえん.locate(ばくだん.mapX, ばくだん.mapY);
           ばくえん.velocityY = -1;
           ばくえん.collisionFlag = false;

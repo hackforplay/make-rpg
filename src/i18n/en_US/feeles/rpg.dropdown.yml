@@ -1,85 +1,85 @@
 Costumes:
-  - body: _kきし
+  - body: Hack.assets.knight
     label: きしのスキン
-  - body: _aあんこくきし
+  - body: Hack.assets.darkKnight
     label: あんこくきしのスキン
-  - body: _sスライム
+  - body: Hack.assets.slime
     label: スライムのスキン
-  - body: _iいもむし
+  - body: Hack.assets.insect
     label: いもむしのスキン
-  - body: _kくも
+  - body: Hack.assets.spider
     label: くものスキン
-  - body: _kこうもり
+  - body: Hack.assets.bat
     label: こうもりのスキン
-  - body: _dドラゴン
+  - body: Hack.assets.dragon
     label: ドラゴンのスキン
-  - body: _mミノタウルス
+  - body: Hack.assets.minotaur
     label: ミノタウルスのスキン
-  - body: _o男の子
+  - body: Hack.assets.boy
     label: 男の子のスキン
-  - body: _o女の子
+  - body: Hack.assets.girl
     label: 女の子のスキン
-  - body: _o女の人
+  - body: Hack.assets.woman
     label: 女の人のスキン
-  - body: _m魔道書
+  - body: Hack.assets.enchantBookItem
     label: 魔道書のスキン
-  - body: _bばくえん
+  - body: Hack.assets.explosion
     label: ばくえんのスキン
-  - body: _uウロボロス
+  - body: Hack.assets.ouroboros
     label: ウロボロスのスキン
-  - body: _bビーム
+  - body: Hack.assets.beam
     label: ビームのスキン
-  - body: _kくだりかいだん
+  - body: Hack.assets.downStair
     label: くだりかいだんのスキン
-  - body: _nのぼりかいだん
+  - body: Hack.assets.upStair
     label: のぼりかいだんのスキン
-  - body: _wワープ
+  - body: Hack.assets.warp
     label: ワープのスキン
-  - body: _sしろ
+  - body: Hack.assets.castle
     label: しろのスキン
-  - body: _hはな
+  - body: Hack.assets.flower
     label: はなのスキン
-  - body: _rルビー
+  - body: Hack.assets.ruby
     label: ルビーのスキン
-  - body: _wわな
+  - body: Hack.assets.trap
     label: わなのスキン
-  - body: _wわなかかった
+  - body: Hack.assets.usedTrap
     label: わなかかったのスキン
-  - body: _hハート
+  - body: Hack.assets.heart
     label: ハートのスキン
-  - body: _k木
+  - body: Hack.assets.tree
     label: 木のスキン
-  - body: _iいわ
+  - body: Hack.assets.rock
     label: いわのスキン
-  - body: _tつちかべ
+  - body: Hack.assets.clayWall
     label: つちかべのスキン
-  - body: _iいしかべ
+  - body: Hack.assets.stoneWall
     label: いしかべのスキン
-  - body: _tたからばこ
+  - body: Hack.assets.box
     label: たからばこのスキン
-  - body: _tたからばこひらいた
+  - body: Hack.assets.openedBox
     label: たからばこひらいたのスキン
-  - body: _dドクロ
+  - body: Hack.assets.skull
     label: ドクロのスキン
-  - body: _uうんこ
+  - body: Hack.assets.poo
     label: うんこのスキン
-  - body: _tつぼ
+  - body: Hack.assets.pot
     label: つぼのスキン
-  - body: _dダイヤモンド
+  - body: Hack.assets.diamond
     label: ダイヤモンドのスキン
-  - body: _mまほうじん
+  - body: Hack.assets.magic
     label: まほうじんのスキン
-  - body: _mまほうじんひかった
+  - body: Hack.assets.usedMagic
     label: まほうじんひかったのスキン
-  - body: _kコイン
+  - body: Hack.assets.coin
     label: コインのスキン
-  - body: _sサファイア
+  - body: Hack.assets.sapphire
     label: サファイアのスキン
-  - body: _hほし
+  - body: Hack.assets.star
     label: ほしのスキン
-  - body: _kかぎ
+  - body: Hack.assets.key
     label: かぎのスキン
-  - body: _bばくだん
+  - body: Hack.assets.bomb
     label: ばくだんのスキン
 Events:
   - body: '''とまるとき'''
