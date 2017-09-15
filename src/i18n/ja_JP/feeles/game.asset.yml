@@ -1,0 +1,663 @@
+モンスター:
+  - label: スライム
+    image: trimmed/slime.gif
+    description: ムチのように からだをふりまわす、キケンなスライム
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/スライム'
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _sスライム));
+      item1.hp = 3;
+      item1.atk = 1;
+      item1.locate(7, 5, 'map1');
+      item1.endless(async(self, count) => {
+
+        await self.attack(); // こうげきする
+
+        /*+ じどう*/
+      });
+  - label: イモムシ
+    image: trimmed/insect.gif
+    description: にげあしは おいらの とくぎなのさ。すばやく walk() して  turn() するのが ひけつさ
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/イモムシ'
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _iいもむし));
+      item1.hp = 2;
+      item1.atk = 1;
+      item1.locate(7, 5, 'map1');
+      item1.on(('▼ イベント', 'たおれたとき'), () => {
+        Hack.score += 1;
+      });
+      item1.endless(async(self, count) => {
+
+        await self.walk(); // あるく
+
+        await self.turn(1); // ターンする
+
+        /*+ じどう*/
+      });
+  - label: コウモリ
+    image: trimmed/bat.gif
+    description: ねらいをつけて おそってくる おそろしいコウモリ。 ターゲットに、むかってくる らしい
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/コウモリ'
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _kこうもり));
+      item1.hp = 3;
+      item1.atk = 1;
+      item1.locate(7, 5, 'map1');
+      item1.on(('▼ イベント', 'たおれたとき'), () => {
+        Hack.score += 1;
+      });
+      item1.endless(async(self, count) => {
+
+        const ターゲット = player;
+
+        const moveX = 32 * Math.sign(ターゲット.mapX - self.mapX);
+        const moveY = 32 * Math.sign(ターゲット.mapY - self.mapY);
+        self.forward = [moveX, moveY];
+
+        await self.walk(); // あるく
+
+        await self.attack(); // こうげきする
+
+        await self.wait(1); // やすむ
+
+        /*+ じどう*/
+      });
+  - label: ウロボロス
+    image: trimmed/ouroboros.gif
+    description: ４秒おきに こうげきしてくる 大蛇ウロボロス。こうげきまでの秒数を かえることもできる
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ウロボロス'
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _uウロボロス));
+      item1.hp = 10;
+      item1.atk = 1;
+      item1.locate(7, 5, 'map1');
+      item1.endless(async(self, count) => {
+
+        await self.wait(4); // 少しやすむ
+
+        await self.attack(); // こうげきする
+
+        /*+ じどう*/
+      });
+  - label: ドラゴン
+    image: trimmed/dragon.gif
+    description: やつが この めいきゅうの あるじ 獄炎(ごくえん) の ドラゴン だ！
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ドラゴン'
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _dドラゴン));
+      item1.hp = 10;
+      item1.atk = 1;
+      item1.locate(7, 5, 'map1');
+      item1.scale(2, 2);
+      item1.setFrame('Idle', [10]);
+      item1.on(('▼ イベント', 'たおれたとき'), () => {
+        Hack.gameclear();
+      });
+      item1.endless(async(self, count) => {
+
+        await self.wait(); // 少しやすむ
+
+        const ばくえん = new RPGObject();
+        ばくえん.mod(('▼ スキン', _bばくえん));
+        ばくえん.collisionFlag = false;
+        self.shoot(ばくえん, self.forward, 6);
+        const fx = self.forward.x,
+          fy = self.forward.y;
+        ばくえん.moveBy(fx * random(64, 96), fy * random(64, 96));
+        ばくえん.velocityX += random(-0.99, 1);
+        ばくえん.velocityY += random(-0.99, 1);
+        ばくえん.scale(random(0.99, 1.5));
+        ばくえん.force(-fx * random(0, 0.199), -fy * random(0, 0.199));
+        ばくえん.destroy(20);
+        ばくえん.on(('▼ イベント', 'ふれはじめた'), (event) => {
+          if (event.hit !== self) {
+            Hack.Attack(event.mapX, event.mapY, self.atk);
+          }
+        });
+
+        /*+ じどう*/
+      });
+  - label: ミノタウルス
+    image: trimmed/minotaur.gif
+    description: ずっと こうげきをくりかえす きょうぼうな ミノタウルス
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ミノタウルス'
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _mミノタウルス));
+      item1.hp = 10;
+      item1.atk = 1;
+      item1.locate(7, 5, 'map1');
+      item1.scale(2, 2);
+      item1.endless(async(self, count) => {
+
+        await self.attack(); // こうげきする
+
+        /*+ じどう*/
+      });
+アイテム:
+  - label: ハート
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _hハート));
+      item1.locate(7, 5, 'map1');
+      item1.on(('▼ イベント', 'のった'), () => {
+        player.hp += 1;
+        item1.destroy();
+      });
+    image: trimmed/map-28-3.png
+    descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG/wi,ki/ハート'
+    description: ライフを かいふくする うれしいアイテム！ += にすると プラスされる。ところで -= にするとどうなるのだろうか
+  - label: コイン
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _kコイン));
+      item1.locate(7, 5, 'map1');
+      item1.velocity(1, 0);
+      item1.force(0, 0.5);
+      item1.on(('▼ イベント', 'ふれはじめた'), () => {
+        item1.destroy();
+        Hack.score += 1;
+      });
+    image: trimmed/map-28-5.png
+    description: がめんを はねまわる コイン。
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/チャリンチャリン'
+  - label: スター
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _hほし));
+      item1.locate(7, 5, 'map1');
+      item1.on(('▼ イベント', 'のった'), () => {
+        player.damageTime = 100;
+        item1.destroy();
+      });
+    image: trimmed/map-28-6.png
+    descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG,/wiki/スター'
+    description: ひろってから ３びょうちょい むてきになれる アイテム。３びょうちょい＝１００フレーム？ こも、カイゾウできるらしい
+  - label: ふしぎなカギ
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _kかぎ));
+      item1.locate(random(0, 15), random(0, 10), 'map1');
+      item1.on(('▼ イベント', 'のった'), () => {
+        Hack.log('カチャリ という おと が きこえた');
+        item1.destroy();
+      });
+    image: trimmed/map-28-7.png
+    description: いつも ちがうところに でてくる ふしぎなかぎ。なにかと くみあわせて つかえそうだ
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ふしぎなかぎ'
+  - label: ダイヤモンド
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _dダイヤモンド));
+      item1.locate(7, 5, 'map1');
+      item1.on(('▼ イベント', 'のった'), () => {
+        item1.destroy();
+        Hack.score += 1;
+      });
+    image: trimmed/map-28-0.png
+    description: ゲットすると、スコアになる
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/うれしいダイヤモンド'
+  - label: 色付きハート
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _hハート));
+      item1.locate(7, 5, 'map1');
+      item1.color = ('▼ カラー', 'white');
+    image: trimmed/colorful.png
+    description: ほかにも blue や orange など、さまざまな色がつかえる
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/色付きハート'
+  - label: 魔道書
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _m魔道書));
+      item1.locate(7, 5);
+      item1.on(('▼ イベント', 'のった'), () => {
+        // 魔道書のコードをひらく
+        feeles.openCode('code.js');
+
+        // なくなる
+        item1.destroy();
+      });
+    image: hackforplay/enchantbook.png
+    description: 魔道書を使えるようにする。魔道書のコードは code.js で書きかえることができる
+せっち:
+  - label: 下りかいだん
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _kくだりかいだん));
+      item1.locate(7, 5, 'map1');
+      item1.layer = RPGMap.Layer.Under;
+      item1.on(('▼ イベント', 'のった'), () => {
+        Hack.changeMap('map2');
+      });
+    image: trimmed/map-21-2.png
+    description: つぎのマップに つながっている くだりせんようの かいだん。カイゾウすると、つぎのマップからつぎのつぎのマップに つなげることも…
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/下り階段'
+  - label: ワープ
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _wワープ));
+      item1.locate(7, 5, 'map1');
+      item1.layer = RPGMap.Layer.Under;
+      item1.on(('▼ イベント', 'のった'), () => {
+        player.locate(11, 5);
+      });
+    image: trimmed/map-16-4.png
+    description: ふむとワープできる すごいゆか。あかいろや みどりいろも そんざいするという うわさ
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ワープゾーン'
+  - label: しろ
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _sしろ));
+      item1.locate(7, 5, 'map1');
+      item1.on(('▼ イベント', 'のった'), () => {
+        // ゲームクリア
+        Hack.gameclear();
+        player.destroy();
+        Hack.log('ゲームクリアです。おめでとう！');
+      });
+    image: trimmed/map-25-0.png
+    description: あなたのかえりを まちわびている おしろ。ここへ たどりつくと ゲームクリアになる
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ゴールちてん'
+  - label: お花
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _hはな));
+      item1.locate(7, 5, 'map1');
+      item1.layer = RPGMap.Layer.Under;
+      item1.collisionFlag = false;
+      item1.on(('▼ イベント', 'こうげきされた'), () => {
+        item1.destroy();
+      });
+    image: trimmed/map-21-1.png
+    description: まえで こうげきすると ちってしまう はかないはな。うえを あるくことができる
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/お花畑'
+  - label: 木
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _k木));
+      item1.locate(7, 5, 'map1');
+      item1.hp = 1;
+    image: trimmed/map-26-0.png
+    description: まえで こうげきすると あっけなく おれてしまう キ。うえをあるくことは でキない
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/木'
+  - label: バクダン岩
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _iいわ));
+      item1.locate(7, 5, 'map1');
+      item1.atk = 99;
+      item1.on(('▼ イベント', 'こうげきされた'), () => {
+        const item2 = new RPGObject();
+        item2.mod(('▼ スキン', _bばくえん));
+        item2.locate(7, 5, 'map1');
+        item2.velocityY = -1;
+        item2.collisionFlag = false;
+        item2.on(('▼ イベント', 'ふれはじめた'), (event) => {
+          Hack.Attack.call(item2, event.mapX, event.mapY, 1);
+        });
+        item2.destroy(20);
+        item1.destroy();
+      });
+    image: trimmed/map-20-1.png
+    description: しげきを あたえると ばくはつするぞ！おすなよ ぜったいに おすなよ！
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/爆弾岩'
+  - label: ふしぎなかべ
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _tつちかべ));
+      item1.locate(7, 5, 'map1');
+      item1.opacity = 0.5;
+    image: trimmed/map-17-0.png
+    description: むこうがわが すけてみえる ふしぎなかべ。 opacity （オパシティ）を ０ にすると きえてまう
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/とうめいな壁'
+  - label: しゃべるかべ
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _iいしかべ));
+      item1.locate(7, 5, 'map1');
+      item1.on(('▼ イベント', 'こうげきされた'), () => {
+        Hack.log('どうだ　おれさまは　かたいだろう！');
+      });
+    image: trimmed/map-17-1.png
+    description: まえで こうげきすると しゃべる ふしぎなかべ。いっせつによると おおむかしの ざいにんが とこめられている とか
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/しゃべる壁'
+  - label: たからばこ
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _tたからばこ));
+      item1.locate(7, 5, 'map1');
+      item1.onこうげきされた = () => {
+        delete item1.onこうげきされた;
+        item1.mod(('▼ スキン', _tたからばこひらいた));
+      };
+    image: trimmed/map-21-0.png
+    description: まえで こうげきすると かぱっとひらく (た)からばこ。なかに なにか いれられると いいんだどね
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/からばこ'
+  - label: タタリ
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _dドクロ));
+      item1.locate(7, 5, 'map1');
+      item1.on(('▼ イベント', 'のった'), () => {
+        player.hp = 0;
+      });
+      item1.on(('▼ イベント', 'こうげきされた'), (event) => {
+        event.attacker.hp = 0;
+      });
+    image: trimmed/map-28-4.png
+    description: ぜったいに ふんづけたり こうげきしたり してはいけない。ぜったいにだ
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/タタリ'
+  - label: ツボ
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _tつぼ));
+      item1.locate(7, 5, 'map1');
+      item1.on(('▼ イベント', 'こうげきされた'), () => {
+        // ランダムなアイテムをだす
+        const mod = random([
+          _dダイヤモンド,
+          _sサファイア,
+          _rルビー
+        ]);
+        const item2 = new RPGObject();
+        item2.mod(mod);
+        item2.locate(item1.mapX, item1.mapY);
+        item2.on(('▼ イベント', 'のった'), () => {
+          item2.velocity(0, -8);
+          item2.force(0, 0.8);
+          item2.destroy(16);
+        });
+        item1.destroy();
+      });
+    image: trimmed/map-20-0.png
+    description: ランダムなアイテムがでてくる ふしぎなツボ。なんでも だせる という ウワサ
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ふしぎなツボ'
+  - label: 女の人
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _o女の人));
+      item1.locate(7, 5, 'map1');
+      item1.on(('▼ イベント', 'ぶつかった'), () => {
+        Hack.log('こんにちは。ここは 1F です');
+      });
+    image: trimmed/woman.png
+    description: しゃべる ひと。ふだんは、うけつけのしごとを しているらしい。ずっと おなじセリフしか いえないのかな？
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/女の人'
+  - label: 男の子
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _o男の子));
+      item1.locate(7, 5, 'map1');
+      item1.on(('▼ イベント', 'ぶつかった'), () => {
+        item1.turn();
+      });
+      item1.endless(async(self, count) => {
+
+        await item1.walk();
+
+        /*+ じどう*/
+      });
+    image: trimmed/boy.png
+    description: ひたすら はしりつづける おとこのこ。めざしているところは じぶんでも よくわかっていない
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/男の子'
+  - label: わな
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _wわな));
+      item1.locate(7, 5, 'map1');
+      item1.layer = RPGMap.Layer.Under;
+      item1.on(('▼ イベント', 'のった'), () => {
+        item1.mod(('▼ スキン', _wわなかかった));
+        player.hp -= 1;
+        player.damageTime = 30;
+      });
+      item1.on(('▼ イベント', 'onおりた'), () => {
+        item1.mod(('▼ スキン', _wわな));
+      });
+    image: trimmed/map-22-0.png
+    descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG,/wiki/トゲトゲ'
+    description: ふむとダメージをうける めいわくなゆか。でも たった１ダメージだね。カイゾウすると なんダメジにも できるらしい
+  - label: 上りかいだん
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _nのぼりかいだん));
+      item1.locate(7, 5, 'map2');
+      item1.layer = RPGMap.Layer.Under;
+      item1.on(('▼ イベント', 'のった'), () => {
+        Hack.changeMap('map1');
+      });
+    image: trimmed/map-20-2.png
+    descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG,/wiki/上り階段'
+    description: まえのマップに つながっている のぼりせんようの かいだん。なかみは くだりかいだんと たいてかわらない
+  - label: じげんばくだん
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _bばくだん));
+      item1.locate(7, 5, 'map1');
+      item1.setTimeout(() => {
+        const item2 = new RPGObject();
+        item2.mod(('▼ スキン', _bばくえん));
+        item2.locate(7, 5);
+        item2.velocityY = -1;
+        item2.collisionFlag = false;
+        item2.on(('▼ イベント', 'ふれはじめた'), (event) => {
+          Hack.Attack.call(item2, event.mapX, event.mapY, 1);
+        });
+        item2.destroy(20);
+        item1.destroy();
+      }, 90);
+    image: trimmed/map-29-0.png
+    description: じげんしき ばくだん と たちのぼる ばくはつの エフェクト。じかん を ちょうせい できる
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/時限爆弾'
+  - label: まほうじん
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _mまほうじん));
+      item1.locate(7, 5, 'map1');
+      item1.layer = RPGMap.Layer.Under;
+      item1.on(('▼ イベント', 'のった'), () => {
+        if (Hack.score >= 7) {
+          item1.mod(('▼ スキン', _mまほうじんひかった));
+        }
+      });
+    image: trimmed/map-16-9.png
+    description: スコア７以上のとき うえにのると、まほうじんが光る(だけ)
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/スコアで光るまほうじん'
+  - label: スコアでひらく たからばこ
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _tたからばこ));
+      item1.locate(7, 5, 'map1');
+      item1.on(('▼ イベント', 'こうげきされた'), () => {
+        if (Hack.score < 5) {
+          Hack.log('たからばこは びくともしない ');
+        } else {
+          item1.mod(('▼ スキン', _tたからばこひらいた));
+          Hack.log('ガチャ！たからばこが あいた！');
+          // 出てくるもの　→
+        }
+      });
+    image: trimmed/map-21-0.png
+    description: スコアが足りないときは びくともしない ただの からばこ
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/かたいからばこ'
+  - label: お花屋さん
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _o女の子));
+      item1.locate(7, 5, 'map1');
+      item1.on(('▼ イベント', 'ぶつかった'), () => {
+        if (Hack.score < 100) {
+          Hack.log('おはなは100エンです。おカネが たりないよ。');
+        } else {
+          Hack.log('おはなは100エンです。はい、どうぞ');
+          Hack.score -= 100;
+          // おはな
+          const item2 = new RPGObject();
+          item2.mod(('▼ スキン', _hはな));
+          item2.locate(item1.mapX, item1.mapY + 1, 'map1');
+          item2.layer = RPGMap.Layer.Under;
+          item2.on(('▼ イベント', 'のった'), () => {
+            item2.destroy();
+          });
+        }
+      });
+    image: trimmed/girl.png
+    description: おはなを うっている 女の子
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/おはなやさん'
+  - label: ルーレット
+    code: "const item1 = new RPGObject();\nitem1.mod(('▼ スキン', _rルビー));\nitem1.locate(7, 5, 'map1');\nitem1.うごいている = ('▼ フラグ', false);\nitem1.on(('▼ イベント', 'こうげきされた'), (event) => {\nconst self = event.target;\n// うごいているかどうかを逆にする\nself.うごいているか = !self.うごいているか;\n\nif (self.うごいているか) {\n\t// ルーレット開始\n\tself.start(self.ルーレットプログラム);\n}\n});\n// ルーレットがストップしたとき\nitem1.on('ストップ', (event) => {\nconst スキン = event.スキン;\n\n// スコアのプログラム\nif (スキン === _rルビー) {\n\tHack.score += 1; // rubyなら、SCORE + 1\n}\nif (スキン === _dドクロ) {\n\tHack.score -= 1; // skullなら、SCORE - 1\n}\n});\nitem1.ルーレットプログラム = async(self, count, next) => {\n\n  await self.wait(0.1);\n\n  const スキン = random([\n  \t_rルビー,\n  \t_dドクロ,\n  \t_uうんこ\n  ]);\n  self.mod(スキン);\n\n  if (!item1.うごいているか) {\n  \t// 止めたいとき\n  \tconst event = new Event('ストップ');\n  \tevent.スキン = スキン;\n  \tself.dispatchEvent(event);\n  \t// ストップ\n  \treturn;\n  }\n\n  // くりかえし\n  next();\n};\n"
+    image: trimmed/map-28-2.png
+    description: こうげきすると、ルーレットがはじまる
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ルーレット'
+  - label: ばくえん
+    code: |
+      const item1 = new RPGObject();
+      item1.mod(('▼ スキン', _bばくえん));
+      item1.locate(7, 5, 'map1');
+      item1.velocityY = -1;
+      item1.collisionFlag = false;
+      item1.on(('▼ イベント', 'ふれはじめた'), (event) => {
+        Hack.Attack.call(item1, event.mapX, event.mapY, 1);
+      });
+      item1.destroy(20);
+    image: trimmed/explosion.png
+    description: 立ち昇る爆炎。ふれると１のダメージを受ける
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/爆炎'
+システム:
+  - label: プレイヤー２
+    image: trimmed/darknight.png
+    description: 2P をついかする
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/プレイヤー２'
+    code: |
+      const item1 = new Player();
+      item1.mod(('▼ スキン', _aあんこくきし)); // 見た目
+      item1.locate(7, 5); // はじめの位置
+      item1.hp = 3; // 2P の HP
+      item1.atk = 1; // 2P の こうげき力
+      item1.on('たおれたとき', () => {
+        // プレイヤー２がたおれたとき
+        Hack.gameclear();
+      });
+      // キーボードを変える
+      item1.input.left = 'a';
+      item1.input.right = 'd';
+      item1.input.up = 'w';
+      item1.input.down = 's';
+      item1.input.attack = 'f';
+      // ライフ
+      const item2 = new LifeLabel(250, 72, 0);
+      item1.onhpchange = () => {
+        item2.life = item1.hp;
+      };
+      Hack.menuGroup.addChild(item2);
+      // カメラ
+      const camera2 = new Camera();
+      camera2.target = item1;
+      // カメラを ヨコ 2 、タテ 1 のはいちにする
+      Camera.layout(2, 1);
+  - label: ズーム
+    code: |
+      // カメラを 2 倍にズーム
+      Camera.main.zoom(2);
+  - label: カメラ
+    code: |
+      // あたらしいカメラ
+      const item1 = new Camera(100, 100, 100, 100);
+      item1.target = player; // カメラの中心にいるターゲット
+      item1.borderStyle(4, 'red'); // まわりのワク
+      item1.zoom(0.5); // ズームのわりあい
+  - label: 左右はんてん
+    code: |
+      // カメラのヨコの大きさを -1 倍すると左右はんてんする
+      Camera.main.tl.scaleTo(-1, 1, 30, 'QUAD_EASEINOUT');
+  - label: じかんせいげん
+    code: |
+      feeles.setTimeout(() => {
+        // じかんせいげん（ゲームオーバー）
+        Hack.gameover();
+
+        //    ↓ タイマーのじかん
+      }, 1000 * 5);
+    description: 時間がたったらゲームオーバーになる
+  - label: YouTube
+    code: |
+      feeles.openMedia({
+        // YouTube などの URL
+        url: 'https://www.youtube.com/watch?v=B_jHOwhoAzY&t=2s',
+        // オートプレイ
+        playing: ('▼ フラグ', true),
+        // ボタンとバーを表示
+        controls: ('▼ フラグ', false)
+      });
+    description: YouTubeのURLから好きな動画を再生できる
+  - label: セリフ
+    code: |
+      Hack.log('またあそんでね！');
+    description: ゲーム画面に好きな文字を出せる
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ログ'
+  - label: タイム
+    code: |
+      // あたらしい文字のばしょをきめる
+      const item1 = new ScoreLabel(10, 104);
+      // 文字をへんこうする
+      item1.label = 'TIME:';
+      // １秒ごとに、すうじを１ふやす
+      feeles.setInterval(() => {
+        // すうじを１ふやす
+        item1.score = item1.score + 1;
+
+      }, 1000);
+      // 文字をがめんに出す
+      Hack.menuGroup.addChild(item1);
+    description: じかんを表示する
+  - label: こうげき力
+    code: |
+      // あたらしい文字のばしょをきめる
+      const item1 = new ScoreLabel(10, 130);
+      // 文字をへんこうする
+      item1.label = 'ATK:';
+      // つねに、すうじをプレイヤーのこうげき力にする
+      feeles.setInterval(() => {
+        // すうじをプレイヤーのこうげき力にする
+        item1.score = player.atk;
+
+      }, 1000);
+      // 文字をがめんに出す
+      Hack.menuGroup.addChild(item1);
+    description: こうげき力を表示する
+  - label: アラート
+    code: |
+      alert('気をつけて！');
+    description: 好きな文字でアラートを出せる
+  - label: 質問
+    code: |
+      if (confirm('ここに文字を入れる')) {
+        // YESのとき
+      } else {
+        // NOのとき
+      }
+    description: 好きな質問文でダイアログを出して、その結果によってコードを実行できる
+  - label: キー 押した
+    code: |
+      // キーを押したら
+      ('▼ キー', Key.space).press(() => {
+
+        // キーを押したとき、一度だけここが実行される
+        Hack.log('押されたよ〜');
+
+      });
+  - label: キー はなした
+    code: |
+      // キーをはなしたら
+      ('▼ キー', Key.space).release(() => {
+
+        // キーをはなしたとき、一度だけここが実行される
+        Hack.log('はなされたよ〜');
+
+      });

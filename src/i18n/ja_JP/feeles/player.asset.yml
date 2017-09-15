@@ -1,0 +1,98 @@
+スキル:
+  - label: 体力 UP
+    description: プレイヤーの体力を 10 UP する。player の部分を item1 などにかえれば、他のキャラクターがビームを使えるようにもできる
+    descriptionMoreURL: https://github.com/Feeles/IDE/wiki/体力 UP
+    code: |
+      // 体力 UP
+      player.hp = 10;
+
+  - label: パワー UP
+    description: プレイヤーのこうげき力を 10 UP する。player の部分を item1 などにかえれば、他のキャラクターがビームを使えるようにもできる
+    descriptionMoreURL: https://github.com/Feeles/IDE/wiki/パワー UP
+    code: |
+      // こうげき力 2 倍
+      player.atk = 2.0;
+
+  - label: スピード UP
+    description: プレイヤーの歩くスピードを３倍にする。player の部分を item1 などにかえれば、他のキャラクターがビームを使えるようにもできる
+    descriptionMoreURL: https://github.com/Feeles/IDE/wiki/スピード UP
+    code: |
+      // スピード 3 倍
+      player.speed = 3.0;
+
+  - label: ビーム
+    image: trimmed/map-27-2.png
+    description: プレイヤーがビームを使えるようにする。 player の部分を item1 などにかえれば、他のキャラクターがビームを使えるようにもできる
+    descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG/wiki/ビーム'
+    code: |
+      // ビーム
+      player.on(('▼ イベント', 'こうげきするとき'), (event) => {
+        const 使い手 = event.target;
+        const ビーム = new RPGObject();
+        ビーム.mod(('▼ スキン', _bビーム));
+        ビーム.on(('▼ イベント', 'ふれはじめた'), (event) => {
+          if (event.hit !== 使い手) {
+            Hack.Attack(event.mapX, event.mapY, 使い手.atk);
+            ビーム.destroy();
+          }
+        });
+        使い手.shoot(ビーム, 使い手.forward, 10);
+      });
+
+  - label: ばくだん
+    image: trimmed/map-29-0.png
+    description: プレイヤーがばくだんを使えるようにする。 player の部分を item1 などにかえれば、他のキャラクターがばくだんを使えるようにもできる
+    descriptionMoreURL: https://github.com/Feeles/IDE/wiki/ばくだん
+    code: |
+      // ばくだん
+      player.on(('▼ イベント', 'こうげきするとき'), (event) => {
+        const 使い手 = event.target;
+        const ばくだん = new RPGObject();
+        ばくだん.mod(('▼ スキン', _bばくだん));
+        ばくだん.locate(使い手.mapX, 使い手.mapY);
+        ばくだん.setTimeout(() => {
+          const ばくえん = new RPGObject();
+          ばくえん.mod(('▼ スキン', _bばくえん));
+          ばくえん.locate(ばくだん.mapX, ばくだん.mapY);
+          ばくえん.velocityY = -1;
+          ばくえん.collisionFlag = false;
+          ばくえん.on(('▼ イベント', 'ふれはじめた'), (event) => {
+            Hack.Attack.call(ばくえん, event.mapX, event.mapY, 使い手.atk);
+          });
+          ばくえん.destroy(20);
+          ばくだん.destroy();
+        }, 90);
+      });
+
+
+  - label: カラーチェンジ
+    description: プレイヤーの色をかえる。player の部分を item1 などにかえれば、他のキャラクターの色をかえられる
+    descriptionMoreURL: https://github.com/Feeles/IDE/wiki/カラーチェンジ
+    code: |
+      // 色をかえる
+      player.color = ('▼ カラー', 'black');
+
+  - label: さいしょの向き
+    description: プレイヤーの向きをかえる。player の部分を item1 などにかえれば、他のキャラクターの向きをかえられる
+    descriptionMoreURL: https://github.com/Feeles/IDE/wiki/さいしょの向き
+    code: |
+      // さいしょの向きをかえる
+      player.turn(1);
+
+  - label: 巨大化
+    description: プレイヤーの見た目の大きさをかえる。player の部分を item1 などにかえれば、他のキャラクターの大きさをかえられる
+    descriptionMoreURL: https://github.com/Feeles/IDE/wiki/巨大化
+    code: |
+      // 見た目の大きさをかえる
+      player.scale(5);
+
+  - label: 自動せいぎょ
+    description: プレイヤーを自動でずっとうごかしつづける。途中でとめることもできる
+    descriptionMoreURL: https://github.com/Feeles/IDE/wiki/自動せいぎょ
+    code: |
+      // 自動せいぎょ
+      player.endless(async (self, count) => {
+
+        /*+ じどう*/
+
+      });
