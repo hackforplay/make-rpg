@@ -67,12 +67,15 @@ class Camera extends Sprite {
 		w = Math.ceil(w);
 		h = Math.ceil(h);
 
+		if (!w || !h) return;
 		if (this.w === w && this.h === h) return;
 
 		this._width = w;
 		this._height = h;
 
-		if (this.image && w && h) {
+		if (this.image) {
+			this.image.width = w;
+			this.image.height = h;
 			this.image._element.width = w;
 			this.image._element.height = h;
 		}
@@ -252,8 +255,16 @@ class Camera extends Sprite {
 		this.borderColor = color;
 	}
 
+	drawBorder() {
+		if (!this.border) return;
+		const context = this.image.context;
+		context.strokeStyle = this.borderColor;
+		context.lineWidth = this.borderLineWidth;
+		context.strokeRect(0, 0, this.w, this.h);
+	}
 
 	render() {
+
 
 		const context = this.image.context;
 
@@ -280,11 +291,7 @@ class Camera extends Sprite {
 			r.x, r.y, r.width, r.height,
 			0, 0, this.w, this.h);
 
-		if (this.border) {
-			context.strokeStyle = this.borderColor;
-			context.lineWidth = this.borderLineWidth;
-			context.strokeRect(0, 0, this.w, this.h);
-		}
+		this.drawBorder();
 
 	}
 
@@ -296,6 +303,7 @@ class Camera extends Sprite {
 	}
 
 	_computeFramePosition() {
+		// サイズが変更されたときに呼ばれる
 		super._computeFramePosition();
 		this.resize(this.w, this.h);
 	}
@@ -327,10 +335,12 @@ Camera.arrange = function(x, y, border, filter) {
 	var index = 0;
 	var cameras = Camera.collection.filter(filter || function(camera) {
 		return camera.enabled;
+
 	});
 
 	// 再配置
 	for2d(y, x, function(y2, x2) {
+
 
 		if (index >= cameras.length) return;
 		var camera = cameras[index++];
