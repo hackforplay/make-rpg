@@ -20,12 +20,11 @@ import {
 	Shpere
 } from 'mod/3d/primitive';
 
-
 import 'mod/3d/player-input';
-
 import 'mod/3d/extension';
-import { VertexShader, FragmentShader } from 'mod/3d/shader';
+import 'mod/3d/ui';
 
+import { VertexShader, FragmentShader } from 'mod/3d/shader';
 
 import defineShader from 'mod/3d/defineShader';
 import defineModel3D from 'mod/3d/defineModel3D';
@@ -58,32 +57,10 @@ import Texture from 'mod/3d/texture';
 import { resize2 } from 'mod/3d/texture';
 
 game.preload('enchantjs/avatarBg2.png');
-game.preload('mod/3d/ui.png');
 
 const main = async function() {
 
 
-	// UI
-	(function() {
-		var a = new Sprite(300, 320);
-		a.image = game.assets['mod/3d/ui.png'];
-		a.x = 455;
-		Hack.menuGroup.addChild(a);
-		const b = new Button("", '', 70, 5)
-		game.rootScene.addChild(b);
-		a.onenterframe = () => {
-			b.x = a.x + 8;
-			b.y = 122.5;
-			if (b._domManager) {
-				b._domManager.element.style.opacity = 0.0;
-			}
-		};
-		let bc = 0;
-		b.ontouchstart = function() {
-			var a2 = bc++ % 2 ? 180 : 455;
-			a.tl.moveTo(a2, 0, 30, enchant.Easing.QUAD_EASEINOUT);
-		};
-	})();
 
 
 
