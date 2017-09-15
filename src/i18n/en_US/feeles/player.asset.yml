@@ -23,11 +23,11 @@ Skills:
     descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG/wiki/ビーム'
     code: |
       // ビーム
-      player.on(('▼ Events', 'こうげきするとき'), (event) => {
+      player.on(('▼ Events', 'becomeattack'), (event) => {
         const 使い手 = event.target;
         const ビーム = new RPGObject();
         ビーム.mod(('▼ Costumes', Hack.assets.beam));
-        ビーム.on(('▼ Events', 'ふれはじめた'), (event) => {
+        ビーム.on(('▼ Events', 'triggerenter'), (event) => {
           if (event.hit !== 使い手) {
             Hack.Attack(event.mapX, event.mapY, 使い手.atk);
             ビーム.destroy();
@@ -41,7 +41,7 @@ Skills:
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ばくだん'
     code: |
       // ばくだん
-      player.on(('▼ Events', 'こうげきするとき'), (event) => {
+      player.on(('▼ Events', 'becomeattack'), (event) => {
         const 使い手 = event.target;
         const ばくだん = new RPGObject();
         ばくだん.mod(('▼ Costumes', Hack.assets.bomb));
@@ -52,7 +52,7 @@ Skills:
           ばくえん.locate(ばくだん.mapX, ばくだん.mapY);
           ばくえん.velocityY = -1;
           ばくえん.collisionFlag = false;
-          ばくえん.on(('▼ Events', 'ふれはじめた'), (event) => {
+          ばくえん.on(('▼ Events', 'triggerenter'), (event) => {
             Hack.Attack.call(ばくえん, event.mapX, event.mapY, 使い手.atk);
           });
           ばくえん.destroy(20);

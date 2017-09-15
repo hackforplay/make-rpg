@@ -82,21 +82,21 @@ Costumes:
   - body: Hack.assets.bomb
     label: ばくだんのスキン
 Events:
-  - body: '''とまるとき'''
+  - body: '''becomeidle'''
     label: item.walk() や item.attack() などが終わって、動きが止まったときに発生するイベント
-  - body: '''あるくとき'''
+  - body: '''becomewalk'''
     label: item.walk() をコールした後、歩き始めたときに発生するイベント
-  - body: '''こうげきするとき'''
+  - body: '''becomeattack'''
     label: item.attack() をコールした後、攻撃し始めるときに発生するイベント
-  - body: '''たおれたとき'''
+  - body: '''becomedead'''
     label: item.hp が0以下になったときに発生するイベント
-  - body: '''こうげきされた'''
+  - body: '''attacked'''
     label: 他のモンスターなどから攻撃されたときに発生するイベント
-  - body: '''ふれはじめた'''
+  - body: '''triggerenter'''
     label: collisionFlag が false のとき、他のものと触れたときに発生するイベント
-  - body: '''ぶつかった'''
+  - body: '''collided'''
     label: collisionFlag が true のとき、他のものとぶつかったときに発生するイベント
-  - body: '''HPかわった'''
+  - body: '''hpchange'''
     label: item.hp が変化したときに発生するイベント
 Flags:
   - body: 'true'
