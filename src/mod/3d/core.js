@@ -65,7 +65,7 @@ const main = async function() {
 
 
 
-	game.fps = 60;
+	game.fps = 30;
 
 	resize2('enchantjs/avatarBg2.png', 320, 50);
 	resize2('enchantjs/x2/dotmat.gif', 32, 32);
@@ -108,10 +108,6 @@ const main = async function() {
 
 
 
-
-
-
-
 	var cameraMain = new Camera3D('main');
 
 	cameraMain.viewport.perspective(70, 480 / 320, 10.0, 800);
@@ -119,7 +115,6 @@ const main = async function() {
 	var cameraLight = new Camera3D('light');
 
 	cameraLight.viewport.perspective(100, 1 / 1, 10.0, 800);
-
 
 
 	// カメラを向く行列
@@ -154,26 +149,26 @@ const main = async function() {
 		0.5, 0.5, 0.0, 1.0
 	]);
 
-	var render2 = function() {
+	function renderObjects(camera2D) {
+
+		const { w, h } = camera2D;
+
+
 
 		var B = ObjectRenderer.nodes[ObjectType.MODEL];
 		var D = ObjectRenderer.nodes[ObjectType.OBJ_MODEL];
 		var blocks = ObjectRenderer.nodes[ObjectType.BLOCK];
 
-
 		const nodes_GROUND = ObjectRenderer.nodes[ObjectType.GROUND];
-
 
 		gl.enable(gl.DEPTH_TEST);
 
 		var cameraPos = cameraMain.position;
 
-
-
+		// console.warn(cameraPos);
 
 
 		var models = (B).concat(D).concat(blocks);
-
 
 
 		models.forEach((node) => {
@@ -183,7 +178,6 @@ const main = async function() {
 			node._cameraDistance = Vec3.sub(pos, cameraPos).length();
 
 		});
-
 
 
 		models.sort((a, b) => {
@@ -198,8 +192,6 @@ const main = async function() {
 		});
 
 
-
-
 		models.forEach((node) => {
 
 			gl.depthMask(!node.alpha);
@@ -211,27 +203,27 @@ const main = async function() {
 
 		gl.depthMask(true);
 
-
-
 	};
 
 	window.Camera3D = Camera3D;
 
 
-	const render = function() {
+	game.on('enterframe', () => ++count);
+
+
+	function render(x, y, w, h, camera2D) {
 
 		// 深度描画パス
 		ObjectRenderer.pass = RenderPass.DEPTH;
 
 		// フレームバッファをバインド
 		Renderer.setFrameBuffer(depthBuffer.frameBuffer);
-		Renderer.clear(1, 1, 1, 1);
+		Renderer.clear(0, 0, 0, 0);
 		gl.viewport(0, 0, depthBuffer.width, depthBuffer.height);
 
 		Program.use('shadow');
 
 
-		++count;
 		var _x = Math.sin(count * 0.005) * 200;
 		var _y = Math.cos(count * 0.005) * 200;
 
@@ -250,6 +242,7 @@ const main = async function() {
 		cameraMain.update();
 
 
+
 		// カメラを向く行列
 		matrixIV = Matrix.inverse(cameraMain.matrix);
 		matrixIV[12] = 0;
@@ -259,12 +252,14 @@ const main = async function() {
 		Camera3D.IV = matrixIV;
 
 
-		render2();
+		renderObjects(camera2D);
 
 		// フレームバッファのバインドを解除
 		Renderer.setFrameBuffer(null);
-		Renderer.clear(0, 0.7, 0.7, 1);
-		gl.viewport(0, 0, 480, 320);
+		Renderer.clear(1, 0, 1, 1);
+
+
+		gl.viewport(x, y, w, h);
 
 		// メインパス
 		ObjectRenderer.pass = RenderPass.MAIN;
@@ -289,18 +284,10 @@ const main = async function() {
 		Program.uniform('mat4', 'matrixTex', false, matrixTexProj);
 
 
-
-
-
-
 		gl.enable(gl.DEPTH_TEST);
 
 
-		render2();
-
-
-
-
+		renderObjects(camera2D);
 
 
 		// 反映
@@ -309,40 +296,70 @@ const main = async function() {
 
 	};
 
-	// 2D のカメラを削除する
-	Hack.cameraGroup.remove();
+
+	const Camera2D = Camera;
+
+	// 2D のレンダリングを停止する
+	const renderCamera2D = Camera2D.prototype.render;
+	Camera2D.prototype.render = function() {
+		if (this.dimension !== 2) return;
+		renderCamera2D.call(this);
+	};
+
+
+
+	function shuffle(array) {
+		var n = array.length,
+			t, i;
+
+		while (n) {
+			i = Math.floor(Math.random() * n--);
+			t = array[n];
+			array[n] = array[i];
+			array[i] = t;
+		}
+
+		return array;
+	}
+
 
 	Hack.world.on('postrender', () => {
 
+		Camera.collection = shuffle(Camera.collection);
+
+
 		const context = game.rootScene._layers.Canvas.context;
-
-
-		context.fillStyle = '#19b7ff';
-		context.fillRect(0, 0, game.width, game.height);
-
-
 
 		context.setTransform(1, 0, 0, 1, 0, 0);
 
-
-
 		// WebGL の canvas を描画
-
 		ObjectRenderer.update();
 
 
+		for (const camera of Camera.collection) {
 
-		// ObjectRenderer.render();
+			// 3D カメラではない
+			if (camera.dimension !== 3) continue;
 
+			const { x, y, w, h } = camera;
 
-		render();
+			const context = camera.image.context;
 
+			updateCameraPos(camera);
 
-		context.drawImage(canvas, 0, 0, game.width, game.height);
+			render(x, y, w, h, camera);
+
+			context.drawImage(canvas,
+				canvas.width - w, canvas.height - h, w, h,
+				0, 0, w, h
+			);
+
+			camera.drawBorder();
+
+		}
 
 
 	});
-
 
 
 	var sp = 3;
@@ -363,7 +380,10 @@ const main = async function() {
 	let pCameraDistance = 100;
 	let pCameraHeight = 30;
 
-	game.on('enterframe', function() {
+	function updateCameraPos(camera2D) {
+
+		cameraMain.viewport.perspective(70, camera2D.w / camera2D.h, 10.0, 800);
+
 
 		if (Key.q.pressed) {
 			an -= sa;
@@ -398,7 +418,9 @@ const main = async function() {
 			pCameraHeight = Math.max(0, pCameraHeight);
 
 
-			CPOS = Hack.player.position.toArray();
+			CPOS = camera2D.target.position.toArray();
+
+
 			CPOS[1] += 50;
 
 
@@ -455,9 +477,9 @@ const main = async function() {
 
 
 
-		(function() {
+		(() => {
 
-			if (!Hack.player) return;
+			if (!camera2D.target) return;
 
 
 			const { position, target } = Camera3D.get('main');
@@ -469,7 +491,7 @@ const main = async function() {
 
 
 
-			Hack.player.cameraDirection = (vv + Math.PI) / (Math.PI * 2);
+			camera2D.target.cameraDirection = (vv + Math.PI) / (Math.PI * 2);
 
 
 
@@ -480,7 +502,7 @@ const main = async function() {
 
 
 
-	});
+	}
 
 
 };
@@ -521,18 +543,14 @@ Hack.on('load', function() {
 	game.onload = function() {
 
 
-
 		main();
-
 
 
 		start.apply(this, arguments);
 
 
-
 		// map object 3d
 		defineModel3D(MapObject3D);
-
 
 
 	};
