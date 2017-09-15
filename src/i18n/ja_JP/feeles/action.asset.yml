@@ -1,0 +1,29 @@
+じどう:
+  - label: 自動こうげき
+    description: こうげきさせる
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/自動こうげき'
+    code: |
+      await self.attack(); // こうげきする
+  - label: 自動あるき
+    description: 一歩前にすすませる
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/自動あるき'
+    code: |
+      await self.walk(); // あるく
+  - label: 自動ターン
+    description: 時計回りに１回ターンさせる
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/自動ターン'
+    code: |
+      await self.turn(1); // ターンする
+  - label: きゅうけい
+    description: １秒だけそこで止める
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/きゅうけい'
+    code: |
+      await self.wait(1); // 少しやすむ
+  - label: 自動をやめる
+    description: 決められた回数で、自動せいぎょをやめる
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/自動をやめる'
+    code: |
+      // 何回目？
+      if (count === 5) {
+        self.endless(); // おわり
+      }

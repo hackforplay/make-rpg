@@ -1,6 +1,6 @@
 ルールついか:
   - label: スコア１以上で
-    descriptionMoreURL: https://github.com/Feeles/IDE/wiki
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
     code: |
       if (Hack.score >= 1) {
         // スコアがいくつか以上のとき
@@ -8,7 +8,7 @@
         /*+ すること ルールついか */
       }
   - label: スコア１以下で
-    descriptionMoreURL: https://github.com/Feeles/IDE/wiki
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
     code: |
       if (Hack.score <= 1) {
         // スコアがいくつか以下のとき
@@ -16,7 +16,7 @@
         /*+ すること ルールついか */
       }
   - label: HP１以上で
-    descriptionMoreURL: https://github.com/Feeles/IDE/wiki
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
     code: |
       if (player.hp >= 1) {
         // HP がいくつか以上のとき
@@ -24,7 +24,7 @@
         /*+ すること ルールついか */
       }
   - label: HP１以下で
-    descriptionMoreURL: https://github.com/Feeles/IDE/wiki
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
     code: |
       if (player.hp <= 1) {
         // HP がいくつか以下のとき
@@ -32,7 +32,7 @@
         /*+ すること ルールついか */
       }
   - label: キー押したら
-    descriptionMoreURL: https://github.com/Feeles/IDE/wiki
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
     code: |
       if (('▼ キー', Key.space).clicked) {
         // キー 押したとき
@@ -40,7 +40,7 @@
         /*+ すること ルールついか */
       }
   - label: キー押してる間
-    descriptionMoreURL: https://github.com/Feeles/IDE/wiki
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
     code: |
       if (('▼ キー', Key.space).pressed) {
         // キーを押している間ずっと
@@ -48,7 +48,7 @@
         /*+ すること ルールついか */
       }
   - label: キーはなしたら
-    descriptionMoreURL: https://github.com/Feeles/IDE/wiki
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
     code: |
       if (('▼ キー', Key.space).released) {
         // キーをはなしたとき
@@ -57,15 +57,15 @@
       }
 すること:
   - label: ゲームクリア
-    descriptionMoreURL: https://github.com/Feeles/IDE/wiki
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
     code: |
       Hack.gameclear(); // ゲームクリア
   - label: ゲームオーバー
-    descriptionMoreURL: https://github.com/Feeles/IDE/wiki
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
     code: |
       Hack.gameover(); // ゲームオーバー
       player.destroy(); // プレイヤーを消す
   - label: 文字を表示
-    descriptionMoreURL: https://github.com/Feeles/IDE/wiki
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
     code: |
       Hack.log('ステージ１ クリア！');
