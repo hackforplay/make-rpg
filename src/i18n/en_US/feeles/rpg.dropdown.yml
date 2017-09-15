@@ -82,25 +82,24 @@
   - body: _bばくだん
     label: ばくだんのスキン
 イベント:
-  - body: "'とまるとき'"
+  - body: '''とまるとき'''
     label: item.walk() や item.attack() などが終わって、動きが止まったときに発生するイベント
-  - body: "'あるくとき'"
+  - body: '''あるくとき'''
     label: item.walk() をコールした後、歩き始めたときに発生するイベント
-  - body: "'こうげきするとき'"
+  - body: '''こうげきするとき'''
     label: item.attack() をコールした後、攻撃し始めるときに発生するイベント
-  - body: "'たおれたとき'"
+  - body: '''たおれたとき'''
     label: item.hp が0以下になったときに発生するイベント
-  - body: "'こうげきされた'"
+  - body: '''こうげきされた'''
     label: 他のモンスターなどから攻撃されたときに発生するイベント
-  - body: "'ふれはじめた'"
+  - body: '''ふれはじめた'''
     label: collisionFlag が false のとき、他のものと触れたときに発生するイベント
-  - body: "'ぶつかった'"
+  - body: '''ぶつかった'''
     label: collisionFlag が true のとき、他のものとぶつかったときに発生するイベント
-  - body: "'HPかわった'"
+  - body: '''HPかわった'''
     label: item.hp が変化したときに発生するイベント
-
 フラグ:
-  - body: "true"
+  - body: 'true'
     label: オン
-  - body: "false"
+  - body: 'false'
     label: オフ
