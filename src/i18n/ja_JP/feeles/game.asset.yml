@@ -417,7 +417,7 @@
         player.hp -= 1;
         player.damageTime = 30;
       });
-      item1.on(('▼ イベント', 'onおりた'), () => {
+      item1.on(('▼ イベント', 'おりた'), () => {
         item1.mod(('▼ スキン', _wわな));
       });
     image: trimmed/map-22-0.png
