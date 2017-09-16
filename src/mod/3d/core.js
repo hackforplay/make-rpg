@@ -40,9 +40,6 @@ import { plane2, plane, model2d, sky } from 'mod/3d/definePrimitive';
 
 import renderSky from 'mod/3d/renderSky';
 
-console.clear();
-
-
 window.RPG3D = {};
 
 
@@ -213,6 +210,9 @@ const main = async function() {
 
 	function render(x, y, w, h, camera2D) {
 
+		canvas.width = w;
+		canvas.height = h;
+
 		// 深度描画パス
 		ObjectRenderer.pass = RenderPass.DEPTH;
 
@@ -259,7 +259,7 @@ const main = async function() {
 		Renderer.clear(1, 0, 1, 1);
 
 
-		gl.viewport(x, y, w, h);
+		gl.viewport(0, 0, w, h);
 
 		// メインパス
 		ObjectRenderer.pass = RenderPass.MAIN;
@@ -307,26 +307,7 @@ const main = async function() {
 	};
 
 
-
-	function shuffle(array) {
-		var n = array.length,
-			t, i;
-
-		while (n) {
-			i = Math.floor(Math.random() * n--);
-			t = array[n];
-			array[n] = array[i];
-			array[i] = t;
-		}
-
-		return array;
-	}
-
-
 	Hack.world.on('postrender', () => {
-
-		Camera.collection = shuffle(Camera.collection);
-
 
 		const context = game.rootScene._layers.Canvas.context;
 
@@ -350,7 +331,7 @@ const main = async function() {
 			render(x, y, w, h, camera);
 
 			context.drawImage(canvas,
-				canvas.width - w, canvas.height - h, w, h,
+				0, 0, w, h,
 				0, 0, w, h
 			);
 
@@ -507,51 +488,18 @@ const main = async function() {
 
 };
 
-game.on('load', function() {
-
-
-
-	Hack.player.input.left = ['left'];
-	Hack.player.input.up = ['up'];
-	Hack.player.input.down = ['down'];
-	Hack.player.input.right = ['right'];
-
-	// Hack.player.visible = false;
-
-
-	/*　移動方法
-
-	左: q キー
-	右: e キー
-	前: w キー
-	後: s キー
-	左: a キー
-	右: d キー
-	上: r キー
-	下: f キー
-	*/
-
-
-});
-
 
 Hack.on('load', function() {
-
-	console.log('Hack.onload');
 
 	var start = game.onload;
 	game.onload = function() {
 
-
 		main();
-
 
 		start.apply(this, arguments);
 
-
 		// map object 3d
 		defineModel3D(MapObject3D);
-
 
 	};
 });

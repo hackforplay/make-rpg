@@ -170,8 +170,6 @@ function initializeMapObjectConfig() {
 
 	window.MapObjectConfig = MapObjectConfig;
 
-	console.log(MapObject);
-
 
 	var initialize = MapObject.prototype.initialize;
 	MapObject.prototype.initialize = function() {
