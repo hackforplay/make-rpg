@@ -44,54 +44,43 @@ class Camera extends Sprite {
 		this.clipScaleFunction = Math.min;
 		this.clamp = true;
 		this.scale = 1.0;
-		// デフォルトの画面にシーンを描画するか
-		this.rootCanvasRendering = false;
+
 		this.border = false;
 		this.borderColor = '#000';
 		this.borderLineWidth = 1;
 
-		Camera.collection.push(this);
 
 		Hack.cameraGroup.addChild(this);
+		Camera.collection.push(this);
 
 	}
 
 
 	get w() { return this.width; }
+	set w(value) { this.width = value; }
+
 	get h() { return this.height; }
+	set h(value) { this.height = value; }
 
-	set w(value) {
-		this.width = value;
-		this.image._element.width = value;
-	}
+	resize(w, h) {
 
-	set h(value) {
-		this.height = value;
-		this.image._element.height = value;
-	}
+		w = Math.ceil(w);
+		h = Math.ceil(h);
 
+		if (!w || !h) return;
+		if (this.w === w && this.h === h) return;
 
-	resize(width, height) {
+		this._width = w;
+		this._height = h;
 
-		width = Math.ceil(width);
-		height = Math.ceil(height);
+		if (this.image) {
+			this.image.width = w;
+			this.image.height = h;
+			this.image._element.width = w;
+			this.image._element.height = h;
+		}
 
-		if (this.width === width && this.height === height) return;
-
-		var previousWidth = this.width;
-		var previousHeight = this.height;
-
-		this.width = width;
-		this.height = height;
-
-
-		this.dispatchEvent((function() {
-
-			var e = new enchant.Event(enchant.Event.RESIZE);
-
-			return e;
-
-		})());
+		this.dispatchEvent(new Event(Event.RESIZE));
 
 		return this;
 	}
@@ -266,8 +255,16 @@ class Camera extends Sprite {
 		this.borderColor = color;
 	}
 
+	drawBorder() {
+		if (!this.border) return;
+		const context = this.image.context;
+		context.strokeStyle = this.borderColor;
+		context.lineWidth = this.borderLineWidth;
+		context.strokeRect(0, 0, this.w, this.h);
+	}
 
 	render() {
+
 
 		const context = this.image.context;
 
@@ -294,12 +291,21 @@ class Camera extends Sprite {
 			r.x, r.y, r.width, r.height,
 			0, 0, this.w, this.h);
 
-		if (this.border) {
-			context.strokeStyle = this.borderColor;
-			context.lineWidth = this.borderLineWidth;
-			context.strokeRect(0, 0, this.w, this.h);
-		}
+		this.drawBorder();
 
+	}
+
+	remove() {
+		super.remove();
+		Camera.collection = Camera.collection.filter((camera) => {
+			return camera !== this;
+		});
+	}
+
+	_computeFramePosition() {
+		// サイズが変更されたときに呼ばれる
+		super._computeFramePosition();
+		this.resize(this.w, this.h);
 	}
 
 }
@@ -329,10 +335,12 @@ Camera.arrange = function(x, y, border, filter) {
 	var index = 0;
 	var cameras = Camera.collection.filter(filter || function(camera) {
 		return camera.enabled;
+
 	});
 
 	// 再配置
 	for2d(y, x, function(y2, x2) {
+
 
 		if (index >= cameras.length) return;
 		var camera = cameras[index++];
