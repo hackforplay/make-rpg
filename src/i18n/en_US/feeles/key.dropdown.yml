@@ -1,4 +1,4 @@
-キー:
+Keys:
   - label: すうじの ０
     body: Key.num0
   - label: すうじの １
@@ -19,7 +19,6 @@
     body: Key.num8
   - label: すうじの ９
     body: Key.num9
-
   - label: Aキー
     body: Key.a
   - label: Bキー
@@ -72,7 +71,6 @@
     body: Key.y
   - label: Zキー
     body: Key.z
-
   - label: もどす (Backspace)
     body: Key.backspace
   - label: タブ (Tab)
@@ -87,7 +85,6 @@
     body: Key.alt
   - label: スペース (Space)
     body: Key.space
-
   - label: F1
     body: Key.f1
   - label: F2
@@ -112,7 +109,6 @@
     body: Key.f11
   - label: F12
     body: Key.f12
-
   - label: やじるし ←
     body: Key.left
   - label: やじるし ↑
@@ -121,6 +117,5 @@
     body: Key.right
   - label: やじるし ↓
     body: Key.down
-
   - label: エスケープ (Esc)
     body: Key.esc

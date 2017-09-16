@@ -1,0 +1,121 @@
+キー:
+  - label: すうじの ０
+    body: Key.num0
+  - label: すうじの １
+    body: Key.num1
+  - label: すうじの ２
+    body: Key.num2
+  - label: すうじの ３
+    body: Key.num3
+  - label: すうじの ４
+    body: Key.num4
+  - label: すうじの ５
+    body: Key.num5
+  - label: すうじの ６
+    body: Key.num6
+  - label: すうじの ７
+    body: Key.num7
+  - label: すうじの ８
+    body: Key.num8
+  - label: すうじの ９
+    body: Key.num9
+  - label: Aキー
+    body: Key.a
+  - label: Bキー
+    body: Key.b
+  - label: Cキー
+    body: Key.c
+  - label: Dキー
+    body: Key.d
+  - label: Eキー
+    body: Key.e
+  - label: Fキー
+    body: Key.f
+  - label: Gキー
+    body: Key.g
+  - label: Hキー
+    body: Key.h
+  - label: Iキー
+    body: Key.i
+  - label: Jキー
+    body: Key.j
+  - label: Kキー
+    body: Key.k
+  - label: Lキー
+    body: Key.l
+  - label: Mキー
+    body: Key.m
+  - label: Nキー
+    body: Key.n
+  - label: Oキー
+    body: Key.o
+  - label: Pキー
+    body: Key.p
+  - label: Qキー
+    body: Key.q
+  - label: Rキー
+    body: Key.r
+  - label: Sキー
+    body: Key.s
+  - label: Tキー
+    body: Key.t
+  - label: Uキー
+    body: Key.u
+  - label: Vキー
+    body: Key.v
+  - label: Wキー
+    body: Key.w
+  - label: Xキー
+    body: Key.x
+  - label: Yキー
+    body: Key.y
+  - label: Zキー
+    body: Key.z
+  - label: もどす (Backspace)
+    body: Key.backspace
+  - label: タブ (Tab)
+    body: Key.tab
+  - label: エンター (Enter/Return)
+    body: Key.enter
+  - label: シフト (Shift)
+    body: Key.shift
+  - label: コントロール (Ctrl)
+    body: Key.ctrl
+  - label: オルト (Alt)
+    body: Key.alt
+  - label: スペース (Space)
+    body: Key.space
+  - label: F1
+    body: Key.f1
+  - label: F2
+    body: Key.f2
+  - label: F3
+    body: Key.f3
+  - label: F4
+    body: Key.f4
+  - label: F5
+    body: Key.f5
+  - label: F6
+    body: Key.f6
+  - label: F7
+    body: Key.f7
+  - label: F8
+    body: Key.f8
+  - label: F9
+    body: Key.f9
+  - label: F10
+    body: Key.f10
+  - label: F11
+    body: Key.f11
+  - label: F12
+    body: Key.f12
+  - label: やじるし ←
+    body: Key.left
+  - label: やじるし ↑
+    body: Key.up
+  - label: やじるし →
+    body: Key.right
+  - label: やじるし ↓
+    body: Key.down
+  - label: エスケープ (Esc)
+    body: Key.esc

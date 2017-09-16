@@ -1,0 +1,105 @@
+スキン:
+  - body: _kきし
+    label: きしのスキン
+  - body: _aあんこくきし
+    label: あんこくきしのスキン
+  - body: _sスライム
+    label: スライムのスキン
+  - body: _iいもむし
+    label: いもむしのスキン
+  - body: _kくも
+    label: くものスキン
+  - body: _kこうもり
+    label: こうもりのスキン
+  - body: _dドラゴン
+    label: ドラゴンのスキン
+  - body: _mミノタウルス
+    label: ミノタウルスのスキン
+  - body: _o男の子
+    label: 男の子のスキン
+  - body: _o女の子
+    label: 女の子のスキン
+  - body: _o女の人
+    label: 女の人のスキン
+  - body: _m魔道書
+    label: 魔道書のスキン
+  - body: _bばくえん
+    label: ばくえんのスキン
+  - body: _uウロボロス
+    label: ウロボロスのスキン
+  - body: _bビーム
+    label: ビームのスキン
+  - body: _kくだりかいだん
+    label: くだりかいだんのスキン
+  - body: _nのぼりかいだん
+    label: のぼりかいだんのスキン
+  - body: _wワープ
+    label: ワープのスキン
+  - body: _sしろ
+    label: しろのスキン
+  - body: _hはな
+    label: はなのスキン
+  - body: _rルビー
+    label: ルビーのスキン
+  - body: _wわな
+    label: わなのスキン
+  - body: _wわなかかった
+    label: わなかかったのスキン
+  - body: _hハート
+    label: ハートのスキン
+  - body: _k木
+    label: 木のスキン
+  - body: _iいわ
+    label: いわのスキン
+  - body: _tつちかべ
+    label: つちかべのスキン
+  - body: _iいしかべ
+    label: いしかべのスキン
+  - body: _tたからばこ
+    label: たからばこのスキン
+  - body: _tたからばこひらいた
+    label: たからばこひらいたのスキン
+  - body: _dドクロ
+    label: ドクロのスキン
+  - body: _uうんこ
+    label: うんこのスキン
+  - body: _tつぼ
+    label: つぼのスキン
+  - body: _dダイヤモンド
+    label: ダイヤモンドのスキン
+  - body: _mまほうじん
+    label: まほうじんのスキン
+  - body: _mまほうじんひかった
+    label: まほうじんひかったのスキン
+  - body: _kコイン
+    label: コインのスキン
+  - body: _sサファイア
+    label: サファイアのスキン
+  - body: _hほし
+    label: ほしのスキン
+  - body: _kかぎ
+    label: かぎのスキン
+  - body: _bばくだん
+    label: ばくだんのスキン
+イベント:
+  - body: '''とまるとき'''
+    label: item.walk() や item.attack() などが終わって、動きが止まったときに発生するイベント
+  - body: '''あるくとき'''
+    label: item.walk() をコールした後、歩き始めたときに発生するイベント
+  - body: '''こうげきするとき'''
+    label: item.attack() をコールした後、攻撃し始めるときに発生するイベント
+  - body: '''たおれたとき'''
+    label: item.hp が0以下になったときに発生するイベント
+  - body: '''こうげきされた'''
+    label: 他のモンスターなどから攻撃されたときに発生するイベント
+  - body: '''ふれはじめた'''
+    label: collisionFlag が false のとき、他のものと触れたときに発生するイベント
+  - body: '''ぶつかった'''
+    label: collisionFlag が true のとき、他のものとぶつかったときに発生するイベント
+  - body: '''HPかわった'''
+    label: item.hp が変化したときに発生するイベント
+フラグ:
+  - body: 'true'
+    label: オン
+  - body: 'false'
+    label: オフ

@@ -1,0 +1,281 @@
+カラー:
+  - body: '''AliceBlue'''
+    label: null
+  - body: '''AntiqueWhite'''
+    label: null
+  - body: '''Aqua'''
+    label: null
+  - body: '''Aquamarine'''
+    label: null
+  - body: '''Azure'''
+    label: null
+  - body: '''Beige'''
+    label: null
+  - body: '''Bisque'''
+    label: null
+  - body: '''Black'''
+    label: null
+  - body: '''BlanchedAlmond'''
+    label: null
+  - body: '''Blue'''
+    label: null
+  - body: '''BlueViolet'''
+    label: null
+  - body: '''Brown'''
+    label: null
+  - body: '''BurlyWood'''
+    label: null
+  - body: '''CadetBlue'''
+    label: null
+  - body: '''Chartreuse'''
+    label: null
+  - body: '''Chocolate'''
+    label: null
+  - body: '''Coral'''
+    label: null
+  - body: '''CornflowerBlue'''
+    label: null
+  - body: '''Cornsilk'''
+    label: null
+  - body: '''Crimson'''
+    label: null
+  - body: '''Cyan'''
+    label: null
+  - body: '''DarkBlue'''
+    label: null
+  - body: '''DarkCyan'''
+    label: null
+  - body: '''DarkGoldenrod'''
+    label: null
+  - body: '''DarkGray'''
+    label: null
+  - body: '''DarkGreen'''
+    label: null
+  - body: '''DarkKhaki'''
+    label: null
+  - body: '''DarkMagenta'''
+    label: null
+  - body: '''DarkOliveGreen'''
+    label: null
+  - body: '''DarkOrange'''
+    label: null
+  - body: '''DarkOrchid'''
+    label: null
+  - body: '''DarkRed'''
+    label: null
+  - body: '''DarkSalmon'''
+    label: null
+  - body: '''DarkSeaGreen'''
+    label: null
+  - body: '''DarkSlateBlue'''
+    label: null
+  - body: '''DarkSlateGray'''
+    label: null
+  - body: '''DarkTurquoise'''
+    label: null
+  - body: '''DarkViolet'''
+    label: null
+  - body: '''DeepPink'''
+    label: null
+  - body: '''DeepSkyBlue'''
+    label: null
+  - body: '''DimGray'''
+    label: null
+  - body: '''DodgerBlue'''
+    label: null
+  - body: '''FireBrick'''
+    label: null
+  - body: '''FloralWhite'''
+    label: null
+  - body: '''ForestGreen'''
+    label: null
+  - body: '''Fuchsia'''
+    label: null
+  - body: '''Gainsboro'''
+    label: null
+  - body: '''GhostWhite'''
+    label: null
+  - body: '''Gold'''
+    label: null
+  - body: '''Goldenrod'''
+    label: null
+  - body: '''Gray'''
+    label: null
+  - body: '''Green'''
+    label: null
+  - body: '''GreenYellow'''
+    label: null
+  - body: '''Honeydew'''
+    label: null
+  - body: '''HotPink'''
+    label: null
+  - body: '''IndianRed'''
+    label: null
+  - body: '''Indigo'''
+    label: null
+  - body: '''Ivory'''
+    label: null
+  - body: '''Khaki'''
+    label: null
+  - body: '''Lavender'''
+    label: null
+  - body: '''LavenderBlush'''
+    label: null
+  - body: '''LawnGreen'''
+    label: null
+  - body: '''LemonChiffon'''
+    label: null
+  - body: '''LightBlue'''
+    label: null
+  - body: '''LightCoral'''
+    label: null
+  - body: '''LightCyan'''
+    label: null
+  - body: '''LightGoldenrodYellow'''
+    label: null
+  - body: '''LightGreen'''
+    label: null
+  - body: '''LightGrey'''
+    label: null
+  - body: '''LightPink'''
+    label: null
+  - body: '''LightSalmon'''
+    label: null
+  - body: '''LightSeaGreen'''
+    label: null
+  - body: '''LightSkyBlue'''
+    label: null
+  - body: '''LightSlateGray'''
+    label: null
+  - body: '''LightSteelBlue'''
+    label: null
+  - body: '''LightYellow'''
+    label: null
+  - body: '''Lime'''
+    label: null
+  - body: '''LimeGreen'''
+    label: null
+  - body: '''Linen'''
+    label: null
+  - body: '''Magenta'''
+    label: null
+  - body: '''Maroon'''
+    label: null
+  - body: '''MediumAquamarine'''
+    label: null
+  - body: '''MediumBlue'''
+    label: null
+  - body: '''MediumOrchid'''
+    label: null
+  - body: '''MediumPurple'''
+    label: null
+  - body: '''MediumSeaGreen'''
+    label: null
+  - body: '''MediumSlateBlue'''
+    label: null
+  - body: '''MediumSpringGreen'''
+    label: null
+  - body: '''MediumTurquoise'''
+    label: null
+  - body: '''MediumVioletRed'''
+    label: null
+  - body: '''MidnightBlue'''
+    label: null
+  - body: '''MintCream'''
+    label: null
+  - body: '''MistyRose'''
+    label: null
+  - body: '''Moccasin'''
+    label: null
+  - body: '''NavajoWhite'''
+    label: null
+  - body: '''Navy'''
+    label: null
+  - body: '''OldLace'''
+    label: null
+  - body: '''Olive'''
+    label: null
+  - body: '''OliveDrab'''
+    label: null
+  - body: '''Orange'''
+    label: null
+  - body: '''OrangeRed'''
+    label: null
+  - body: '''Orchid'''
+    label: null
+  - body: '''PaleGoldenrod'''
+    label: null
+  - body: '''PaleGreen'''
+    label: null
+  - body: '''PaleTurquoise'''
+    label: null
+  - body: '''PaleVioletRed'''
+    label: null
+  - body: '''PapayaWhip'''
+    label: null
+  - body: '''PeachPuff'''
+    label: null
+  - body: '''Peru'''
+    label: null
+  - body: '''Pink'''
+    label: null
+  - body: '''Plum'''
+    label: null
+  - body: '''PowderBlue'''
+    label: null
+  - body: '''Purple'''
+    label: null
+  - body: '''Red'''
+    label: null
+  - body: '''RosyBrown'''
+    label: null
+  - body: '''RoyalBlue'''
+    label: null
+  - body: '''SaddleBrown'''
+    label: null
+  - body: '''Salmon'''
+    label: null
+  - body: '''SandyBrown'''
+    label: null
+  - body: '''SeaGreen'''
+    label: null
+  - body: '''Seashell'''
+    label: null
+  - body: '''Sienna'''
+    label: null
+  - body: '''Silver'''
+    label: null
+  - body: '''SkyBlue'''
+    label: null
+  - body: '''SlateBlue'''
+    label: null
+  - body: '''SlateGray'''
+    label: null
+  - body: '''Snow'''
+    label: null
+  - body: '''SpringGreen'''
+    label: null
+  - body: '''SteelBlue'''
+    label: null
+  - body: '''Tan'''
+    label: null
+  - body: '''Teal'''
+    label: null
+  - body: '''Thistle'''
+    label: null
+  - body: '''Tomato'''
+    label: null
+  - body: '''Turquoise'''
+    label: null
+  - body: '''Violet'''
+    label: null
+  - body: '''Wheat'''
+    label: null
+  - body: '''White'''
+    label: null
+  - body: '''WhiteSmoke'''
+    label: null
+  - body: '''Yellow'''
+    label: null
+  - body: '''YellowGreen'''
+    label: null

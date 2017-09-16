@@ -253,6 +253,9 @@ Object.defineProperty(RPGObject.prototype, 'opacity', {
 // walk の条件に高さを追加
 (function() {
 
+	// TODO: 新仕様の walk に対応する
+	return;
+
 
 	RPGObject.prototype.walk = function(distance, continuous) {
 		if (!this.isKinematic || !continuous && this.behavior !== BehaviorTypes.Idle || !Hack.isPlaying) return;
