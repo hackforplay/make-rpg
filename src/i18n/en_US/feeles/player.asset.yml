@@ -27,12 +27,12 @@ Skills:
         const user = event.target;
         const beam = new RPGObject();
         beam.mod(('▼ Costumes', Hack.assets.beam));
-        beam.on(('▼ Events', 'triggerenter'), (event) => {
+        beam.ontriggerenter = (event) => {
           if (event.hit !== user) {
             Hack.Attack(event.mapX, event.mapY, user.atk);
             beam.destroy();
           }
-        });
+        };
         user.shoot(beam, user.forward, 10);
       });
   - label: ばくだん
@@ -52,9 +52,9 @@ Skills:
           explosion.locate(bomb.mapX, bomb.mapY);
           explosion.velocityY = -1;
           explosion.collisionFlag = false;
-          explosion.on(('▼ Events', 'triggerenter'), (event) => {
+          explosion.ontriggerenter = (event) => {
             Hack.Attack.call(explosion, event.mapX, event.mapY, user.atk);
-          });
+          };
           explosion.destroy(20);
           bomb.destroy();
         }, 90);

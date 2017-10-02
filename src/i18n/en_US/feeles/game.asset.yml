@@ -114,11 +114,11 @@ Monsters:
         explosion.scale(random(0.99, 1.5));
         explosion.force(-fx * random(0, 0.199), -fy * random(0, 0.199));
         explosion.destroy(20);
-        explosion.on(('▼ Events', 'triggerenter'), (event) => {
+        explosion.ontriggerenter = (event) => {
           if (event.hit !== self) {
             Hack.Attack(event.mapX, event.mapY, self.atk);
           }
-        });
+        };
 
         /*+ Actions*/
       });
@@ -159,10 +159,10 @@ Items:
       item1.locate(7, 5, 'map1');
       item1.velocity(1, 0);
       item1.force(0, 0.5);
-      item1.on(('▼ Events', 'triggerenter'), () => {
+      item1.ontriggerenter = () => {
         item1.destroy();
         Hack.score += 1;
-      });
+      };
     image: trimmed/map-28-5.png
     description: がめんを はねまわる コイン。
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/チャリンチャリン'
@@ -302,9 +302,9 @@ Objects:
         item2.locate(7, 5, 'map1');
         item2.velocityY = -1;
         item2.collisionFlag = false;
-        item2.on(('▼ Events', 'triggerenter'), (event) => {
+        item2.ontriggerenter = (event) => {
           Hack.Attack.call(item2, event.mapX, event.mapY, 1);
-        });
+        };
         item2.destroy(20);
         item1.destroy();
       });
@@ -450,9 +450,9 @@ Objects:
         item2.locate(7, 5);
         item2.velocityY = -1;
         item2.collisionFlag = false;
-        item2.on(('▼ Events', 'triggerenter'), (event) => {
+        item2.ontriggerenter = (event) => {
           Hack.Attack.call(item2, event.mapX, event.mapY, 1);
-        });
+        };
         item2.destroy(20);
         item1.destroy();
       }, 90);
@@ -526,9 +526,9 @@ Objects:
       item1.locate(7, 5, 'map1');
       item1.velocityY = -1;
       item1.collisionFlag = false;
-      item1.on(('▼ Events', 'triggerenter'), (event) => {
+      item1.ontriggerenter = (event) => {
         Hack.Attack.call(item1, event.mapX, event.mapY, 1);
-      });
+      };
       item1.destroy(20);
     image: trimmed/explosion.png
     description: 立ち昇る爆炎。ふれると１のダメージを受ける

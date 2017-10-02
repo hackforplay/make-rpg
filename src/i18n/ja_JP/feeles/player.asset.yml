@@ -27,12 +27,12 @@
         const 使い手 = event.target;
         const ビーム = new RPGObject();
         ビーム.mod(('▼ スキン', _bビーム));
-        ビーム.on(('▼ イベント', 'ふれはじめた'), (event) => {
+        ビーム.onふれはじめた = (event) => {
           if (event.hit !== 使い手) {
             Hack.Attack(event.mapX, event.mapY, 使い手.atk);
             ビーム.destroy();
           }
-        });
+        };
         使い手.shoot(ビーム, 使い手.forward, 10);
       });
   - label: ばくだん
@@ -52,9 +52,9 @@
           ばくえん.locate(ばくだん.mapX, ばくだん.mapY);
           ばくえん.velocityY = -1;
           ばくえん.collisionFlag = false;
-          ばくえん.on(('▼ イベント', 'ふれはじめた'), (event) => {
+          ばくえん.onふれはじめた = (event) => {
             Hack.Attack.call(ばくえん, event.mapX, event.mapY, 使い手.atk);
-          });
+          };
           ばくえん.destroy(20);
           ばくだん.destroy();
         }, 90);
