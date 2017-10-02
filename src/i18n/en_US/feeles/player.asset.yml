@@ -17,6 +17,18 @@ Skills:
     code: |
       // スピード 3 倍
       player.speed = 3.0;
+  - label: はんとうめい
+    description: プレイヤーをはんとうめいにする。player の部分を item1 などにかえれば、他のキャラクターがはんとうめいになる
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/はんとうめい'
+    code: |
+      // はんとうめい
+      player.opacity = 0.1;
+  - label: とうめい
+    description: プレイヤーをとうめいにする。player の部分を item1 などにかえれば、他のキャラクターがとうめいになる
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/とうめい'
+    code: |
+      // とうめい
+      player.opacity = 0;
   - label: ビーム
     image: trimmed/map-27-2.png
     description: プレイヤーがビームを使えるようにする。 player の部分を item1 などにかえれば、他のキャラクターがビームを使えるようにもできる
