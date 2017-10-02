@@ -208,6 +208,10 @@
       item1.mod(('▼ スキン', _hハート));
       item1.locate(7, 5, 'map1');
       item1.color = ('▼ カラー', 'white');
+      item1.on(('▼ イベント', 'のった'), () => {
+        player.hp += 1;
+        item1.destroy();
+      });
     image: trimmed/colorful.png
     description: ほかにも blue や orange など、さまざまな色がつかえる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/色付きハート'

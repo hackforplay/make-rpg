@@ -208,6 +208,10 @@ Items:
       item1.mod(('▼ Costumes', Hack.assets.heart));
       item1.locate(7, 5, 'map1');
       item1.color = ('▼ Colors', 'white');
+      item1.on(('▼ Events', 'playerenter'), () => {
+        player.hp += 1;
+        item1.destroy();
+      });
     image: trimmed/colorful.png
     description: ほかにも blue や orange など、さまざまな色がつかえる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/色付きハート'
