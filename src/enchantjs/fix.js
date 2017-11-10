@@ -4,9 +4,21 @@ import {
 	Node,
 	Group,
 	Tween,
-	Easing
+	Easing,
+	Timeline
 } from 'enchantjs/enchant';
 
+/**
+ * 1 度だけ呼ばれるイベントリスナーを追加する
+ * @param {string}   type     イベント名
+ * @param {function} listener リスナー
+ */
+EventTarget.prototype.once = function once(type, listener) {
+	this.on(type, function callback() {
+		this.removeEventListener(type, callback);
+		listener.apply(this, arguments);
+	});
+}
 
 // Easing を文字列で指定できるようにする
 const initializeTween = Tween.prototype.initialize;
@@ -18,7 +30,6 @@ Tween.prototype.initialize = function $initialize(params) {
 
 	initializeTween.call(this, params);
 };
-
 
 // Event の第二引数に props を追加する
 const initializeEvent = Event.prototype.initialize;
@@ -33,7 +44,6 @@ Event.prototype.initialize = function $initialize(name, props) {
 	}
 
 };
-
 
 Node.prototype.name = 'Node';
 
@@ -57,8 +67,6 @@ Object.defineProperty(Node.prototype, 'order', {
 	}
 });
 
-
-
 // 子要素を order でソートする
 Group.prototype.sortChildren = function sortChildren() {
 
@@ -79,8 +87,15 @@ Group.prototype.sortChildren = function sortChildren() {
 
 };
 
-
-
+/**
+ * タイムラインの再生終了まで待機する
+ * @return {Promise} Promise
+ */
+Timeline.prototype.async = function async () {
+	return new Promise((resolve) => {
+		this.then(resolve);
+	});
+}
 
 enchant.Map.prototype.cvsRender = function cvsRender(context) {
 
