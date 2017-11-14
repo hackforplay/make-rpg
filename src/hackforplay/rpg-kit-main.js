@@ -57,8 +57,41 @@ import Camera from 'hackforplay/camera';
 
 
 import { CanvasRenderer } from 'enchantjs/enchant';
+import { KeyClass } from 'mod/key';
+
+import Keyboard from 'hackforplay/keyboard';
+
 
 game.on('awake', () => {
+
+	// マウス座標
+	let mouseX = null;
+	let mouseY = null;
+	// 正規化されたマウス座標
+	let normalizedMouseX = null;
+	let normalizedMouseY = null;
+
+	game._element.onmousemove = function({ x, y }) {
+		const rect = this.getBoundingClientRect();
+		mouseX = x;
+		mouseY = y;
+		normalizedMouseX = x / rect.width;
+		normalizedMouseY = y / rect.height;
+	};
+
+	Object.defineProperties(Hack, {
+		mouseX: { get: () => mouseX },
+		mouseY: { get: () => mouseY },
+		normalizedMouseX: { get: () => normalizedMouseX },
+		normalizedMouseY: { get: () => normalizedMouseY }
+	});
+
+	// マウスの入力状態
+	Hack.mouseInput = new KeyClass();
+	let mousePressed = false;
+	game.rootScene.on('touchstart', () => mousePressed = true);
+	game.rootScene.on('touchend', () => mousePressed = false);
+	game.on('enterframe', () => Hack.mouseInput.update(mousePressed));
 
 	// カメラグループ
 	const cameraGroup = new Group();

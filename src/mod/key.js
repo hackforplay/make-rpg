@@ -189,17 +189,22 @@ var KeyClass = enchant.Class.create({
 		var pressed = this.pressed;
 		var released = this.released;
 
+		this.press = this.release = this.click = false;
+
 		this.count = input ? this.count + 1 : 0;
 
 		if (pressed && this.released) {
+			this.release = true;
 			this.dispatch('release');
 		}
 
 		if (released && this.pressed) {
+			this.press = true;
 			this.dispatch('press');
 		}
 
 		if (this.clicked) {
+			this.click = true;
 			this.dispatch('click');
 		}
 
@@ -279,5 +284,5 @@ core.on('enterframe', function() {
 
 });
 
-
+export { KeyClass };
 export default Key;
