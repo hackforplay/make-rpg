@@ -41,7 +41,7 @@ class RPGObject extends Sprite {
 
 
 		var collisionFlag = null; // this.collisionFlag (Default:true)
-		var noCollisionEvents = ['playerenter', 'playerstay', 'playerexit'];
+		var noCollisionEvents = ['playerenter', 'playerstay', 'playerexit', 'pickedup'];
 		Object.defineProperty(this, 'collisionFlag', {
 			configurable: true,
 			enumerable: true,
@@ -80,6 +80,13 @@ class RPGObject extends Sprite {
 		this.on('hpchange', function() {
 			if (this.hp <= 0) {
 				this.behavior = BehaviorTypes.Dead;
+			}
+		});
+
+		// 歩き終わったときに自動でものを拾う設定
+		this.on('walkend', function() {
+			if (this.isAutoPickUp) {
+				this.pickUp();
 			}
 		});
 
@@ -702,6 +709,17 @@ class RPGObject extends Sprite {
 			// 次回呼ぶ関数を上書き (フラグの役割を兼ねている)
 			this._endless = virtual;
 		}
+	}
+
+	pickUp() {
+		// Find items and dispatch pickedup event
+		RPGObject.collection.filter((item) => {
+			return item.mapX === this.mapX && item.mapY === this.mapY;
+		}).forEach((item) => {
+			const event = new Event('pickedup');
+			event.actor = this;
+			item.dispatchEvent(event);
+		});
 	}
 }
 

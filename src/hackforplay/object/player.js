@@ -25,6 +25,8 @@ class Player extends RPGObject {
 			attack: 'space'
 		};
 
+		// 歩き終わったときに自動でモノを拾う (pickUp)
+		this.isAutoPickUp = true;
 	}
 
 	checkInput(type) {
