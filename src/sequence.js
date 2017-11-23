@@ -75,11 +75,11 @@ export const turnLeft = () => {
 };
 
 // 壁にぶつかるまで高速で移動
-export const dash = () => {
+export const dash = (num = 15) => {
 	queue.push(async player => {
 		// 仮実装
 		player.speed = 999;
-		await player.walk(15);
+		await player.walk(num);
 		player.speed = 1;
 	});
 };
