@@ -63,6 +63,8 @@ class Keyboard extends Sprite {
 		// キャンセルできるか
 		this.cancelable = true;
 
+		this.visible = false;
+
 		this.fontWeight = 'bold';
 		this.fontSize = 20;
 		this.fontFamily = 'Roboto, Arial, sans-serif';
@@ -184,6 +186,8 @@ class Keyboard extends Sprite {
 	 * アップデート
 	 */
 	update() {
+		if (!this.visible) return;
+
 		if (Key.up.clicked) this.move(0, -1);
 		if (Key.down.clicked) this.move(0, 1);
 		if (Key.left.clicked) this.move(-1, 0);
@@ -220,6 +224,7 @@ class Keyboard extends Sprite {
 	 * 描画
 	 */
 	render() {
+		if (!this.visible) return;
 
 		const context = this.image.context;
 
@@ -378,6 +383,7 @@ class Keyboard extends Sprite {
 
 		const overlay = Hack.overlay('rgba(0, 0, 0, .5)');
 		overlay.opacity = 0;
+		this.visible = true;
 		overlay.tl.fadeIn(this.fadeFrame, this.easing);
 		await this.tl.scaleTo(1, 1, this.fadeFrame, this.easing).async();
 
@@ -398,6 +404,7 @@ class Keyboard extends Sprite {
 		overlay.tl.fadeOut(this.fadeFrame, this.easing);
 		await this.tl.scaleTo(0, 0, this.fadeFrame, this.easing).async();
 		overlay.remove();
+		this.visible = false;
 
 		return value;
 	}
