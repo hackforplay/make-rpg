@@ -1,4 +1,4 @@
-/* global Hack:false, feeles:false */
+/* global Hack:false, feeles:false, RPGObject:false */
 
 // シーケンスオブジェクトが入るキュー
 // 魔道書実行時にすべてのシーケンスが追加され、
@@ -74,13 +74,23 @@ export const turnLeft = () => {
 	});
 };
 
-// 壁にぶつかるまで高速で移動
-export const dash = (num = 15) => {
+// num マス分高速に移動 (最大100)
+// 指定がない場合は壁にぶつかるまで高速で移動
+// 例外として、マップが変わったときは停止する
+export const dash = (num = 100) => {
 	queue.push(async player => {
-		// 仮実装
-		player.speed = 999;
-		await player.walk(num);
-		player.speed = 1;
+		for (let moved = 0; moved < num; moved++) {
+			const { mapX, mapY, map } = player; // 移動前の値
+
+			walkWithoutAnimation(player); // ノーフレームで１マス進む
+			
+			if (player.mapX === mapX && player.mapY === mapY) {
+				break; // mapX, mapY が同じなら壁と判断して終了
+			}
+			if (player.map !== map) {
+				break; // 別のマップに移動した場合も終了
+			}
+		}
 	});
 };
 
@@ -125,7 +135,7 @@ export const attack = num => {
 
 // 絶対座標で移動する
 export const locate = (x, y) => {
-	queue.push(async () => {
+	queue.push(async player => {
 		player.locate(x, y);
 		await wait();
 	});
@@ -150,3 +160,44 @@ export const repeat = num => {
 	});
 };
 
+const walkWithoutAnimation = player => {
+	// マップのタイル数
+	const tx = Hack.map.tileNumX;
+	const ty = Hack.map.tileNumY;
+
+	// 画面外
+	if (nextX < 0 || nextX >= tx || nextY < 0 || nextY >= ty) {
+		return; // 画面外なら歩かない
+	}
+
+	// タイルのサイズ
+	const tw = Hack.map.tileWidth;
+	const th = Hack.map.tileHeight;
+
+	// 移動先
+	const nextX = player.mapX + player.forward.x;
+	const nextY = player.mapY + player.forward.y;
+		
+	// マップの当たり判定
+	if (Hack.map.hitTest(nextX * tw, nextY * th)) {
+		return;
+	}
+
+	// 歩く先にあるオブジェクト
+	const hits = RPGObject.collection
+		.filter((obj) => {
+			return obj.isKinematic &&
+					obj.collisionFlag &&
+					obj.mapX === nextX &&
+					obj.mapY === nextY;
+		});
+
+	// 障害物があるので歩けない
+	if (hits.length) {
+		return;
+	}
+
+	// 移動する
+	player.moveBy(player.forward.x * tw, player.forward.y * th);
+	player.dispatchEvent(new Event('walkend'));
+};
