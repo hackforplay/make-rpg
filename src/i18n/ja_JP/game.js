@@ -1,6 +1,6 @@
 /* global Hack, Player, feeles, _kきし  */
 import 'hackforplay/core';
-import * as sequens  from 'sequens';
+import * as sequence  from 'sequence';
 
 /* ここの部分は選手には見えません
  * デバッグ中につき魔道書は最初から表示されています
@@ -14,14 +14,15 @@ async function gameFunc() {
 	player.mod(('▼ スキン', _kきし)); // 見た目
 	player.locate(3, 5); // はじめの位置
 	/*+ スキル */
+	player.turn(1);
 
 	// 魔道書のコードをひらく
 	feeles.openCode('code.js');
 
 	// プレイヤーを挿入する
-	for (const key of Object.keys(sequens)) {
+	for (const key of Object.keys(sequence)) {
 		feeles.exports.push({
-			[key]: sequens[key](player)
+			[key]: sequence[key](player)
 		});
 	}
 
