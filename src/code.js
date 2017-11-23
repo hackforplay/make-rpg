@@ -2,6 +2,8 @@ turnLeft();
 walk(3);
 repeat(2);
 
+locate(1, 5);
+
 headRight();
 headDown();
 headLeft();
@@ -11,4 +13,4 @@ turnRight();
 dash();
 attack(2);
 
-repeat(2);
+repeat(1);

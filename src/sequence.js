@@ -123,6 +123,14 @@ export const attack = num => {
 	});
 };
 
+// 絶対座標で移動する
+export const locate = (x, y) => {
+	queue.push(async () => {
+		player.locate(x, y);
+		await wait();
+	});
+};
+
 // num 回だけシーケンスを最初からリピートする
 // ただし一度過ぎ去ったあとは２重ループの実現ためにカウントをリセット
 // repeat(0) ... リピートしない。つねにスルー
