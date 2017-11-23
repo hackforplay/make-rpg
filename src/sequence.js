@@ -15,7 +15,7 @@ feeles.connected.then(({ port }) => {
 		// shot: コードをおくる
 		if (e.data.query === 'shot') {
 			// キューをリセット
-			queue.splice(0,	 queue.length - 1);
+			queue.splice(0,	 queue.length);
 			// 魔道書実行イベントを発行
 			const event = new Event('code');
 			Hack.dispatchEvent(event);
