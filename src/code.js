@@ -1,20 +1,14 @@
-walk();
-
-turnRight();
-
 turnLeft();
-
-dash();
-
-headUp();
+walk(3);
+repeat(2);
 
 headRight();
-
 headDown();
-
 headLeft();
+headUp();
 
-attack();
+turnRight();
+dash();
+attack(2);
 
-repeat();
-
+repeat(2);

@@ -1,42 +1,144 @@
-/* global Hack:false */
+/* global Hack:false, feeles:false */
 
-export const walk = player => () => {
-	Hack.log('walk');	
+// シーケンスオブジェクトが入るキュー
+// 魔道書実行時にすべてのシーケンスが追加され、
+// 以降は次の魔道書実行時まで追加されない
+const queue = [];
+
+// コードを受け取ってから実行を開始するまでの待機時間
+window.WAIT_TIME = 3000;
+
+// 魔道書の実行をハンドルする
+feeles.connected.then(({ port }) => {
+	// ChannelMessage の port
+	port.addEventListener('message', e => {
+		// shot: コードをおくる
+		if (e.data.query === 'shot') {
+			// キューをリセット
+			queue.splice(0,	 queue.length - 1);
+			// 魔道書実行イベントを発行
+			const event = new Event('code');
+			Hack.dispatchEvent(event);
+			// 待機してからスタート
+			setTimeout(() => {
+				if (!window.player) {
+					throw new Error('sequence: player is not found');
+				}
+				Hack.log('start!');
+				next(window.player);
+			}, window.WAIT_TIME + 10);
+		}
+	});
+});
+
+// 最初のシーケンスオブジェクトを実行する
+// 実行後もキューはそのまま残り続ける
+let cursor = 0;
+const next = async player => {
+	const task = queue[cursor];
+	if (task) {
+		console.info('runnging: ', task, cursor);
+		await task(player); // タスクを実行, 終わるまで待つ
+		cursor++; // カーソルをひとつ進める
+		next(player);
+	} else {
+		// もうシーケンスが存在しない
+		cursor = 0; // リセットして待機
+	}
 };
 
-export const turnRight = player => () => {
-	Hack.log('turnRight');	
+const wait = (time = 100) => new Promise(resolve => {
+	setTimeout(resolve, time);
+});
+
+// num マス前に歩く
+export const walk = num => {
+	queue.push(async player => {
+		await player.walk(num);
+	});
 };
 
-export const turnLeft = player => () => {
-	Hack.log('turnLeft');	
+// 右に回転
+export const turnRight = () => {
+	queue.push(async player => {
+		player.turn(-1);
+		await wait();
+	});
 };
 
-export const dash = player => () => {
-	Hack.log('dash');	
+// 左に回転
+export const turnLeft = () => {
+	queue.push(async player => {
+		player.turn(1);
+		await wait();
+	});
 };
 
-export const headUp = player => () => {
-	Hack.log('headUp');	
+// 壁にぶつかるまで高速で移動
+export const dash = () => {
+	queue.push(async player => {
+		// 仮実装
+		player.speed = 999;
+		await player.walk(15);
+		player.speed = 1;
+	});
 };
 
-export const headRight = player => () => {
-	Hack.log('headRight');	
+// 上を向く
+export const headUp = () => {
+	queue.push(async player => {
+		player.forward = [0, -1];
+		await wait();
+	});
 };
 
-export const headDown = player => () => {
-	Hack.log('headDown');	
+// 右を向く
+export const headRight = () => {
+	queue.push(async player => { 
+		player.forward = [1, 0];
+		await wait();
+	});
 };
 
-export const headLeft = player => () => {
-	Hack.log('headLeft');	
+// 下を向く
+export const headDown = () => {
+	queue.push(async player => { 
+		player.forward = [0, 1];
+		await wait();
+	});
 };
 
-export const attack = player => () => {
-	Hack.log('attack');	
+// 左を向く
+export const headLeft = () => {
+	queue.push(async player => { 
+		player.forward = [-1, 0];
+		await wait();
+	});
 };
 
-export const repeat = player => () => {
-	Hack.log('repeat');	
+// num 回攻撃する
+export const attack = num => {
+	queue.push(async player => {
+		await player.attack(num);
+	});
+};
+
+// num 回だけシーケンスを最初からリピートする
+// ただし一度過ぎ去ったあとは２重ループの実現ためにカウントをリセット
+// repeat(0) ... リピートしない。つねにスルー
+// repeat(1) ... １回目はリピート, ２回目はスルー, ３回目はリピート...
+// repeat(2) ... リピート, リピート, スルー, リピート, リピート, スルー...
+// repeat(n) ... n + 1 の倍数回はスルー, それ以外はリピート
+export const repeat = num => {
+	Hack.log('repeat');
+	let count = 0; // (この中だけのローカルスコープ)
+	if (num < 1) return; // つねにスルー
+
+	queue.push(() => {
+		if (++count % (num + 1) > 0) {
+			// n + 1 の倍数回以外
+			cursor = -1; // カーソルを一番最初に戻す
+		}
+	});
 };
 
