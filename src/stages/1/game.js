@@ -64,14 +64,6 @@ function resetMap() {
 
 	Hack.changeMap('map1'); // map1 をロード
 	
-	const itemStairs1 = new RPGObject();
-	itemStairs1.mod(('▼ スキン', _nのぼりかいだん));
-	itemStairs1.locate(1, 1, 'map1');
-	itemStairs1.layer = RPGMap.Layer.Under;
-	itemStairs1.on(('▼ イベント', 'のった'), () => {
-		Hack.log('後戻りはできない！！');
-	});
-
 	const itemStairs2 = new RPGObject();
 	itemStairs2.mod(('▼ スキン', _kくだりかいだん));
 	itemStairs2.locate(9, 5, 'map1');
