@@ -17,6 +17,8 @@ const common = () => {
 	resetButton.moveTo(0, 24);
 	resetButton.ontouchstart = () => {
 		Hack.dispatchEvent(new Event('reset'));
+		// リセットはストップをかねる
+		window.STOP_FLAG = true;
 	};
 	Hack.menuGroup.addChild(resetButton);
 
