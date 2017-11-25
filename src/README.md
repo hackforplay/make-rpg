@@ -1,7 +1,5 @@
 もくじ
 
-![ゲームのコード 🎮](game.js)  
-![魔道書のコード 📖](code.js)  
-![マップのコード 🗺](maps.js)  
-[マップチップ](https://embed.hackforplay.xyz/open-source/ogp/mapTipIndex.jpg)  
-![ゲームのルール 📝](update.js)  
+![ステージ1 🎮](stages/1/game.js)  
+![ステージ2 🎮](stages/2/game.js)  
+![ステージ3 🎮](stages/3/game.js)

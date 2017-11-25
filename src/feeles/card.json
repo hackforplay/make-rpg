@@ -13,7 +13,7 @@
         "visible": false,
         "order": 2,
         "init": {
-            "fileName": "main.js"
+            "fileName": "stages/1/code.js"
         }
     },
     "MediaCard": {
@@ -24,7 +24,7 @@
         "visible": true,
         "order": 4,
         "init": {
-            "fileName": "game.js"
+            "fileName": "stages/1/game.js"
         }
     },
     "ReadmeCard": {
