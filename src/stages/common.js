@@ -3,6 +3,7 @@
 
 import Hack from 'hackforplay/hack';
 import { Event } from 'enchantjs/enchant';
+import { resetQueue } from 'sequence';
 
 const common = () => {
 	// 呪文詠唱を止めるボタン
@@ -10,7 +11,7 @@ const common = () => {
 	stopButton.image = game.assets['resources/stop_button'];
 	stopButton.moveTo(0, 270);
 	stopButton.ontouchstart = () => {
-		window.STOP_FLAG = true;
+		resetQueue();
 	};
 	Hack.menuGroup.addChild(stopButton);
 	
@@ -21,7 +22,7 @@ const common = () => {
 	resetButton.ontouchstart = () => {
 		Hack.dispatchEvent(new Event('reset'));
 		// リセットはストップをかねる
-		window.STOP_FLAG = true;
+		resetQueue();
 	};
 	Hack.menuGroup.addChild(resetButton);
 
