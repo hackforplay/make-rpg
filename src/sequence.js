@@ -163,6 +163,30 @@ export function walkRight(step) {
 	walk(step);
 }
 
+// 上に走る
+export function dashUp(step) {
+	headUp();
+	dash(step);
+}
+
+// 下に走る
+export function dashDown(step) {
+	headDown();
+	dash(step);
+}
+
+// 左に走る
+export function dashLeft(step) {
+	headLeft();
+	dash(step);
+}
+
+// 右に走る
+export function dashRight(step) {
+	headRight();
+	dash(step);
+}
+
 // num 回攻撃する
 export const attack = num => {
 	queue.push(async player => {
