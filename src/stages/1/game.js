@@ -11,6 +11,18 @@ async function gameFunc() {
 
 	const player = self.player = new Player(); // プレイヤーをつくる
 	player.locate(2, 1); // はじめの位置
+	player.on(('▼ イベント', 'こうげきするとき'), (event) => {
+		const 使い手 = event.target;
+		const ビーム = new RPGObject();
+		ビーム.mod(('▼ スキン', _bビーム));
+		ビーム.onふれはじめた = (event) => {
+			if (event.hit !== 使い手) {
+				Hack.Attack(event.mapX, event.mapY, 使い手.atk);
+				ビーム.destroy();
+			}
+		};
+		使い手.shoot(ビーム, 使い手.forward, 10);
+	});
 	/*+ スキル */
 
 	// さいしょの向きをかえる
