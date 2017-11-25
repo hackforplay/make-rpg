@@ -495,6 +495,18 @@ Hack.assets.ouroboros = function() {
 	this.forward = [-1, 0];
 };
 
+Hack.assets.barrier = function() {
+	this.image = game.assets['resources/barrier'];
+	this.width = 160;
+	this.height = 128;
+	this.offset = {
+		x: 0,
+		y: 0
+	};
+	this.directionType = 'single';
+	this.forward = [0, -1];
+	this.frame = [0];
+};
 
 var __Effect = enchant.Class(RPGObject, {
 	initialize: function(velocityX, velocityY, lifetime, randomize) {
