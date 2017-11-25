@@ -2,6 +2,7 @@
 // 全てのステージに共通する処理
 
 import Hack from 'hackforplay/hack';
+import { Event } from 'enchantjs/enchant';
 
 const common = () => {
 	// 呪文詠唱を止めるボタン
@@ -59,16 +60,17 @@ const common = () => {
 		}, window.WAIT_TIME);
 	});
 
-	let previousScore = Hack.score;
-	Hack.on('scorechange', () => {
+	Hack.on('scorechange', ({ oldValue, newValue }) => {
 		// スコアが増えたときに出る数字
 		const scoreEffect = new enchant.ui.ScoreLabel();
-		scoreEffect.score = (Hack.score - previousScore); // 取得したスコア
+		scoreEffect.score = (newValue - oldValue); // 取得したスコア
+		Object.defineProperty(scoreEffect, 'easing', { value: 0, writable: false });
 		scoreEffect.label = '';
+		scoreEffect.moveTo(player.center.x - (scoreEffect.score.toString().length * scoreEffect.fontSize / 2), player.y);
 		// いい感じのエフェクト
-		scoreEffect.tl.moveTo(player.x, player.y, 0).moveBy(0, -8, 8).then(() => {
-			scoreEffect.parentNode.removeChild(scoreEffect);
-		});
+		scoreEffect.tl.moveBy(0, -8, 8).removeFromScene();
+		// scorechange のタイミングでシーンに追加する場合は enterframe を呼ばないと label が反映されない
+		scoreEffect.dispatchEvent(new Event('enterframe'));
 		Hack.menuGroup.addChild(scoreEffect);
 	});
 
