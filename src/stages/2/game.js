@@ -31,6 +31,9 @@ async function gameFunc() {
 
 	// 詠唱待ち時間設定
 	window.WAIT_TIME = 3000;
+	
+	// ゲーム時間設定
+	window.TIME_LIMIT = 180 * 1000;
 
 	// 魔道書のコードをひらく
 	feeles.openCode('stages/2/code.js');
