@@ -71,16 +71,6 @@ function resetMap() {
 
 	Hack.changeMap('map1'); // map1 をロード
 	
-	const itemBook = new RPGObject();
-	itemBook.mod(('▼ スキン', _m魔道書));
-	itemBook.locate(2, 1);
-	itemBook.on(('▼ イベント', 'のった'), () => {
-		// 魔道書のコードをひらく
-		feeles.openCode('stages/2/code.js');
-		// なくなる
-		itemBook.destroy();
-	});
-
 	for (var i=3; i<=13; i+=2) {
 		for (var j=3; j<100; j+=2) {
 			putTresureBox(i, j);

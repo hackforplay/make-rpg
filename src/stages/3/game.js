@@ -77,17 +77,6 @@ function resetMap() {
 		player.locate(7, 8); // はじめの位置
 	});
 
-	const itemBook = new RPGObject();
-	itemBook.mod(('▼ スキン', _m魔道書));
-	itemBook.locate(8, 8);
-	itemBook.on(('▼ イベント', 'のった'), () => {
-		// 魔道書のコードをひらく
-		feeles.openCode('stages/3/code.js');
-		// なくなる
-		itemBook.destroy();
-	});
-
-
 	const itemDragon = new RPGObject();
 	itemDragon.mod(('▼ スキン', _dドラゴン));
 	// itemDragon.hp = 10;
