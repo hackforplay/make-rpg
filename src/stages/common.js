@@ -26,7 +26,7 @@ const common = () => {
 
 	// 階層ラベル (同じマップになんども enter することを想定している)
 	Hack.floorLabel = new enchant.ui.ScoreLabel(120, 8);
-	Hack.scoreLabel.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+	Hack.floorLabel.backgroundColor = 'rgba(0, 0, 0, 0.5)';
 	Hack.floorLabel.score = 1;
 	Hack.floorLabel.label = 'FLOOR:';
 	Hack.menuGroup.addChild(Hack.floorLabel);
