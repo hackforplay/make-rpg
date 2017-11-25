@@ -129,7 +129,7 @@ class RPGObject extends Sprite {
 		return {
 			x: this.x - this.offset.x + 16,
 			y: this.y - this.offset.y + 16
-		}
+		};
 	}
 
 	geneticUpdate() {
@@ -475,12 +475,12 @@ class RPGObject extends Sprite {
 		// 他オブジェクトはプレイヤーレイヤーに干渉できないようにする
 		if (this._layer === RPGMap.Layer.Player) {
 			switch (Math.sign(value - this._layer)) {
-				case 1:
-					return this.bringOver();
-				case -1:
-					return this.bringUnder();
-				default:
-					break;
+			case 1:
+				return this.bringOver();
+			case -1:
+				return this.bringUnder();
+			default:
+				break;
 			}
 		}
 
@@ -575,11 +575,11 @@ class RPGObject extends Sprite {
 				x: value[0],
 				y: value[1]
 			} :
-			'x' in value && 'y' in value ? {
-				x: value.x,
-				y: value.y
-			} :
-			this._forward;
+				'x' in value && 'y' in value ? {
+					x: value.x,
+					y: value.y
+				} :
+					this._forward;
 		var norm = Math.sqrt(vec.x * vec.x + vec.y * vec.y);
 		if (norm > 0) {
 			this._forward = {
@@ -588,40 +588,40 @@ class RPGObject extends Sprite {
 			};
 		}
 		switch (this.directionType) {
-			case 'single':
-				var rad = Math.atan2(this._forward.y, this._forward.x);
-				var enchantRot = rad / Math.PI * 180 + 90; // 基準は上,時計回りの度数法
-				this.rotation = (enchantRot + 360) % 360;
-				break;
-			case 'double':
-				if (this._forward.x !== 0) {
-					this.scaleX = -Math.sign(this._forward.x) * Math.abs(this.scaleX);
-				}
-				break;
-			case 'quadruple':
-				var dir = Hack.Vec2Dir(this._forward);
-				this.frame = [dir * 9 + (this.frame % 9)];
-				break;
+		case 'single':
+			var rad = Math.atan2(this._forward.y, this._forward.x);
+			var enchantRot = rad / Math.PI * 180 + 90; // 基準は上,時計回りの度数法
+			this.rotation = (enchantRot + 360) % 360;
+			break;
+		case 'double':
+			if (this._forward.x !== 0) {
+				this.scaleX = -Math.sign(this._forward.x) * Math.abs(this.scaleX);
+			}
+			break;
+		case 'quadruple':
+			var dir = Hack.Vec2Dir(this._forward);
+			this.frame = [dir * 9 + (this.frame % 9)];
+			break;
 		}
 	}
 
 	get direction() {
 		switch (this.directionType) {
-			case 'double':
-				return this.forward.x;
-			case 'quadruple':
-				return Hack.Vec2Dir(this.forward);
+		case 'double':
+			return this.forward.x;
+		case 'quadruple':
+			return Hack.Vec2Dir(this.forward);
 		}
 	}
 
 	set direction(value) {
 		switch (this.directionType) {
-			case 'double':
-				this.forward = [Math.sign(value) || -1, 0];
-				return;
-			case 'quadruple':
-				this.forward = Hack.Dir2Vec(value);
-				break;
+		case 'double':
+			this.forward = [Math.sign(value) || -1, 0];
+			return;
+		case 'quadruple':
+			this.forward = Hack.Dir2Vec(value);
+			break;
 		}
 	}
 
@@ -637,22 +637,34 @@ class RPGObject extends Sprite {
 		});
 	}
 
+	setFrameD3(behavior, frame) {
+		var array = typeof frame === 'function' ? frame() : frame;
+
+		this.setFrame(behavior, function() {
+			var _array = [];
+			array.forEach(function(item, index) {
+				_array[index] = item !== null && item >= 0 ? item + this.direction * 3 : item;
+			}, this);
+			return _array;
+		});
+	}
+
 	turn(count) {
 		var c, i;
 		switch (this.directionType) {
-			case 'double':
-				c = typeof count === 'number' ? Math.ceil(Math.abs(count / 2)) : 1;
-				i = {
-					'-1': 1,
-					'1': 0
-				}[this.direction] + c; // direction to turn index
-				this.direction = [1, -1, -1, 1][i % 2]; // turn index to direction
-				break;
-			case 'quadruple':
-				c = typeof count === 'number' ? count % 4 + 4 : 1;
-				i = [3, 2, 0, 1][this.direction] + c; // direction to turn index
-				this.direction = [2, 3, 1, 0][i % 4]; // turn index to direction
-				break;
+		case 'double':
+			c = typeof count === 'number' ? Math.ceil(Math.abs(count / 2)) : 1;
+			i = {
+				'-1': 1,
+				'1': 0
+			}[this.direction] + c; // direction to turn index
+			this.direction = [1, -1, -1, 1][i % 2]; // turn index to direction
+			break;
+		case 'quadruple':
+			c = typeof count === 'number' ? count % 4 + 4 : 1;
+			i = [3, 2, 0, 1][this.direction] + c; // direction to turn index
+			this.direction = [2, 3, 1, 0][i % 4]; // turn index to direction
+			break;
 		}
 	}
 

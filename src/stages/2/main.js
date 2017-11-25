@@ -1,6 +1,7 @@
 import 'hackforplay/core';
 
 import gameFunc from './game';
+import common from '../common';
 
 // ゲームをつくる
 game.onload = async() => {
@@ -12,6 +13,9 @@ game.onload = async() => {
 	Hack.maps = Hack.maps || {};
 	
 	gameFunc();
+
+	// 共通処理
+	common();
 
 	// Hack.player がないとき self.player を代わりに入れる
 	if (self.player && !Hack.player) {

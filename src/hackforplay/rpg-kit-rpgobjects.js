@@ -288,19 +288,19 @@ var __Bat = enchant.Class(RPGObject, {
 });
 
 Hack.assets.dragon = function() {
-	this.image = game.assets['enchantjs/bigmonster1.gif'];
+	this.image = game.assets['resources/red_dragon'];
 	this.width = 80;
-	this.height = 80;
+	this.height = 64;
 	this.offset = {
 		x: -24,
 		y: -42
 	};
-	this.setFrame(BehaviorTypes.Idle, [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]);
-	this.setFrame(BehaviorTypes.Walk, [2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3]);
-	this.setFrame(BehaviorTypes.Attack, [8, 8, 8, 8, 8, 8, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, null]);
-	this.setFrame(BehaviorTypes.Damaged, [4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5]);
-	this.setFrame(BehaviorTypes.Dead, [2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, null]);
-	this.directionType = 'double';
+	this.setFrameD3(BehaviorTypes.Idle, [0, 0, 0, 0, 0, 0, 1, 1, 1, 2, 2, 2]);
+	this.setFrameD3(BehaviorTypes.Walk, [null]);
+	this.setFrameD3(BehaviorTypes.Attack, [null]);
+	this.setFrameD3(BehaviorTypes.Damaged, [2, -1, -1, -1, 2, 2, 2, -1, -1, -1]);
+	this.setFrameD3(BehaviorTypes.Dead, [1, null]);
+	this.directionType = 'quadruple';
 	this.forward = [-1, 0];
 };
 var __Dragon = enchant.Class(RPGObject, {
