@@ -131,6 +131,30 @@ export const headLeft = () => {
 	});
 };
 
+// 上に歩く
+export function walkUp(step) {
+	headUp();
+	walk(step);
+}
+
+// 下に歩く
+export function walkDown(step) {
+	headDown();
+	walk(step);
+}
+
+// 左に歩く
+export function walkLeft(step) {
+	headLeft();
+	walk(step);
+}
+
+// 右に歩く
+export function walkRight(step) {
+	headRight();
+	walk(step);
+}
+
 // num 回攻撃する
 export const attack = num => {
 	queue.push(async player => {
