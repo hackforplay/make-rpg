@@ -48,6 +48,11 @@ async function gameFunc() {
 
 }
 
+Hack.onreset = function() {
+	resetMap();
+	player.locate(7, 8); // はじめの位置
+}
+
 function resetMap() {
 	const map1 = Hack.createMap(`
 		10|10|10|10|10|10|10|10|10|10|10|10|10|10|10|
@@ -71,7 +76,18 @@ function resetMap() {
 	itemStairs.layer = RPGMap.Layer.Under;
 	itemStairs.on(('▼ イベント', 'のった'), () => {
 		resetMap();
+		Hack.floorLabel.score++;
 		player.locate(7, 8); // はじめの位置
+	});
+
+	const itemBook = new RPGObject();
+	itemBook.mod(('▼ スキン', _m魔道書));
+	itemBook.locate(8, 8);
+	itemBook.on(('▼ イベント', 'のった'), () => {
+		// 魔道書のコードをひらく
+		feeles.openCode('stages/3/code.js');
+		// なくなる
+		itemBook.destroy();
 	});
 
 
@@ -97,7 +113,7 @@ function resetMap() {
 			itemGem2.color = "red";
 			itemGem3.color = "red";
 
-			itemBarrier.tl.show().delay(10).fadeTo(0.7, 30).then(()=> {
+			itemBarrier.tl.show().delay(10).fadeTo(0.3, 30).then(()=> {
 				itemGem1.color = "brown";
 				itemGem2.color = "brown";
 				itemGem3.color = "brown";
@@ -152,7 +168,7 @@ function resetMap() {
 	const itemBarrier = new Sprite(160, 128);
 	itemBarrier.image = game.assets['resources/barrier'];
 	itemBarrier.moveTo(160, 96);
-	itemBarrier.opacity = 0.7;
+	itemBarrier.opacity = 0.3;
 	Hack.defaultParentNode.addChild(itemBarrier);
 
 	/*+ モンスター アイテム せっち システム */

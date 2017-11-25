@@ -78,6 +78,7 @@ function resetMap() {
 	itemStairs2.layer = RPGMap.Layer.Under;
 	itemStairs2.on(('▼ イベント', 'のった'), () => {
 		resetMap();
+		Hack.floorLabel.score++;
 		player.locate(2, 1); // はじめの位置
 	});
 
@@ -129,7 +130,12 @@ function putCoin(x, y) {
 		itemCoin1.destroy();
 		Hack.score += mCoinScore;
 	}
+}
 
+
+Hack.onreset = function() {
+	resetMap();
+	player.locate(2, 1); // はじめの位置
 }
 
 export default gameFunc;
