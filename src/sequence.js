@@ -12,45 +12,114 @@ window.STOP_FLAG = false;
 // 1 フレームで走れる最大距離
 const DASH_STEP_LIMIT = 3;
 
+// 停止フラグを持った関数
+class SequenceObject {
+	constructor(sequence) {
+		this.isStop = false;
+		this.sequence = sequence;
+	}
+	async run(...args) {
+		if (this.isStop) return;
+		await this.sequence(...args);
+	}
+	stop() {
+		this.isStop = true;
+	}
+}
+queue.push = function(sequence) {
+	Array.prototype.push.call(this, new SequenceObject(sequence));
+};
+
+// コードを送った回数
+let shotCount = 0;
+
 // 魔道書の実行をハンドルする
 feeles.connected.then(({ port }) => {
 	// ChannelMessage の port
-	port.addEventListener('message', e => {
+	port.addEventListener('message', async ({ data }) => {
 		// shot: コードをおくる
-		if (e.data.query === 'shot') {
-			// キューをリセット
-			queue.splice(0,	 queue.length);
-			// 魔道書実行イベントを発行
-			const event = new Event('code');
-			Hack.dispatchEvent(event);
-			// 待機してからスタート
+		if (data.query !== 'shot') return;
+		// console.warn('1: コードが発行されました');
+
+		++shotCount;
+		// キューをリセット
+		await resetQueue();
+
+		// 魔道書実行イベントを発行
+		Hack.dispatchEvent(new Event('code'));
+
+		// console.warn('4: 魔道書イベントを発行しました');
+		// 待機してからスタート
+		(function() {
+			// ショットを送った回数を束縛
+			const localCount = shotCount;
+
 			setTimeout(() => {
+				if (localCount !== shotCount) return;
+
+				// console.warn('5: 魔道書を実行しました');
 				if (!window.player) {
 					throw new Error('sequence: player is not found');
 				}
 				window.STOP_FLAG = false;
 				next(window.player);
 			}, window.WAIT_TIME + 10);
-		}
+		})();
 	});
 });
 
+let cursor = 0;
+let nextResolver = null;
+
+// シーケンスを再生中か
+let isPlaying = false;
+
+// キューをリセットする
+export async function resetQueue() {
+
+	// console.warn('2: キューをリセットします');
+
+	window.STOP_FLAG = true;
+
+	// 以前のキューを停止する
+	queue.forEach((queue) => queue.stop());
+
+	queue.length = 0;
+
+	// 現在実行中のキューを待機する
+	if (isPlaying) {
+		await new Promise((resolve) => nextResolver = () => {
+			resolve();
+		});
+		nextResolver = null;
+	}
+	isPlaying = false;
+	cursor = 0;
+	// console.warn('3: キューをリセットしました');
+}
+
 // 最初のシーケンスオブジェクトを実行する
 // 実行後もキューはそのまま残り続ける
-let cursor = 0;
 const next = async player => {
+
+	isPlaying = true;
+
 	if (window.STOP_FLAG) {
 		// 強制終了フラグ
 		return;
 	}
 	const task = queue[cursor];
 	if (task) {
-		console.info('runnging: ', task, cursor);
-		await task(player); // タスクを実行, 終わるまで待つ
+		// console.info('runnging: ', task, cursor);
+		await task.run(player); // タスクを実行, 終わるまで待つ
 		cursor++; // カーソルをひとつ進める
+		// next 通知
+		if (nextResolver) nextResolver();
+
 		next(player);
 	} else {
 		// もうシーケンスが存在しない
+		isPlaying = false;
 		cursor = 0; // リセットして待機
 	}
 };
