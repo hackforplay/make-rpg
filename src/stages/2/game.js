@@ -4,7 +4,7 @@ import * as sequence from 'sequence';
 /* ここの部分は選手には見えません
  * デバッグ中につき魔道書は最初から表示されています
  */
-var mTresureBoxScore = 3;
+var mTresureBoxScore = 5;
 
 async function gameFunc() {
 
@@ -71,14 +71,6 @@ function resetMap() {
 
 	Hack.changeMap('map1'); // map1 をロード
 	
-	const item1 = new RPGObject();
-	item1.mod(('▼ スキン', _kくだりかいだん));
-	item1.locate(7, 5, 'map2');
-	item1.layer = RPGMap.Layer.Under;
-	item1.on(('▼ イベント', 'のった'), () => {
-		resetMap();
-	});
-
 	const itemBook = new RPGObject();
 	itemBook.mod(('▼ スキン', _m魔道書));
 	itemBook.locate(2, 1);
@@ -89,7 +81,7 @@ function resetMap() {
 		itemBook.destroy();
 	});
 
-	for (var i=2; i<=12; i+=2) {
+	for (var i=3; i<=13; i+=2) {
 		for (var j=3; j<100; j+=2) {
 			putTresureBox(i, j);
 		}

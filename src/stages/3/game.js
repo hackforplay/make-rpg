@@ -4,7 +4,7 @@ import * as sequence from 'sequence';
 /* ここの部分は選手には見えません
  * デバッグ中につき魔道書は最初から表示されています
  */
-var mDragonScore = 20; 
+var mDragonScore = 30; 
 var mDragonHp = 1;
 var flagGem1 = false;
 var flagGem2 = false;
