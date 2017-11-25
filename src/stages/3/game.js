@@ -4,7 +4,8 @@ import * as sequence from 'sequence';
 /* ここの部分は選手には見えません
  * デバッグ中につき魔道書は最初から表示されています
  */
-var mDragonScore = 20; 
+var mDragonScore = 30; 
+var mDragonHp = 1;
 var flagGem1 = false;
 var flagGem2 = false;
 var flagGem3 = false;
@@ -58,8 +59,8 @@ Hack.onreset = function() {
 function resetMap() {
 	const map1 = Hack.createMap(`
 		10|10|10|10|10|10|10|10|10|10|10|10|10|10|10|
-		10|08 10|08 10|08 08 08 08 08 08 08 10|10|10|
-		10|08 10|08 10|08 08 08 08 08 08 08 10|10|10|
+		10|08 10|10|10|08 08 08 08 08 08 08 10|10|10|
+		10|08 10|10|08 08 08 08 08 08 08 08 10|10|10|
 		10|08 10|08 08 08 08 08 08 08 08 08 10|08 10|
 		10|08 08 08 08 08 08 08 08 08 08 08 08 08 10|
 		10|08 08 08 08 08 08 08 08 08 08 08 08 08 10|
@@ -81,17 +82,6 @@ function resetMap() {
 		Hack.floorLabel.score++;
 		player.locate(7, 8); // はじめの位置
 	});
-
-	const itemBook = new RPGObject();
-	itemBook.mod(('▼ スキン', _m魔道書));
-	itemBook.locate(8, 8);
-	itemBook.on(('▼ イベント', 'のった'), () => {
-		// 魔道書のコードをひらく
-		feeles.openCode('stages/3/code.js');
-		// なくなる
-		itemBook.destroy();
-	});
-
 
 	const itemDragon = new RPGObject();
 	itemDragon.mod(('▼ スキン', _dドラゴン));
@@ -115,7 +105,7 @@ function resetMap() {
 			itemGem2.color = 'red';
 			itemGem3.color = 'red';
 
-			itemBarrier.tl.show().delay(10).fadeTo(0.3, 30).then(()=> {
+			itemBarrier.tl.clear().show().delay(10).fadeTo(0.3, 30).then(() => {
 				itemGem1.color = 'brown';
 				itemGem2.color = 'brown';
 				itemGem3.color = 'brown';
@@ -127,13 +117,13 @@ function resetMap() {
 	const itemGem1 = new RPGObject();
 	flagGem1 = false;	
 	itemGem1.mod(('▼ スキン', _tつぼ));
-	itemGem1.hp = 50;
+	itemGem1.hp = 1;
 	itemGem1.locate(4, 3, 'map1');
 	itemGem1.tl.moveBy(0, 96, 60).moveBy(0, -96, 60).loop();
 	itemGem1.on(('▼ イベント', 'たおれたとき'), () => {
 		flagGem1 = true;
 		if (flagGem2 && flagGem3) {
-			itemDragon.hp = 999;
+			itemDragon.hp = mDragonHp;
 			itemBarrier.visible = false;
 		}
 	});
@@ -142,13 +132,13 @@ function resetMap() {
 	const itemGem2 = new RPGObject();
 	flagGem2 = false;	
 	itemGem2.mod(('▼ スキン', _tつぼ));
-	itemGem2.hp = 50;
+	itemGem2.hp = 1;
 	itemGem2.locate(10, 6, 'map1');
 	itemGem2.tl.moveBy(0, -96, 60).moveBy(0, 96, 60).loop();
 	itemGem2.on(('▼ イベント', 'たおれたとき'), () => {
 		flagGem2 = true;
 		if (flagGem1 && flagGem3) {
-			itemDragon.hp = 999;
+			itemDragon.hp = mDragonHp;
 			itemBarrier.visible = false;
 		}
 	});
@@ -157,13 +147,13 @@ function resetMap() {
 	const itemGem3 = new RPGObject();
 	flagGem3 = false;
 	itemGem3.mod(('▼ スキン', _tつぼ));
-	itemGem3.hp = 50;
+	itemGem3.hp = 1;
 	itemGem3.locate(8, 2, 'map1');
 	itemGem3.tl.moveBy(-64, 0, 60).moveBy(64, 0, 60).loop();
 	itemGem3.on(('▼ イベント', 'たおれたとき'), () => {
 		flagGem3 = true;
 		if (flagGem1 && flagGem2) {
-			itemDragon.hp = 999;
+			itemDragon.hp = mDragonHp;
 			itemBarrier.visible = false;
 		}
 	});

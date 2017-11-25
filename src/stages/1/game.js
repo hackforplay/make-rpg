@@ -52,7 +52,7 @@ function resetMap() {
 
 	const map1 = Hack.createMap(`
 		10|10|10|10|10|10|10|10|10|10|10|10|10|10|10|
-		10|00 00 00 00 00 00 00 00 00 00 00 00 00 10|
+		10|10|00 00 00 00 00 00 00 00 00 00 00 00 10|
 		10|10|10|10|10|10|10|10|10|10|10|10|10|00 10|
 		10|00 00 00 00 00 00 00 00 00 00 00 10|00 10|
 		10|00 10|10|10|10|10|10|10|10|10|00 10|00 10|
@@ -66,11 +66,6 @@ function resetMap() {
 
 	Hack.changeMap('map1'); // map1 をロード
 	
-	const itemStairs1 = new RPGObject();
-	itemStairs1.mod(('▼ スキン', _nのぼりかいだん));
-	itemStairs1.locate(1, 1, 'map1');
-	itemStairs1.layer = RPGMap.Layer.Under;
-
 	const itemStairs2 = new RPGObject();
 	itemStairs2.mod(('▼ スキン', _kくだりかいだん));
 	itemStairs2.locate(9, 5, 'map1');
@@ -81,19 +76,9 @@ function resetMap() {
 		player.locate(2, 1); // はじめの位置
 	});
 
-	const itemBook = new RPGObject();
-	itemBook.mod(('▼ スキン', _m魔道書));
-	itemBook.locate(3, 1);
-	itemBook.on(('▼ イベント', 'のった'), () => {
-		// 魔道書のコードをひらく
-		feeles.openCode('stages/1/code.js');
-
-		// なくなる
-		itemBook.destroy();
-	});
 
 	// コインを置きまくる
-	for (var i=4; i<=13; i++) {
+	for (var i=3; i<=13; i++) {
 		putCoin(i, 1);
 	}
 	for (var j=2; j<=8; j++) {
