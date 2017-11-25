@@ -228,7 +228,8 @@ MapObject.dictionary = {
 	openedBox: 22,
 	downStair: 32,
 	upStair: 34,
-	pot: 42
+	pot: 42,
+	beam: 30,
 
 	// 新仕様公式定義
 	// clay: 320,
