@@ -7,7 +7,10 @@ import 'hackforplay/rpg-kit-color';
 
 const game = enchant.Core.instance;
 
+// 新
+game.preload('resources/magician_girl', 'resources/maps');
 
+// 旧
 game.preload('enchantjs/monster1.gif', 'enchantjs/monster2.gif', 'enchantjs/monster3.gif', 'enchantjs/monster4.gif', 'enchantjs/bigmonster1.gif', 'enchantjs/bigmonster2.gif', 'enchantjs/x2/map1.gif', 'enchantjs/x2/dotmat.gif', 'enchantjs/x1.5/chara0.png', 'enchantjs/x1.5/chara5.png', 'hackforplay/enchantbook.png', 'enchantjs/icon0.png', 'enchantjs/x2/effect0.png', 'hackforplay/madosyo_small.png', 'enchantjs/shadow.gif', 'enchantjs/x1.5/chara7.png',
 	'hackforplay/clear.png', 'hackforplay/gameover.png', 'hackforplay/button_retry.png', 'hackforplay/new_button_replay.png', 'hackforplay/new_button_retry.png', 'hackforplay/menu-button-menu.png', 'hackforplay/menu-button-restage.png', 'hackforplay/menu-button-hint.png', 'hackforplay/menu-button-comment.png', 'hackforplay/menu-button-retry.png', 'hackforplay/new_button_next.png', 'hackforplay/new_button_comment.png', 'hackforplay/new_button_restage.png', 'hackforplay/attack.png');
 
@@ -286,15 +289,15 @@ Object.keys(MapObject.dictionary).forEach(function(name) {
 });
 
 function tryFetchMapImage(name) {
-	if (game.assets['enchantjs/x2/dotmat.gif']) {
-		var length = 20,
+	if (game.assets['resources/maps']) {
+		var length = 10,
 			w = 32,
 			h = 32;
 		var frame = MapObject.dictionary[name],
 			x = (frame % length) * w,
 			y = ((frame / length) >> 0) * h;
 		var s = new Surface(w, h);
-		s.draw(game.assets['enchantjs/x2/dotmat.gif'], x, y, w, h, 0, 0, w, h);
+		s.draw(game.assets['resources/maps'], x, y, w, h, 0, 0, w, h);
 		return MapObject.surfaces[name] = s;
 	}
 	return undefined;
@@ -342,7 +345,7 @@ Hack.createMap = function(template) {
 	}
 	var source = template.split('\n')
 		.map(function(line) {
-			return line.match(/\s*\d+[\s\|]?/g)
+			return line.match(/\s*\d+[\s\|]?/g);
 		})
 		.filter(function(line) {
 			return Array.isArray(line);
@@ -361,7 +364,7 @@ Hack.createMap = function(template) {
 	});
 
 	const map = new RPGMap(32, 32, bmap[0].length, bmap.length);
-	map.imagePath = 'enchantjs/x2/dotmat.gif';
+	map.imagePath = 'resources/maps';
 	map.bmap.loadData(bmap);
 	map.cmap = cmap;
 	return map;
@@ -371,18 +374,18 @@ Hack.changeMap = function(mapName) {
 	(function(current, next) {
 		if (next === undefined) {
 			switch (typeof mapName) {
-				case 'string':
-					Hack.log(mapName + ' は、まだつくられていない');
-					break;
-				case 'object':
-					Hack.log('まだ マップが つくられていないようだ');
-					break;
-				case 'number':
-					Hack.log(mapName + ' ではなく \'map' + mapName + '\' ではありませんか？');
-					break;
-				default:
-					Hack.log('Hack.changeMap(\'map2\'); の ように かいてみよう');
-					break;
+			case 'string':
+				Hack.log(mapName + ' は、まだつくられていない');
+				break;
+			case 'object':
+				Hack.log('まだ マップが つくられていないようだ');
+				break;
+			case 'number':
+				Hack.log(mapName + ' ではなく \'map' + mapName + '\' ではありませんか？');
+				break;
+			default:
+				Hack.log('Hack.changeMap(\'map2\'); の ように かいてみよう');
+				break;
 			}
 		} else if (!current) {
 			// 最初のマップをロード
@@ -406,28 +409,28 @@ directionをforwardに変換する。 0/down, 1/left, 2/right, 3/up
 */
 Hack.Dir2Vec = function(dir) {
 	switch (dir) {
-		case 0:
-			return {
-				x: 0,
-				y: 1
-			};
-		case 1:
-			return {
-				x: -1,
-				y: 0
-			};
-		case 2:
-			return {
-				x: 1,
-				y: 0
-			};
-		case 3:
-			return {
-				x: 0,
-				y: -1
-			};
-		default:
-			return null;
+	case 0:
+		return {
+			x: 0,
+			y: 1
+		};
+	case 1:
+		return {
+			x: -1,
+			y: 0
+		};
+	case 2:
+		return {
+			x: 1,
+			y: 0
+		};
+	case 3:
+		return {
+			x: 0,
+			y: -1
+		};
+	default:
+		return null;
 	}
 };
 /*  Vec2Dir
