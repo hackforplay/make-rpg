@@ -1,3 +1,4 @@
+/* global Hack, Sprite, game */
 // 全てのステージに共通する処理
 
 const common = () => {
@@ -10,7 +11,14 @@ const common = () => {
 	};
 	Hack.menuGroup.addChild(stopButton);
 	
-	// TODO: ゲームリセットボタン
+	// ゲームリセットボタン
+	const resetButton = new Sprite(80, 20);
+	resetButton.image = game.assets['resources/reset_button'];
+	resetButton.moveTo(0, 24);
+	resetButton.ontouchstart = () => {
+		Hack.dispatchEvent(new Event('reset'));
+	};
+	Hack.menuGroup.addChild(resetButton);
 };
 
 export default common;
