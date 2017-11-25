@@ -131,29 +131,6 @@ game.on('awake', () => {
 	domGroup._element = {};
 	game.rootScene.addChild(domGroup);
 
-
-
-
-	const pad = new Pad();
-	pad.moveTo(20, 200);
-
-	controllerGroup.addChild(pad);
-
-	Hack.pad = pad;
-
-	const apad = new Sprite(64, 64);
-	apad.image = game.assets['hackforplay/attack.png'];
-	apad.buttonMode = 'a';
-	apad.moveTo(400, 250);
-
-
-	controllerGroup.addChild(apad);
-	Hack.apad = apad;
-
-
-	Hack.pad.name = 'Pad';
-	Hack.apad.name = 'APad';
-
 	// Enchant book
 	Hack.enchantBookIcon = Hack.createSprite(64, 64, {
 		image: game.assets['hackforplay/enchantbook.png'],
