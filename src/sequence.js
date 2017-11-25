@@ -153,7 +153,6 @@ export const locate = (x, y) => {
 // repeat(2) ... リピート, リピート, スルー, リピート, リピート, スルー...
 // repeat(n) ... n + 1 の倍数回はスルー, それ以外はリピート
 export const repeat = num => {
-	Hack.log('repeat');
 	let count = 0; // (この中だけのローカルスコープ)
 	if (num < 1) return; // つねにスルー
 

@@ -33,11 +33,7 @@ async function gameFunc() {
 	player.turn(1);
 
 	// 詠唱待ち時間設定
-	window.WAIT_TIME = 0;
-
-	Hack.oncode = () => {
-		Hack.log('まどうしょがじっこうされた！');
-	};
+	window.WAIT_TIME = 3000;
 
 	// 魔道書のコードをひらく
 	feeles.openCode('stages/3/code.js');
@@ -52,7 +48,7 @@ async function gameFunc() {
 Hack.onreset = function() {
 	resetMap();
 	player.locate(7, 8); // はじめの位置
-}
+};
 
 function resetMap() {
 	const map1 = Hack.createMap(`
@@ -110,14 +106,14 @@ function resetMap() {
 		} 
 		// そうでない＝攻撃を受け付けない
 		else {
-			itemGem1.color = "red";
-			itemGem2.color = "red";
-			itemGem3.color = "red";
+			itemGem1.color = 'red';
+			itemGem2.color = 'red';
+			itemGem3.color = 'red';
 
 			itemBarrier.tl.show().delay(10).fadeTo(0.3, 30).then(()=> {
-				itemGem1.color = "brown";
-				itemGem2.color = "brown";
-				itemGem3.color = "brown";
+				itemGem1.color = 'brown';
+				itemGem2.color = 'brown';
+				itemGem3.color = 'brown';
 			});
 			// itemBarrier.tl.fadeIn(0).delay(10).fadeOut(20);
 		}
