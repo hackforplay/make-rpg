@@ -4,14 +4,14 @@ import * as sequence from 'sequence';
 /* ここの部分は選手には見えません
  * デバッグ中につき魔道書は最初から表示されています
  */
+var mCoinScore = 1;
 
 async function gameFunc() {
-
 	resetMap();
 
 	const player = self.player = new Player(); // プレイヤーをつくる
 	player.mod(('▼ スキン', _kきし)); // 見た目
-	player.locate(3, 5); // はじめの位置
+	player.locate(2, 1); // はじめの位置
 	/*+ スキル */
 
 	// さいしょの向きをかえる
@@ -35,31 +35,89 @@ async function gameFunc() {
 }
 
 function resetMap() {
+
+
 	const map1 = Hack.createMap(`
-		322 322 322 322 322 322 322 322 322 322 322 322 322 322 322
-		322 322 322 322 322 322 322 322 322 322 322 322 322 322 322
-		322 322 322 322 322 322 322 322 322 322 322 322 322 322 322
-		322 322 322 322 322 322 322 322 322 322 322 322 322 322 322
-		322 322 322 322 322 322 322 322 322 322 322 322 322 322 322
-		322 322 322 322 322 322 322 322 322 322 322 322 322 322 322
-		322 322 322 322 322 322 322 322 322 322 322 322 322 322 322
-		322 322 322 322 322 322 322 322 322 322 322 322 322 322 322
-		322 322 322 322 322 322 322 322 322 322 322 322 322 322 322
-		322 322 322 322 322 322 322 322 322 322 322 322 322 322 322
+		10|10|10|10|10|10|10|10|10|10|10|10|10|10|10|
+		10|00 00 00 00 00 00 00 00 00 00 00 00 00 10|
+		10|10|10|10|10|10|10|10|10|10|10|10|10|00 10|
+		10|00 00 00 00 00 00 00 00 00 00 00 10|00 10|
+		10|00 10|10|10|10|10|10|10|10|10|00 10|00 10|
+		10|00 10|00 00 00 00 00 00 00 10|00 10|00 10|
+		10|00 10|00 00 00 00 00 00 00 00 00 10|00 10|
+		10|00 10|10|10|10|10|10|10|10|10|10|10|00 10|
+		10|00 00 00 00 00 00 00 00 00 00 00 00 00 10|
+		10|10|10|10|10|10|10|10|10|10|10|10|10|10|10|
 	`);
 	Hack.maps.map1 = map1;
 
 	Hack.changeMap('map1'); // map1 をロード
 	
-	const item1 = new RPGObject();
-	item1.mod(('▼ スキン', _kくだりかいだん));
-	item1.locate(7, 5, 'map2');
-	item1.layer = RPGMap.Layer.Under;
-	item1.on(('▼ イベント', 'のった'), () => {
-		resetMap();
+	const itemStairs1 = new RPGObject();
+	itemStairs1.mod(('▼ スキン', _nのぼりかいだん));
+	itemStairs1.locate(1, 1, 'map1');
+	itemStairs1.layer = RPGMap.Layer.Under;
+	itemStairs1.on(('▼ イベント', 'のった'), () => {
+		Hack.log('後戻りはできない！！');
 	});
 
+	const itemStairs2 = new RPGObject();
+	itemStairs2.mod(('▼ スキン', _kくだりかいだん));
+	itemStairs2.locate(9, 5, 'map1');
+	itemStairs2.layer = RPGMap.Layer.Under;
+	itemStairs2.on(('▼ イベント', 'のった'), () => {
+		resetMap();
+		player.locate(2, 1); // はじめの位置
+	});
+
+	const itemBook = new RPGObject();
+	itemBook.mod(('▼ スキン', _m魔道書));
+	itemBook.locate(3, 1);
+	itemBook.on(('▼ イベント', 'のった'), () => {
+		// 魔道書のコードをひらく
+		feeles.openCode('stages/1/code.js');
+
+		// なくなる
+		itemBook.destroy();
+	});
+
+	// コインを置きまくる
+	for (var i=4; i<=13; i++) {
+		putCoin(i, 1);
+	}
+	for (var j=2; j<=8; j++) {
+		putCoin(13, j);
+	}
+	for (var i=1; i<=12; i++) {
+		putCoin(i, 8);
+	}
+	for (var j=3; j<=7; j++) {
+		putCoin(1, j);
+	}
+	for (var i=2; i<=11; i++) {
+		putCoin(i, 3);
+	}
+	for (var j=4; j<=6; j++) {
+		putCoin(11, j);
+	}
+	for (var i=3; i<=10; i++) {
+		putCoin(i, 6);
+	}
+	for (var i=3; i<=8; i++) {
+		putCoin(i, 5);
+	}
 	/*+ モンスター アイテム せっち システム */
+
+}
+
+function putCoin(x, y) {
+	const itemCoin1 = new RPGObject();
+	itemCoin1.mod(('▼ スキン', _kコイン));
+	itemCoin1.locate(x, y, 'map1');
+	itemCoin1.onplayerenter = () => {
+		itemCoin1.destroy();
+		Hack.score += mCoinScore;
+	}
 
 }
 
