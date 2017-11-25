@@ -10,7 +10,6 @@ async function gameFunc() {
 	resetMap();
 
 	const player = self.player = new Player(); // プレイヤーをつくる
-	player.mod(('▼ スキン', _kきし)); // 見た目
 	player.locate(2, 1); // はじめの位置
 	/*+ スキル */
 
