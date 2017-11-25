@@ -299,7 +299,7 @@ Hack.assets.dragon = function() {
 	this.setFrameD3(BehaviorTypes.Walk, [null]);
 	this.setFrameD3(BehaviorTypes.Attack, [null]);
 	this.setFrameD3(BehaviorTypes.Damaged, [2, -1, -1, -1, 2, 2, 2, -1, -1, -1]);
-	this.setFrameD3(BehaviorTypes.Dead, [1, null]);
+	this.setFrameD3(BehaviorTypes.Dead, [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, null]);
 	this.directionType = 'quadruple';
 	this.forward = [-1, 0];
 };
