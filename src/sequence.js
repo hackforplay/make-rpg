@@ -7,6 +7,7 @@ const queue = [];
 
 // コードを受け取ってから実行を開始するまでの待機時間
 window.WAIT_TIME = 3000;
+window.STOP_FLAG = false;
 
 // 魔道書の実行をハンドルする
 feeles.connected.then(({ port }) => {
@@ -24,7 +25,7 @@ feeles.connected.then(({ port }) => {
 				if (!window.player) {
 					throw new Error('sequence: player is not found');
 				}
-				Hack.log('start!');
+				window.STOP_FLAG = false;
 				next(window.player);
 			}, window.WAIT_TIME + 10);
 		}
@@ -35,6 +36,10 @@ feeles.connected.then(({ port }) => {
 // 実行後もキューはそのまま残り続ける
 let cursor = 0;
 const next = async player => {
+	if (window.STOP_FLAG) {
+		// 強制終了フラグ
+		return;
+	}
 	const task = queue[cursor];
 	if (task) {
 		console.info('runnging: ', task, cursor);
