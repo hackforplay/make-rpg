@@ -9,6 +9,9 @@ const queue = [];
 window.WAIT_TIME = 3000;
 window.STOP_FLAG = false;
 
+// 1 フレームで走れる最大距離
+const DASH_STEP_LIMIT = 3;
+
 // 魔道書の実行をハンドルする
 feeles.connected.then(({ port }) => {
 	// ChannelMessage の port
@@ -16,7 +19,7 @@ feeles.connected.then(({ port }) => {
 		// shot: コードをおくる
 		if (e.data.query === 'shot') {
 			// キューをリセット
-			queue.splice(0,	 queue.length);
+			queue.splice(0, queue.length);
 			// 魔道書実行イベントを発行
 			const event = new Event('code');
 			Hack.dispatchEvent(event);
@@ -84,11 +87,16 @@ export const turnLeft = () => {
 // 例外として、マップが変わったときは停止する
 export const dash = (num = 100) => {
 	queue.push(async player => {
-		for (let moved = 0; moved < num; moved++) {
+		for (let moved = 1; moved <= num; moved++) {
 			const { mapX, mapY, map } = player; // 移動前の値
 
 			walkWithoutAnimation(player); // ノーフレームで１マス進む
-			
+
+			// 1 フレームで走れる最大距離に達したなら
+			if (!(moved % DASH_STEP_LIMIT)) {
+				// 1 フレーム待機する
+				await new Promise((resolve) => player.setTimeout(resolve, 1));
+			}
 			if (player.mapX === mapX && player.mapY === mapY) {
 				break; // mapX, mapY が同じなら壁と判断して終了
 			}
@@ -109,7 +117,7 @@ export const headUp = () => {
 
 // 右を向く
 export const headRight = () => {
-	queue.push(async player => { 
+	queue.push(async player => {
 		player.forward = [1, 0];
 		await wait();
 	});
@@ -117,7 +125,7 @@ export const headRight = () => {
 
 // 下を向く
 export const headDown = () => {
-	queue.push(async player => { 
+	queue.push(async player => {
 		player.forward = [0, 1];
 		await wait();
 	});
@@ -125,7 +133,7 @@ export const headDown = () => {
 
 // 左を向く
 export const headLeft = () => {
-	queue.push(async player => { 
+	queue.push(async player => {
 		player.forward = [-1, 0];
 		await wait();
 	});
@@ -205,7 +213,7 @@ const walkWithoutAnimation = player => {
 	// 移動先
 	const nextX = player.mapX + player.forward.x;
 	const nextY = player.mapY + player.forward.y;
-		
+
 	// マップの当たり判定
 	if (Hack.map.hitTest(nextX * tw, nextY * th)) {
 		return;
@@ -215,9 +223,9 @@ const walkWithoutAnimation = player => {
 	const hits = RPGObject.collection
 		.filter((obj) => {
 			return obj.isKinematic &&
-					obj.collisionFlag &&
-					obj.mapX === nextX &&
-					obj.mapY === nextY;
+				obj.collisionFlag &&
+				obj.mapX === nextX &&
+				obj.mapY === nextY;
 		});
 
 	// 障害物があるので歩けない

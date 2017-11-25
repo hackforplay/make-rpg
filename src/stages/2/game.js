@@ -30,7 +30,7 @@ async function gameFunc() {
 	player.turn(1);
 
 	// 詠唱待ち時間設定
-	window.WAIT_TIME = 3000;
+	window.WAIT_TIME = 500;
 	
 	// ゲーム時間設定
 	window.TIME_LIMIT = 180 * 1000;
