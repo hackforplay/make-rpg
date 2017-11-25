@@ -34,6 +34,9 @@ async function gameFunc() {
 	// ゲーム時間設定
 	window.TIME_LIMIT = 180 * 1000;
 
+	// タイマー開始
+	Hack.startTimer();
+
 	// 魔道書のコードをひらく
 	feeles.openCode('stages/1/code.js');
 
