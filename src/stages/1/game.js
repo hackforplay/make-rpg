@@ -129,7 +129,12 @@ function putCoin(x, y) {
 		itemCoin1.destroy();
 		Hack.score += mCoinScore;
 	}
+}
 
+
+Hack.onreset = function() {
+	resetMap();
+	player.locate(2, 1); // はじめの位置
 }
 
 export default gameFunc;

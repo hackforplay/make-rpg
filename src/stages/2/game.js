@@ -114,4 +114,9 @@ function putTresureBox(x, y) {
 	};
 }
 
+Hack.onreset = function() {
+	resetMap();
+	player.locate(1, 1); // はじめの位置
+}
+
 export default gameFunc;
