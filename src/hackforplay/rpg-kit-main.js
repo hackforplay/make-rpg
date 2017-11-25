@@ -207,6 +207,7 @@ MapObject.dictionary = {
 	upStair: 34,
 	pot: 42,
 	beam: 30,
+	stoneWall: 30,
 
 	// 新仕様公式定義
 	// clay: 320,
