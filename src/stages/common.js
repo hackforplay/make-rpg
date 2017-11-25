@@ -31,6 +31,9 @@ const common = () => {
 	Hack.floorLabel.label = 'FLOOR:';
 	Hack.menuGroup.addChild(Hack.floorLabel);
 
+	// ライフラベルを隠す
+	Hack.lifeLabel.parentNode.removeChild(Hack.lifeLabel);
+
 	// 詠唱アニメーション
 	Hack.on('code', () => {
 		const chantEffect = new RPGObject();
