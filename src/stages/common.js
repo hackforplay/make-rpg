@@ -1,5 +1,7 @@
-/* global Hack, enchant, game */
+/* global enchant, game */
 // 全てのステージに共通する処理
+
+import Hack from 'hackforplay/hack';
 
 const common = () => {
 	// 呪文詠唱を止めるボタン
@@ -21,6 +23,12 @@ const common = () => {
 		window.STOP_FLAG = true;
 	};
 	Hack.menuGroup.addChild(resetButton);
+
+	// タイムオーバー
+	Hack.on('gameclear', () => {
+		// 時間切れ！
+		window.STOP_FLAG = true;
+	});
 
 	// スコアの表示位置変更
 	Hack.scoreLabel.moveTo(180, 8);
@@ -64,13 +72,21 @@ const common = () => {
 		Hack.menuGroup.addChild(scoreEffect);
 	});
 
+};
 
+// タイマーをスタートさせる
+Hack.startTimer = () => {
 	// 時間制限タイマー
 	const limitTimer = new enchant.ui.TimeLabel(352, 8, 'DOWN');
 	limitTimer.time = (window.TIME_LIMIT / 1000) >> 0;
 	limitTimer.backgroundColor = 'rgba(0, 0, 0, 0.5)';
 	Hack.menuGroup.addChild(limitTimer);
 
+	// ゲーム終了
+	setTimeout(() => {
+		// クリア（これ以降はスコアが増えない）
+		Hack.gameclear();
+	}, window.TIME_LIMIT);
 };
 
 export default common;
