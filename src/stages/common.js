@@ -71,7 +71,7 @@ const common = () => {
 		scoreEffect.tl.moveBy(0, -8, 8).removeFromScene();
 		// scorechange のタイミングでシーンに追加する場合は enterframe を呼ばないと label が反映されない
 		scoreEffect.dispatchEvent(new Event('enterframe'));
-		Hack.world.addChild(scoreEffect);
+		Hack.menuGroup.addChild(scoreEffect);
 	});
 
 };
