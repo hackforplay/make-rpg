@@ -5,7 +5,7 @@ const common = () => {
 	// 呪文詠唱を止めるボタン
 	const stopButton = new enchant.Sprite(80, 20);
 	stopButton.image = game.assets['resources/stop_button'];
-	stopButton.moveTo(0, 0);
+	stopButton.moveTo(0, 270);
 	stopButton.ontouchstart = () => {
 		window.STOP_FLAG = true;
 	};
@@ -14,7 +14,7 @@ const common = () => {
 	// ゲームリセットボタン
 	const resetButton = new enchant.Sprite(80, 20);
 	resetButton.image = game.assets['resources/reset_button'];
-	resetButton.moveTo(0, 24);
+	resetButton.moveTo(0, 282);
 	resetButton.ontouchstart = () => {
 		Hack.dispatchEvent(new Event('reset'));
 		// リセットはストップをかねる
@@ -23,11 +23,11 @@ const common = () => {
 	Hack.menuGroup.addChild(resetButton);
 
 	// スコアの表示位置変更
-	Hack.scoreLabel.moveTo(300, 8);
+	Hack.scoreLabel.moveTo(200, 8);
 	Hack.scoreLabel.backgroundColor = 'rgba(0, 0, 0, 0.5)';
 
 	// 階層ラベル (同じマップになんども enter することを想定している)
-	Hack.floorLabel = new enchant.ui.ScoreLabel(120, 8);
+	Hack.floorLabel = new enchant.ui.ScoreLabel(8, 8);
 	Hack.floorLabel.backgroundColor = 'rgba(0, 0, 0, 0.5)';
 	Hack.floorLabel.score = 1;
 	Hack.floorLabel.label = 'FLOOR:';
