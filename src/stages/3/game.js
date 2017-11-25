@@ -34,10 +34,6 @@ async function gameFunc() {
 	// 詠唱待ち時間設定
 	window.WAIT_TIME = 3000;
 
-	Hack.oncode = () => {
-		Hack.log('まどうしょがじっこうされた！');
-	};
-
 	// 魔道書のコードをひらく
 	feeles.openCode('stages/3/code.js');
 
