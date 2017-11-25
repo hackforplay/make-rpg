@@ -1,11 +1,13 @@
-/* global Hack, enchant, game */
+/* global enchant, game */
 // 全てのステージに共通する処理
+
+import Hack from 'hackforplay/hack';
 
 const common = () => {
 	// 呪文詠唱を止めるボタン
 	const stopButton = new enchant.Sprite(80, 20);
 	stopButton.image = game.assets['resources/stop_button'];
-	stopButton.moveTo(0, 0);
+	stopButton.moveTo(0, 270);
 	stopButton.ontouchstart = () => {
 		window.STOP_FLAG = true;
 	};
@@ -14,18 +16,26 @@ const common = () => {
 	// ゲームリセットボタン
 	const resetButton = new enchant.Sprite(80, 20);
 	resetButton.image = game.assets['resources/reset_button'];
-	resetButton.moveTo(0, 24);
+	resetButton.moveTo(0, 296);
 	resetButton.ontouchstart = () => {
 		Hack.dispatchEvent(new Event('reset'));
+		// リセットはストップをかねる
+		window.STOP_FLAG = true;
 	};
 	Hack.menuGroup.addChild(resetButton);
 
+	// タイムオーバー
+	Hack.on('gameclear', () => {
+		// 時間切れ！
+		window.STOP_FLAG = true;
+	});
+
 	// スコアの表示位置変更
-	Hack.scoreLabel.moveTo(300, 8);
+	Hack.scoreLabel.moveTo(180, 8);
 	Hack.scoreLabel.backgroundColor = 'rgba(0, 0, 0, 0.5)';
 
 	// 階層ラベル (同じマップになんども enter することを想定している)
-	Hack.floorLabel = new enchant.ui.ScoreLabel(120, 8);
+	Hack.floorLabel = new enchant.ui.ScoreLabel(8, 8);
 	Hack.floorLabel.backgroundColor = 'rgba(0, 0, 0, 0.5)';
 	Hack.floorLabel.score = 1;
 	Hack.floorLabel.label = 'FLOOR:';
@@ -49,6 +59,34 @@ const common = () => {
 		}, window.WAIT_TIME);
 	});
 
+	let previousScore = Hack.score;
+	Hack.on('scorechange', () => {
+		// スコアが増えたときに出る数字
+		const scoreEffect = new enchant.ui.ScoreLabel();
+		scoreEffect.score = (Hack.score - previousScore); // 取得したスコア
+		scoreEffect.label = '';
+		// いい感じのエフェクト
+		scoreEffect.tl.moveTo(player.x, player.y, 0).moveBy(0, -8, 8).then(() => {
+			scoreEffect.parentNode.removeChild(scoreEffect);
+		});
+		Hack.menuGroup.addChild(scoreEffect);
+	});
+
+};
+
+// タイマーをスタートさせる
+Hack.startTimer = () => {
+	// 時間制限タイマー
+	const limitTimer = new enchant.ui.TimeLabel(352, 8, 'DOWN');
+	limitTimer.time = (window.TIME_LIMIT / 1000) >> 0;
+	limitTimer.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+	Hack.menuGroup.addChild(limitTimer);
+
+	// ゲーム終了
+	setTimeout(() => {
+		// クリア（これ以降はスコアが増えない）
+		Hack.gameclear();
+	}, window.TIME_LIMIT);
 };
 
 export default common;
