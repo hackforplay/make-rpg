@@ -4,14 +4,14 @@ import * as sequence from 'sequence';
 /* ここの部分は選手には見えません
  * デバッグ中につき魔道書は最初から表示されています
  */
-var mCoinScore = 3;
+var mTresureBoxScore = 3;
 
 async function gameFunc() {
 
 	resetMap();
 
 	const player = self.player = new Player(); // プレイヤーをつくる
-	player.locate(2, 1); // はじめの位置
+	player.locate(1, 1); // はじめの位置
 	/*+ スキル */
 
 	// さいしょの向きをかえる
@@ -71,9 +71,20 @@ function resetMap() {
 		resetMap();
 	});
 
+	const itemBook = new RPGObject();
+	itemBook.mod(('▼ スキン', _m魔道書));
+	itemBook.locate(2, 1);
+	itemBook.on(('▼ イベント', 'のった'), () => {
+		// 魔道書のコードをひらく
+		feeles.openCode('stages/2/code.js');
+		// なくなる
+		itemBook.destroy();
+	});
+
 	for (var i=2; i<=12; i+=2) {
-		for (var j=3; i<=100; i+=2) {
-		putCoin(i, j);
+		for (var j=3; j<100; j+=2) {
+			putTresureBox(i, j);
+		}
 	}
 
 	/*+ モンスター アイテム せっち システム */
@@ -84,11 +95,11 @@ function putTresureBox(x, y) {
 	const itemBox = new RPGObject();
 	itemBox.mod(('▼ スキン', _tたからばこ));
 	itemBox.locate(x, y, 'map1');
-	itemBox.onplayerenter = () => {
-		itemBox.destroy();
+	itemBox.onこうげきされた = () => {
+		delete itemBox.onこうげきされた;
+		itemBox.mod(('▼ スキン', _tたからばこひらいた));
 		Hack.score += mTresureBoxScore;
-	}
-
+	};
 }
 
 export default gameFunc;
