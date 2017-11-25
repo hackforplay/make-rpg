@@ -29,7 +29,7 @@ async function gameFunc() {
 	player.turn(1);
 
 	// 詠唱待ち時間設定
-	window.WAIT_TIME = 0;
+	window.WAIT_TIME = 3000;
 
 	Hack.oncode = () => {
 		Hack.log('まどうしょがじっこうされた！');
@@ -129,13 +129,13 @@ function putCoin(x, y) {
 	itemCoin1.onplayerenter = () => {
 		itemCoin1.destroy();
 		Hack.score += mCoinScore;
-	}
+	};
 }
 
 
 Hack.onreset = function() {
 	resetMap();
 	player.locate(2, 1); // はじめの位置
-}
+};
 
 export default gameFunc;
