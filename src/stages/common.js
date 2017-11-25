@@ -50,13 +50,16 @@ const common = () => {
 		const chantEffect = new RPGObject();
 		chantEffect.mod(Hack.assets.chantEffect);
 		chantEffect.locate(player.mapX, player.mapY);
+		chantEffect.compositeOperation = 'lighter';
+		chantEffect.scale(0);
+		chantEffect.tl.scaleTo(1, 1, 8, 'QUAD_EASEOUT');
 		// 詠唱中は操作できない
 		player.stop();
 		setTimeout(() => {
 			// 元に戻す
 			player.resume();
 			// エフェクトを消す
-			chantEffect.destroy();
+			chantEffect.tl.fadeOut(4).removeFromScene();
 		}, window.WAIT_TIME);
 	});
 
