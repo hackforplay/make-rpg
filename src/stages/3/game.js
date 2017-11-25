@@ -99,7 +99,7 @@ function resetMap() {
 			itemGem2.color = 'red';
 			itemGem3.color = 'red';
 
-			itemBarrier.tl.show().delay(10).fadeTo(0.3, 30).then(()=> {
+			itemBarrier.tl.clear().show().delay(10).fadeTo(0.3, 30).then(() => {
 				itemGem1.color = 'brown';
 				itemGem2.color = 'brown';
 				itemGem3.color = 'brown';
