@@ -14,7 +14,7 @@ const common = () => {
 	// ゲームリセットボタン
 	const resetButton = new enchant.Sprite(80, 20);
 	resetButton.image = game.assets['resources/reset_button'];
-	resetButton.moveTo(0, 282);
+	resetButton.moveTo(0, 296);
 	resetButton.ontouchstart = () => {
 		Hack.dispatchEvent(new Event('reset'));
 		// リセットはストップをかねる
@@ -23,7 +23,7 @@ const common = () => {
 	Hack.menuGroup.addChild(resetButton);
 
 	// スコアの表示位置変更
-	Hack.scoreLabel.moveTo(200, 8);
+	Hack.scoreLabel.moveTo(180, 8);
 	Hack.scoreLabel.backgroundColor = 'rgba(0, 0, 0, 0.5)';
 
 	// 階層ラベル (同じマップになんども enter することを想定している)
@@ -63,6 +63,13 @@ const common = () => {
 		});
 		Hack.menuGroup.addChild(scoreEffect);
 	});
+
+
+	// 時間制限タイマー
+	const limitTimer = new enchant.ui.TimeLabel(352, 8, 'DOWN');
+	limitTimer.time = (window.TIME_LIMIT / 1000) >> 0;
+	limitTimer.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+	Hack.menuGroup.addChild(limitTimer);
 
 };
 
