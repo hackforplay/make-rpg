@@ -31,6 +31,21 @@ const common = () => {
 	Hack.floorLabel.label = 'FLOOR:';
 	Hack.menuGroup.addChild(Hack.floorLabel);
 
+	// 詠唱アニメーション
+	Hack.on('code', () => {
+		const chantEffect = new RPGObject();
+		chantEffect.mod(Hack.assets.chantEffect);
+		chantEffect.locate(player.mapX, player.mapY);
+		// 詠唱中は操作できない
+		player.speed = 0;
+		setTimeout(() => {
+			// 元に戻す
+			player.speed = 1;
+			// エフェクトを消す
+			chantEffect.destroy();
+		}, window.WAIT_TIME);
+	});
+
 };
 
 export default common;
