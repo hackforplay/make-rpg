@@ -1,6 +1,6 @@
 // 全てのステージに共通する処理
 
-function common () {
+const common = () => {
 	// 呪文詠唱を止めるボタン
 	const stopButton = new Sprite(80, 20);
 	stopButton.image = game.assets['resources/stop_button'];
@@ -11,6 +11,6 @@ function common () {
 	Hack.menuGroup.addChild(stopButton);
 	
 	// TODO: ゲームリセットボタン
-}
+};
 
 export default common;
