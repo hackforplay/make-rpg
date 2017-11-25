@@ -76,6 +76,7 @@ function resetMap() {
 	itemStairs.layer = RPGMap.Layer.Under;
 	itemStairs.on(('▼ イベント', 'のった'), () => {
 		resetMap();
+		Hack.floorLabel.score++;
 		player.locate(7, 8); // はじめの位置
 	});
 
