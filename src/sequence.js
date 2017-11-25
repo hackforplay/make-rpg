@@ -9,6 +9,9 @@ const queue = [];
 window.WAIT_TIME = 3000;
 window.STOP_FLAG = false;
 
+// 1 フレームで走れる最大距離
+const DASH_STEP_LIMIT = 3;
+
 // 魔道書の実行をハンドルする
 feeles.connected.then(({ port }) => {
 	// ChannelMessage の port
@@ -84,11 +87,16 @@ export const turnLeft = () => {
 // 例外として、マップが変わったときは停止する
 export const dash = (num = 100) => {
 	queue.push(async player => {
-		for (let moved = 0; moved < num; moved++) {
+		for (let moved = 1; moved <= num; moved++) {
 			const { mapX, mapY, map } = player; // 移動前の値
 
 			walkWithoutAnimation(player); // ノーフレームで１マス進む
-			
+
+			// 1 フレームで走れる最大距離に達したなら
+			if (!(moved % DASH_STEP_LIMIT)) {
+				// 1 フレーム待機する
+				await new Promise((resolve) => player.setTimeout(resolve, 1));
+			}
 			if (player.mapX === mapX && player.mapY === mapY) {
 				break; // mapX, mapY が同じなら壁と判断して終了
 			}
