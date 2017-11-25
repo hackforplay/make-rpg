@@ -77,16 +77,25 @@ const common = () => {
 // タイマーをスタートさせる
 Hack.startTimer = () => {
 	// 時間制限タイマー
-	const limitTimer = new enchant.ui.TimeLabel(352, 8, 'DOWN');
+	const limitTimer = new enchant.ui.TimeLabel(352, 8, 'countdown');
 	limitTimer.time = (window.TIME_LIMIT / 1000) >> 0;
 	limitTimer.backgroundColor = 'rgba(0, 0, 0, 0.5)';
 	Hack.menuGroup.addChild(limitTimer);
 
+	let isEnd = false;
 	// ゲーム終了
-	setTimeout(() => {
+	function end() {
+		isEnd = true;
 		// クリア（これ以降はスコアが増えない）
 		Hack.gameclear();
-	}, window.TIME_LIMIT);
+	}
+	
+	limitTimer._listeners.enterframe.push(() => {
+		const time = Math.max(limitTimer._time / game.fps, 0);
+		// 時間切れ
+		if (!isEnd && time <= 0) end();
+		limitTimer.text = limitTimer.label + Math.ceil(time);
+	});
 };
 
 export default common;
