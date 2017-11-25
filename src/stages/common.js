@@ -50,10 +50,10 @@ const common = () => {
 		chantEffect.mod(Hack.assets.chantEffect);
 		chantEffect.locate(player.mapX, player.mapY);
 		// 詠唱中は操作できない
-		player.speed = 0;
+		player.stop();
 		setTimeout(() => {
 			// 元に戻す
-			player.speed = 1;
+			player.resume();
 			// エフェクトを消す
 			chantEffect.destroy();
 		}, window.WAIT_TIME);
