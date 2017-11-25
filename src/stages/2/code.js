@@ -1,16 +1,3 @@
-turnLeft();
-walk(3);
-repeat(2);
-
-locate(1, 5);
-
-headRight();
-headDown();
-headLeft();
-headUp();
-
-turnRight();
-dash();
-attack(2);
-
-repeat(1);
+// dash(5); // 5マスダッシュする
+// attack(); // 攻撃する＝宝箱をひらく
+// repeat(5); // 5回繰り返す
