@@ -51,6 +51,19 @@ const common = () => {
 		}, window.WAIT_TIME);
 	});
 
+	let previousScore = Hack.score;
+	Hack.on('scorechange', () => {
+		// スコアが増えたときに出る数字
+		const scoreEffect = new enchant.ui.ScoreLabel();
+		scoreEffect.score = (Hack.score - previousScore); // 取得したスコア
+		scoreEffect.label = '';
+		// いい感じのエフェクト
+		scoreEffect.tl.moveTo(player.x, player.y, 0).moveBy(0, -8, 8).then(() => {
+			scoreEffect.parentNode.removeChild(scoreEffect);
+		});
+		Hack.menuGroup.addChild(scoreEffect);
+	});
+
 };
 
 export default common;
