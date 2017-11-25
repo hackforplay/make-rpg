@@ -508,6 +508,19 @@ Hack.assets.barrier = function() {
 	this.frame = [0];
 };
 
+Hack.assets.chantEffect = function() {
+	this.image = game.assets['resources/chant_effect'];
+	this.width = 240;
+	this.height = 240;
+	this.offset = {
+		x: -105,
+		y: -108
+	};
+	this.directionType = 'single';
+	this.forward = [0, -1];
+	this.frame = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+};
+
 var __Effect = enchant.Class(RPGObject, {
 	initialize: function(velocityX, velocityY, lifetime, randomize) {
 		RPGObject.call(this, 32, 32, 0, 0);

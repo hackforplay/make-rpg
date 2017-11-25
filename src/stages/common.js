@@ -26,10 +26,28 @@ const common = () => {
 
 	// 階層ラベル (同じマップになんども enter することを想定している)
 	Hack.floorLabel = new enchant.ui.ScoreLabel(120, 8);
-	Hack.scoreLabel.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+	Hack.floorLabel.backgroundColor = 'rgba(0, 0, 0, 0.5)';
 	Hack.floorLabel.score = 1;
 	Hack.floorLabel.label = 'FLOOR:';
 	Hack.menuGroup.addChild(Hack.floorLabel);
+
+	// ライフラベルを隠す
+	Hack.lifeLabel.parentNode.removeChild(Hack.lifeLabel);
+
+	// 詠唱アニメーション
+	Hack.on('code', () => {
+		const chantEffect = new RPGObject();
+		chantEffect.mod(Hack.assets.chantEffect);
+		chantEffect.locate(player.mapX, player.mapY);
+		// 詠唱中は操作できない
+		player.speed = 0;
+		setTimeout(() => {
+			// 元に戻す
+			player.speed = 1;
+			// エフェクトを消す
+			chantEffect.destroy();
+		}, window.WAIT_TIME);
+	});
 
 };
 
