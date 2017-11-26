@@ -7,7 +7,10 @@ const queue = [];
 
 // コードを受け取ってから実行を開始するまでの待機時間
 window.WAIT_TIME = 3000;
+// 魔道書実行の強制停止フラグ
 window.STOP_FLAG = false;
+// 魔道書の詠唱中or実行中フラグ
+window.IS_CHANTING = false;
 
 // 1 フレームで走れる最大距離
 const DASH_STEP_LIMIT = 3;
@@ -67,6 +70,9 @@ feeles.connected.then(({ port }) => {
 				next(window.player);
 			}, window.WAIT_TIME + 10);
 		})();
+
+		// 魔道書の詠唱中or実行中フラグ
+		window.IS_CHANTING = true;
 	});
 });
 
@@ -98,6 +104,9 @@ export async function resetQueue() {
 	isPlaying = false;
 	cursor = 0;
 	// console.warn('3: キューをリセットしました');
+	
+	// 魔道書の詠唱中or実行中フラグ
+	window.IS_CHANTING = false;
 }
 
 // 最初のシーケンスオブジェクトを実行する
@@ -123,6 +132,9 @@ const next = async player => {
 		// もうシーケンスが存在しない
 		isPlaying = false;
 		cursor = 0; // リセットして待機
+
+		// 魔道書の詠唱中or実行中フラグ
+		window.IS_CHANTING = false;
 	}
 };
 
