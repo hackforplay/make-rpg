@@ -66,7 +66,7 @@ const common = () => {
 		}, window.WAIT_TIME / 1000 * game.fps);
 	});
 
-	Hack.on('scorechange', ({ oldValue, newValue }) => {
+	Hack.on('realtimescorechange', ({ oldValue, newValue }) => {
 		// スコアが増えたときに出る数字
 		const scoreEffect = new enchant.ui.ScoreLabel();
 		scoreEffect.score = (newValue - oldValue); // 取得したスコア
