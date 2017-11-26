@@ -7,48 +7,134 @@ const queue = [];
 
 // コードを受け取ってから実行を開始するまでの待機時間
 window.WAIT_TIME = 3000;
+// 魔道書実行の強制停止フラグ
 window.STOP_FLAG = false;
+// 魔道書の詠唱中or実行中フラグ
+window.IS_CHANTING = false;
+
+// 1 フレームで走れる最大距離
+const DASH_STEP_LIMIT = 3;
+
+// 停止フラグを持った関数
+class SequenceObject {
+	constructor(sequence) {
+		this.isStop = false;
+		this.sequence = sequence;
+	}
+	async run(...args) {
+		if (this.isStop) return;
+		await this.sequence(...args);
+	}
+	stop() {
+		this.isStop = true;
+	}
+}
+queue.push = function(sequence) {
+	Array.prototype.push.call(this, new SequenceObject(sequence));
+};
+
+// コードを送った回数
+let shotCount = 0;
 
 // 魔道書の実行をハンドルする
 feeles.connected.then(({ port }) => {
 	// ChannelMessage の port
-	port.addEventListener('message', e => {
+	port.addEventListener('message', async ({ data }) => {
 		// shot: コードをおくる
-		if (e.data.query === 'shot') {
-			// キューをリセット
-			queue.splice(0,	 queue.length);
-			// 魔道書実行イベントを発行
-			const event = new Event('code');
-			Hack.dispatchEvent(event);
-			// 待機してからスタート
+		if (data.query !== 'shot') return;
+		if (!Hack.isPlaying) return;
+
+		// console.warn('1: コードが発行されました');
+
+		++shotCount;
+		// キューをリセット
+		await resetQueue();
+
+		// 魔道書実行イベントを発行
+		Hack.dispatchEvent(new Event('code'));
+
+		// console.warn('4: 魔道書イベントを発行しました');
+		// 待機してからスタート
+		(function() {
+			// ショットを送った回数を束縛
+			const localCount = shotCount;
+
 			setTimeout(() => {
+				if (localCount !== shotCount) return;
+
+				// console.warn('5: 魔道書を実行しました');
 				if (!window.player) {
 					throw new Error('sequence: player is not found');
 				}
 				window.STOP_FLAG = false;
 				next(window.player);
 			}, window.WAIT_TIME + 10);
-		}
+		})();
+
+		// 魔道書の詠唱中or実行中フラグ
+		window.IS_CHANTING = true;
 	});
 });
 
+let cursor = 0;
+let nextResolver = null;
+
+// シーケンスを再生中か
+let isPlaying = false;
+
+// キューをリセットする
+export async function resetQueue() {
+
+	// console.warn('2: キューをリセットします');
+
+	window.STOP_FLAG = true;
+
+	// 以前のキューを停止する
+	queue.forEach((queue) => queue.stop());
+
+	queue.length = 0;
+
+	// 現在実行中のキューを待機する
+	if (isPlaying) {
+		await new Promise((resolve) => nextResolver = () => {
+			resolve();
+		});
+		nextResolver = null;
+	}
+	isPlaying = false;
+	cursor = 0;
+	// console.warn('3: キューをリセットしました');
+	
+	// 魔道書の詠唱中or実行中フラグ
+	window.IS_CHANTING = false;
+}
+
 // 最初のシーケンスオブジェクトを実行する
 // 実行後もキューはそのまま残り続ける
-let cursor = 0;
 const next = async player => {
+
+	isPlaying = true;
+
 	if (window.STOP_FLAG) {
 		// 強制終了フラグ
 		return;
 	}
 	const task = queue[cursor];
 	if (task) {
-		console.info('runnging: ', task, cursor);
-		await task(player); // タスクを実行, 終わるまで待つ
+		// console.info('runnging: ', task, cursor);
+		await task.run(player); // タスクを実行, 終わるまで待つ
 		cursor++; // カーソルをひとつ進める
+		// next 通知
+		if (nextResolver) nextResolver();
+
 		next(player);
 	} else {
 		// もうシーケンスが存在しない
+		isPlaying = false;
 		cursor = 0; // リセットして待機
+
+		// 魔道書の詠唱中or実行中フラグ
+		window.IS_CHANTING = false;
 	}
 };
 
@@ -84,11 +170,16 @@ export const turnLeft = () => {
 // 例外として、マップが変わったときは停止する
 export const dash = (num = 100) => {
 	queue.push(async player => {
-		for (let moved = 0; moved < num; moved++) {
+		for (let moved = 1; moved <= num; moved++) {
 			const { mapX, mapY, map } = player; // 移動前の値
 
 			walkWithoutAnimation(player); // ノーフレームで１マス進む
-			
+
+			// 1 フレームで走れる最大距離に達したなら
+			if (!(moved % DASH_STEP_LIMIT)) {
+				// 1 フレーム待機する
+				await new Promise((resolve) => player.setTimeout(resolve, 1));
+			}
 			if (player.mapX === mapX && player.mapY === mapY) {
 				break; // mapX, mapY が同じなら壁と判断して終了
 			}
@@ -131,6 +222,54 @@ export const headLeft = () => {
 	});
 };
 
+// 上に歩く
+export function walkUp(step) {
+	headUp();
+	walk(step);
+}
+
+// 下に歩く
+export function walkDown(step) {
+	headDown();
+	walk(step);
+}
+
+// 左に歩く
+export function walkLeft(step) {
+	headLeft();
+	walk(step);
+}
+
+// 右に歩く
+export function walkRight(step) {
+	headRight();
+	walk(step);
+}
+
+// 上に走る
+export function dashUp(step) {
+	headUp();
+	dash(step);
+}
+
+// 下に走る
+export function dashDown(step) {
+	headDown();
+	dash(step);
+}
+
+// 左に走る
+export function dashLeft(step) {
+	headLeft();
+	dash(step);
+}
+
+// 右に走る
+export function dashRight(step) {
+	headRight();
+	dash(step);
+}
+
 // num 回攻撃する
 export const attack = num => {
 	queue.push(async player => {
@@ -153,6 +292,7 @@ export const locate = (x, y) => {
 // repeat(2) ... リピート, リピート, スルー, リピート, リピート, スルー...
 // repeat(n) ... n + 1 の倍数回はスルー, それ以外はリピート
 export const repeat = num => {
+	--num;
 	let count = 0; // (この中だけのローカルスコープ)
 	if (num < 1) return; // つねにスルー
 

@@ -207,6 +207,7 @@ MapObject.dictionary = {
 	upStair: 34,
 	pot: 42,
 	beam: 30,
+	stoneWall: 30,
 
 	// 新仕様公式定義
 	// clay: 320,
@@ -453,12 +454,16 @@ Hack.Attack = function(x, y, damage, pushX, pushY) {
 	}, this);
 };
 
+Hack.realtimeScoreChangeEnabled = true;
+
 /**
  * Hack.score
  * Generic scoring property
  * Invoke Hack.onscorechange
  */
 var scorechangeFlag = false;
+let scoreOldValue = null;
+let scoreNewValue = null;
 Object.defineProperty(Hack, 'score', {
 	enumerable: true,
 	configurable: false,
@@ -467,8 +472,13 @@ Object.defineProperty(Hack, 'score', {
 	},
 	set: function(value) {
 		if (Hack.scoreLabel.score !== value) {
+			scoreOldValue = Hack.scoreLabel.score;
+			scoreNewValue = value;
 			Hack.scoreLabel.score = value;
 			scorechangeFlag = true;
+			if (Hack.realtimeScoreChangeEnabled) {
+				Hack.dispatchEvent(new Event('realtimescorechange', { oldValue: scoreOldValue, newValue: scoreNewValue }));
+			}
 		}
 	}
 });
@@ -476,7 +486,10 @@ Hack.scoreLabel = Object.create(null); // 仮オブジェクト
 Hack.score = 0; // Fire a event and Initialize score
 game.on('enterframe', function() {
 	if (scorechangeFlag && Hack.isPlaying) {
-		Hack.dispatchEvent(new Event('scorechange'));
+		const event = new Event('scorechange');
+		event.oldValue = scoreOldValue;
+		event.newValue = scoreNewValue;
+		Hack.dispatchEvent(event);
 		scorechangeFlag = false;
 	}
 });
