@@ -10,7 +10,7 @@
         }
     },
     "ShotCard": {
-        "visible": false,
+        "visible": true,
         "order": 2,
         "init": {
             "fileName": "stages/1/code.js"
@@ -21,14 +21,14 @@
         "order": 3
     },
     "EditorCard": {
-        "visible": true,
+        "visible": false,
         "order": 4,
         "init": {
-            "fileName": "stages/1/game.js"
+            
         }
     },
     "ReadmeCard": {
-        "visible": true,
+        "visible": false,
         "order": 5,
         "init": {
             "fileName": "README.md"
