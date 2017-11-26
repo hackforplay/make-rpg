@@ -3,6 +3,7 @@
 
 import Hack from 'hackforplay/hack';
 import { Event } from 'enchantjs/enchant';
+import { resetQueue } from 'sequence';
 
 const common = () => {
 	// 呪文詠唱を止めるボタン
@@ -10,7 +11,7 @@ const common = () => {
 	stopButton.image = game.assets['resources/stop_button'];
 	stopButton.moveTo(0, 270);
 	stopButton.ontouchstart = () => {
-		window.STOP_FLAG = true;
+		resetQueue();
 	};
 	Hack.menuGroup.addChild(stopButton);
 	
@@ -21,7 +22,7 @@ const common = () => {
 	resetButton.ontouchstart = () => {
 		Hack.dispatchEvent(new Event('reset'));
 		// リセットはストップをかねる
-		window.STOP_FLAG = true;
+		resetQueue();
 	};
 	Hack.menuGroup.addChild(resetButton);
 
@@ -46,8 +47,10 @@ const common = () => {
 	Hack.lifeLabel.parentNode.removeChild(Hack.lifeLabel);
 
 	// 詠唱アニメーション
+	let chantEffect = null;
 	Hack.on('code', () => {
-		const chantEffect = new RPGObject();
+		if (chantEffect) chantEffect.remove();
+		chantEffect = new RPGObject();
 		chantEffect.mod(Hack.assets.chantEffect);
 		chantEffect.locate(player.mapX, player.mapY);
 		chantEffect.compositeOperation = 'lighter';
@@ -55,12 +58,12 @@ const common = () => {
 		chantEffect.tl.scaleTo(1, 1, 8, 'QUAD_EASEOUT');
 		// 詠唱中は操作できない
 		player.stop();
-		setTimeout(() => {
+		chantEffect.setTimeout(() => {
 			// 元に戻す
 			player.resume();
 			// エフェクトを消す
 			chantEffect.tl.fadeOut(4).removeFromScene();
-		}, window.WAIT_TIME);
+		}, window.WAIT_TIME / 1000 * game.fps);
 	});
 
 	Hack.on('scorechange', ({ oldValue, newValue }) => {
