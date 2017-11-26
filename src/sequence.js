@@ -39,6 +39,8 @@ feeles.connected.then(({ port }) => {
 	port.addEventListener('message', async ({ data }) => {
 		// shot: コードをおくる
 		if (data.query !== 'shot') return;
+		if (!Hack.isPlaying) return;
+
 		// console.warn('1: コードが発行されました');
 
 		++shotCount;
