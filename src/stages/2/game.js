@@ -7,16 +7,15 @@ import * as sequence from 'sequence';
 var mTresureBoxScore = 5;
 
 async function gameFunc() {
-
 	resetMap();
 
-	const player = self.player = new Player(); // プレイヤーをつくる
+	const player = (self.player = new Player()); // プレイヤーをつくる
 	player.locate(1, 1); // はじめの位置
-	player.on(('▼ イベント', 'こうげきするとき'), (event) => {
+	player.on(('▼ イベント', 'こうげきするとき'), event => {
 		const 使い手 = event.target;
 		const ビーム = new RPGObject();
 		ビーム.mod(('▼ スキン', _bビーム));
-		ビーム.onふれはじめた = (event) => {
+		ビーム.onふれはじめた = event => {
 			if (event.hit !== 使い手) {
 				Hack.Attack(event.mapX, event.mapY, 使い手.atk);
 				ビーム.destroy();
@@ -31,10 +30,10 @@ async function gameFunc() {
 
 	// 詠唱待ち時間設定
 	window.WAIT_TIME = 3000;
-	
+
 	// ゲーム時間設定
 	window.TIME_LIMIT = 180 * 1000;
-	
+
 	// タイマー開始
 	Hack.startTimer();
 
@@ -42,10 +41,11 @@ async function gameFunc() {
 	feeles.openCode('stages/2/code.js');
 
 	for (const key of Object.keys(sequence)) {
-		// コード側から使えるようにする
-		feeles.setAlias(key, sequence[key]);
+		if (key !== 'resetQueue') {
+			// コード側から使えるようにする
+			feeles.setAlias(key, sequence[key]);
+		}
 	}
-
 }
 
 function resetMap() {
@@ -76,15 +76,14 @@ function resetMap() {
 	Hack.maps.map1 = map1;
 
 	Hack.changeMap('map1'); // map1 をロード
-	
-	for (var i=3; i<=13; i+=2) {
-		for (var j=3; j<100; j+=2) {
+
+	for (var i = 3; i <= 13; i += 2) {
+		for (var j = 3; j < 100; j += 2) {
 			putTresureBox(i, j);
 		}
 	}
 
 	/*+ モンスター アイテム せっち システム */
-
 }
 
 function putTresureBox(x, y) {

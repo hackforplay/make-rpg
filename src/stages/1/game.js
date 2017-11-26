@@ -41,8 +41,10 @@ async function gameFunc() {
 	feeles.openCode('stages/1/code.js');
 
 	for (const key of Object.keys(sequence)) {
-		// コード側から使えるようにする
-		feeles.setAlias(key, sequence[key]);
+		if (key !== 'resetQueue') {
+			// コード側から使えるようにする
+			feeles.setAlias(key, sequence[key]);
+		}
 	}
 
 }
