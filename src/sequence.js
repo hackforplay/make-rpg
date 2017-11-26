@@ -39,6 +39,8 @@ feeles.connected.then(({ port }) => {
 	port.addEventListener('message', async ({ data }) => {
 		// shot: コードをおくる
 		if (data.query !== 'shot') return;
+		if (!Hack.isPlaying) return;
+
 		// console.warn('1: コードが発行されました');
 
 		++shotCount;
@@ -278,6 +280,7 @@ export const locate = (x, y) => {
 // repeat(2) ... リピート, リピート, スルー, リピート, リピート, スルー...
 // repeat(n) ... n + 1 の倍数回はスルー, それ以外はリピート
 export const repeat = num => {
+	--num;
 	let count = 0; // (この中だけのローカルスコープ)
 	if (num < 1) return; // つねにスルー
 

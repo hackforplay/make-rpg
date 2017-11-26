@@ -454,6 +454,8 @@ Hack.Attack = function(x, y, damage, pushX, pushY) {
 	}, this);
 };
 
+Hack.realtimeScoreChangeEnabled = true;
+
 /**
  * Hack.score
  * Generic scoring property
@@ -474,6 +476,9 @@ Object.defineProperty(Hack, 'score', {
 			scoreNewValue = value;
 			Hack.scoreLabel.score = value;
 			scorechangeFlag = true;
+			if (Hack.realtimeScoreChangeEnabled) {
+				Hack.dispatchEvent(new Event('realtimescorechange', { oldValue: scoreOldValue, newValue: scoreNewValue }));
+			}
 		}
 	}
 });

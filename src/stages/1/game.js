@@ -72,7 +72,11 @@ function resetMap() {
 	itemStairs2.mod(('▼ スキン', _kくだりかいだん));
 	itemStairs2.locate(9, 5, 'map1');
 	itemStairs2.layer = RPGMap.Layer.Under;
-	itemStairs2.on(('▼ イベント', 'のった'), () => {
+	itemStairs2.on(('▼ イベント', 'のった'), async () => {
+		// ダッシュしながら階段に乗ると直前のコインが消える前にリロードされるので少し待つ
+		Hack.player.stop();
+		await new Promise((resolve) => setTimeout(resolve, 100));
+		Hack.player.resume();
 		resetMap();
 		Hack.floorLabel.score++;
 		player.locate(2, 1); // はじめの位置
