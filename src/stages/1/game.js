@@ -34,8 +34,22 @@ async function gameFunc() {
 	// ゲーム時間設定
 	window.TIME_LIMIT = 180 * 1000;
 
-	// タイマー開始
-	Hack.startTimer();
+	// せつめい
+	const description = new enchant.Sprite(388, 224);
+	description.image = game.assets['resources/start_message_01'];
+	description.moveTo(46, 48);
+	Hack.menuGroup.addChild(description);
+
+	const startButton = new enchant.Sprite(120, 32);
+	startButton.image = game.assets['resources/start_button'];
+	startButton.moveTo(180, 220);
+	Hack.menuGroup.addChild(startButton);
+	startButton.ontouchstart = () => {
+		Hack.menuGroup.removeChild(description);
+		Hack.menuGroup.removeChild(startButton);
+		// タイマー開始
+		Hack.startTimer();
+	};
 
 	// 魔道書のコードをひらく
 	feeles.openCode('stages/1/code.js');
