@@ -6,19 +6,19 @@ import { Event } from 'enchantjs/enchant';
 import { resetQueue } from 'sequence';
 
 const common = () => {
-	// 呪文詠唱を止めるボタン
-	const stopButton = new enchant.Sprite(80, 20);
-	stopButton.image = game.assets['resources/stop_button'];
-	stopButton.moveTo(0, 270);
-	stopButton.ontouchstart = () => {
-		resetQueue();
-	};
-	Hack.menuGroup.addChild(stopButton);
+	// // 呪文詠唱を止めるボタン [一旦廃止]
+	// const stopButton = new enchant.Sprite(80, 20);
+	// stopButton.image = game.assets['resources/stop_button'];
+	// stopButton.moveTo(0, 270);
+	// stopButton.ontouchstart = () => {
+	// 	resetQueue();
+	// };
+	// Hack.menuGroup.addChild(stopButton);
 	
 	// ゲームリセットボタン
-	const resetButton = new enchant.Sprite(80, 20);
+	const resetButton = new enchant.Sprite(64, 64);
 	resetButton.image = game.assets['resources/reset_button'];
-	resetButton.moveTo(0, 296);
+	resetButton.moveTo(0, 320 - 64);
 	resetButton.ontouchstart = () => {
 		Hack.dispatchEvent(new Event('reset'));
 		// リセットはストップをかねる

@@ -498,7 +498,7 @@ Hack.assets.ouroboros = function() {
 Hack.assets.barrier = function() {
 	this.image = game.assets['resources/barrier'];
 	this.width = 160;
-	this.height = 128;
+	this.height = 96;
 	this.offset = {
 		x: 0,
 		y: 0

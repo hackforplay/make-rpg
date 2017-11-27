@@ -295,7 +295,7 @@ export const repeat = num => {
 	--num;
 	let count = 0; // (この中だけのローカルスコープ)
 	if (num < 1) return; // つねにスルー
-
+	num = Math.min(num, 1000); // 限界
 	queue.push(() => {
 		if (++count % (num + 1) > 0) {
 			// n + 1 の倍数回以外

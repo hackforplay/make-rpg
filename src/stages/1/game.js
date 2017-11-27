@@ -26,7 +26,7 @@ async function gameFunc() {
 	/*+ スキル */
 
 	// さいしょの向きをかえる
-	player.turn(1);
+	player.forward = [1, 0];
 
 	// 詠唱待ち時間設定
 	window.WAIT_TIME = 3000;
@@ -126,6 +126,7 @@ function putCoin(x, y) {
 Hack.onreset = function() {
 	resetMap();
 	player.locate(2, 1); // はじめの位置
+	player.forward = [1, 0];
 };
 
 export default gameFunc;

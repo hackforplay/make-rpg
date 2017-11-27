@@ -4,8 +4,9 @@ import * as sequence from 'sequence';
 /* ここの部分は選手には見えません
  * デバッグ中につき魔道書は最初から表示されています
  */
-var mDragonScore = 30; 
+var mDragonScore = 50;
 var mDragonHp = 1;
+var mOrbScore = 5;
 var flagGem1 = false;
 var flagGem2 = false;
 var flagGem3 = false;
@@ -30,13 +31,13 @@ async function gameFunc() {
 	/*+ スキル */
 
 	// さいしょの向きをかえる
-	player.turn(1);
-
+	player.forward = [0, -1];
+	
 	// 詠唱待ち時間設定
 	window.WAIT_TIME = 3000;
 	
 	// ゲーム時間設定
-	window.TIME_LIMIT = 180 * 1000;
+	window.TIME_LIMIT = 300 * 1000;
 	
 	// タイマー開始
 	Hack.startTimer();
@@ -56,6 +57,7 @@ async function gameFunc() {
 Hack.onreset = function() {
 	resetMap();
 	player.locate(7, 8); // はじめの位置
+	player.forward = [0, -1];
 };
 
 function resetMap() {
@@ -118,7 +120,7 @@ function resetMap() {
 
 	const itemGem1 = new RPGObject();
 	flagGem1 = false;	
-	itemGem1.mod(('▼ スキン', _tつぼ));
+	itemGem1.mod(('▼ スキン', Hack.assets.blueOrb));
 	itemGem1.hp = 1;
 	itemGem1.locate(4, 3, 'map1');
 	itemGem1.tl.moveBy(0, 96, 60).moveBy(0, -96, 60).loop();
@@ -128,12 +130,13 @@ function resetMap() {
 			itemDragon.hp = mDragonHp;
 			itemBarrier.visible = false;
 		}
+		Hack.score += mOrbScore;
 	});
 
 
 	const itemGem2 = new RPGObject();
 	flagGem2 = false;	
-	itemGem2.mod(('▼ スキン', _tつぼ));
+	itemGem2.mod(('▼ スキン', Hack.assets.greenOrb));
 	itemGem2.hp = 1;
 	itemGem2.locate(10, 6, 'map1');
 	itemGem2.tl.moveBy(0, -96, 60).moveBy(0, 96, 60).loop();
@@ -143,12 +146,13 @@ function resetMap() {
 			itemDragon.hp = mDragonHp;
 			itemBarrier.visible = false;
 		}
+		Hack.score += mOrbScore;
 	});
 
 
 	const itemGem3 = new RPGObject();
 	flagGem3 = false;
-	itemGem3.mod(('▼ スキン', _tつぼ));
+	itemGem3.mod(('▼ スキン', Hack.assets.pinkOrb));
 	itemGem3.hp = 1;
 	itemGem3.locate(8, 2, 'map1');
 	itemGem3.tl.moveBy(-64, 0, 60).moveBy(64, 0, 60).loop();
@@ -158,10 +162,11 @@ function resetMap() {
 			itemDragon.hp = mDragonHp;
 			itemBarrier.visible = false;
 		}
+		Hack.score += mOrbScore;
 	});
-	const itemBarrier = new Sprite(160, 128);
+	const itemBarrier = new Sprite(160, 96);
 	itemBarrier.image = game.assets['resources/barrier'];
-	itemBarrier.moveTo(160, 96);
+	itemBarrier.moveTo(160, 100);
 	itemBarrier.opacity = 0.3;
 	Hack.defaultParentNode.addChild(itemBarrier);
 
