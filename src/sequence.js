@@ -142,12 +142,12 @@ const wait = (time = 100) => new Promise(resolve => {
 	setTimeout(resolve, time);
 });
 
-// num マス前に歩く
-export const walk = num => {
-	queue.push(async player => {
-		await player.walk(num);
-	});
-};
+// // num マス前に歩く
+// export const walk = num => {
+// 	queue.push(async player => {
+// 		await player.walk(num);
+// 	});
+// };
 
 // 右に回転
 export const turnRight = () => {
@@ -275,9 +275,9 @@ export function dashRight(step) {
 */
 
 // num 回攻撃する
-export const attack = num => {
+export const attack = () => {
 	queue.push(async player => {
-		await player.attack(num);
+		await player.attack();
 	});
 };
 
