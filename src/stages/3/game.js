@@ -119,14 +119,14 @@ function resetMap() {
 		} 
 		// そうでない＝攻撃を受け付けない
 		else {
-			itemGem1.color = 'red';
-			itemGem2.color = 'red';
-			itemGem3.color = 'red';
+			// itemGem1.color = 'red';
+			// itemGem2.color = 'red';
+			// itemGem3.color = 'red';
 
 			itemBarrier.tl.clear().show().delay(10).fadeTo(0.3, 30).then(() => {
-				itemGem1.color = 'brown';
-				itemGem2.color = 'brown';
-				itemGem3.color = 'brown';
+				// itemGem1.color = 'brown';
+				// itemGem2.color = 'brown';
+				// itemGem3.color = 'brown';
 			});
 			// itemBarrier.tl.fadeIn(0).delay(10).fadeOut(20);
 		}
