@@ -222,6 +222,9 @@ export const headLeft = () => {
 	});
 };
 
+/*
+// 向き変更＋移動
+
 // 上に歩く
 export function walkUp(step) {
 	headUp();
@@ -269,6 +272,7 @@ export function dashRight(step) {
 	headRight();
 	dash(step);
 }
+*/
 
 // num 回攻撃する
 export const attack = num => {
