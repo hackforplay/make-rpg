@@ -54,9 +54,8 @@ function resetMap() {
 	Hack.maps.map1 = map1;
 
 	Hack.changeMap('map1'); // map1 をロード
-
-	for (var i = 3; i <= 13; i += 2) {
-		for (var j = 3; j < 100; j += 2) {
+	for (var i=3; i<=13; i+=2) {
+		for (var j=2; j<100; j+=2) {
 			putTresureBox(i, j);
 		}
 	}
