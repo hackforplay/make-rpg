@@ -123,7 +123,7 @@ function resetMap() {
 			// itemGem2.color = 'red';
 			// itemGem3.color = 'red';
 
-			itemBarrier.tl.clear().show().delay(10).fadeTo(0.3, 30).then(() => {
+			itemBarrier.tl.clear().show().delay(10).fadeTo(0.7, 30).then(() => {
 				// itemGem1.color = 'brown';
 				// itemGem2.color = 'brown';
 				// itemGem3.color = 'brown';
@@ -134,7 +134,7 @@ function resetMap() {
 
 	const itemGem1 = new RPGObject();
 	flagGem1 = false;	
-	itemGem1.mod(('▼ スキン', Hack.assets.blueOrb));
+	itemGem1.mod(('▼ スキン', Hack.assets.orangeOrb));
 	itemGem1.hp = 1;
 	itemGem1.locate(4, 3, 'map1');
 	itemGem1.tl.moveBy(0, 96, 60).moveBy(0, -96, 60).loop();
@@ -150,7 +150,7 @@ function resetMap() {
 
 	const itemGem2 = new RPGObject();
 	flagGem2 = false;	
-	itemGem2.mod(('▼ スキン', Hack.assets.greenOrb));
+	itemGem2.mod(('▼ スキン', Hack.assets.orangeOrb));
 	itemGem2.hp = 1;
 	itemGem2.locate(10, 6, 'map1');
 	itemGem2.tl.moveBy(0, -96, 60).moveBy(0, 96, 60).loop();
@@ -166,7 +166,7 @@ function resetMap() {
 
 	const itemGem3 = new RPGObject();
 	flagGem3 = false;
-	itemGem3.mod(('▼ スキン', Hack.assets.pinkOrb));
+	itemGem3.mod(('▼ スキン', Hack.assets.orangeOrb));
 	itemGem3.hp = 1;
 	itemGem3.locate(8, 2, 'map1');
 	itemGem3.tl.moveBy(-64, 0, 60).moveBy(64, 0, 60).loop();
@@ -178,10 +178,10 @@ function resetMap() {
 		}
 		Hack.score += mOrbScore;
 	});
-	const itemBarrier = new Sprite(160, 96);
+	const itemBarrier = new Sprite(128, 128);
 	itemBarrier.image = game.assets['resources/barrier'];
-	itemBarrier.moveTo(160, 100);
-	itemBarrier.opacity = 0.3;
+	itemBarrier.moveTo(173, 80);
+	itemBarrier.opacity = 0.7;
 	Hack.defaultParentNode.addChild(itemBarrier);
 
 	/*+ モンスター アイテム せっち システム */

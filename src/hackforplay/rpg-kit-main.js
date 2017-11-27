@@ -211,6 +211,7 @@ MapObject.dictionary = {
 	blueOrb: 40,
 	greenOrb: 41,
 	pinkOrb: 42,
+	orangeOrb: 43,
 	energyBall: 44
 
 	// 新仕様公式定義
