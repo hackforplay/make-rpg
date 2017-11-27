@@ -19,7 +19,7 @@ async function gameFunc() {
 	player.on(('▼ イベント', 'こうげきするとき'), (event) => {
 		const 使い手 = event.target;
 		const ビーム = new RPGObject();
-		ビーム.mod(('▼ スキン', _bビーム));
+		ビーム.mod(('▼ スキン', Hack.assets.energyBall));
 		ビーム.onふれはじめた = (event) => {
 			if (event.hit !== 使い手) {
 				Hack.Attack(event.mapX, event.mapY, 使い手.atk);
