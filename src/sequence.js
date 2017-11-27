@@ -284,8 +284,11 @@ export const attack = () => {
 // 絶対座標で移動する
 export const locate = (x, y) => {
 	queue.push(async player => {
+		await wait(); // 進んだことが見えるように
 		player.locate(x, y);
-		await wait();
+		// 階段の先へ
+		player.dispatchEvent(new Event('walkend'));
+		await wait(); // 進んだことが見えるように
 	});
 };
 
