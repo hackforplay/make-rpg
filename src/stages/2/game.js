@@ -33,7 +33,7 @@ async function gameFunc() {
 	window.WAIT_TIME = 3000;
 
 	// ゲーム時間設定
-	window.TIME_LIMIT = 180 * 1000;
+	window.TIME_LIMIT = 300 * 1000;
 
 	// タイマー開始
 	Hack.startTimer();
