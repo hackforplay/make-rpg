@@ -8,7 +8,13 @@ import 'hackforplay/rpg-kit-color';
 const game = enchant.Core.instance;
 
 // 新
-game.preload('resources/magician_girl', 'resources/maps', 'resources/red_dragon', 'resources/stop_button', 'resources/barrier', 'resources/reset_button', 'resources/chant_effect', 'resources/start_button', 'resources/start_message_01', 'resources/start_message_02', 'resources/start_message_03');
+game.preload(
+	'resources/magician_girl', 'resources/maps', 'resources/red_dragon', 
+	'resources/stop_button', 'resources/barrier', 'resources/reset_button', 
+	'resources/start_button', 'resources/next_button',
+	'resources/chant_effect', 'resources/timeup',
+	'resources/start_message_01', 'resources/start_message_02', 'resources/start_message_03'
+);
 
 // 旧
 game.preload('enchantjs/monster1.gif', 'enchantjs/monster2.gif', 'enchantjs/monster3.gif', 'enchantjs/monster4.gif', 'enchantjs/bigmonster1.gif', 'enchantjs/bigmonster2.gif', 'enchantjs/x2/map1.gif', 'enchantjs/x2/dotmat.gif', 'enchantjs/x1.5/chara0.png', 'enchantjs/x1.5/chara5.png', 'hackforplay/enchantbook.png', 'enchantjs/icon0.png', 'enchantjs/x2/effect0.png', 'hackforplay/madosyo_small.png', 'enchantjs/shadow.gif', 'enchantjs/x1.5/chara7.png',

@@ -51,6 +51,32 @@ async function gameFunc() {
 		Hack.startTimer();
 	};
 
+	Hack.on('gameclear', function () {
+		// 一旦削除
+		const score = Hack.score;
+		Hack.scoreLabel.score = 0;
+		Hack.menuGroup.removeChild(Hack.scoreLabel);
+		setTimeout(() => {
+			// スコアラベル表示
+			Hack.scoreLabel.moveBy(0, 210);
+			Hack.overlayGroup.addChild(Hack.scoreLabel);
+			Hack.scoreLabel.score = score;
+		}, 1000);
+
+		// 次へボタン
+		const nextButton = new enchant.Sprite(120, 32);
+		nextButton.image = game.assets['resources/next_button'];
+		nextButton.moveTo(180, 260);
+		nextButton.ontouchstart = () => {
+			// stage 2 へ
+			feeles.replace('stages/2/index.html');
+		};
+
+		setTimeout(() => {		
+			Hack.overlayGroup.addChild(nextButton);		
+		}, 4000);
+	});
+
 	// 魔道書のコードをひらく
 	feeles.openCode('stages/1/code.js');
 

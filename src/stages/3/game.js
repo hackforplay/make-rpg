@@ -4,9 +4,9 @@ import * as sequence from 'sequence';
 /* ここの部分は選手には見えません
  * デバッグ中につき魔道書は最初から表示されています
  */
-var mDragonScore = 50;
+var mDragonScore = 200;
 var mDragonHp = 1;
-var mOrbScore = 5;
+var mOrbScore = 40;
 var flagGem1 = false;
 var flagGem2 = false;
 var flagGem3 = false;
@@ -65,6 +65,19 @@ async function gameFunc() {
 			feeles.setAlias(key, sequence[key]);
 		}
 	}
+
+	Hack.on('gameclear', function () {
+		// 一旦削除
+		const score = Hack.score;
+		Hack.scoreLabel.score = 0;
+		Hack.menuGroup.removeChild(Hack.scoreLabel);
+		setTimeout(() => {
+			// スコアラベル表示
+			Hack.scoreLabel.moveBy(0, 210);
+			Hack.overlayGroup.addChild(Hack.scoreLabel);
+			Hack.scoreLabel.score = score;
+		}, 1000);
+	});
 
 }
 

@@ -93,12 +93,12 @@ Hack.log = function() {
 		var values = [];
 		for (var i = arguments.length - 1; i >= 0; i--) {
 			switch (typeof arguments[i]) {
-				case 'object':
-					values[i] = JSON.stringify(arguments[i]);
-					break;
-				default:
-					values[i] = arguments[i] + '';
-					break;
+			case 'object':
+				values[i] = JSON.stringify(arguments[i]);
+				break;
+			default:
+				values[i] = arguments[i] + '';
+				break;
 			}
 		}
 		this.textarea.text = values.join(' ') + (this.textarea.text !== '' ? '\n' : '') + this.textarea.text;
@@ -241,16 +241,16 @@ Hack.overlay = function() {
 		for (var i = 0; i < args.length; i++) {
 			var fill = args[i];
 			switch (true) {
-				case fill instanceof Surface:
-					this.image.draw(fill, 0, 0, game.width, game.height);
-					break;
-				case game.assets[fill] instanceof Surface:
-					this.image.draw(game.assets[fill], 0, 0, game.width, game.height);
-					break;
-				default:
-					this.image.context.fillStyle = fill;
-					this.image.context.fillRect(0, 0, game.width, game.height);
-					break;
+			case fill instanceof Surface:
+				this.image.draw(fill, 0, 0, game.width, game.height);
+				break;
+			case game.assets[fill] instanceof Surface:
+				this.image.draw(game.assets[fill], 0, 0, game.width, game.height);
+				break;
+			default:
+				this.image.context.fillStyle = fill;
+				this.image.context.fillRect(0, 0, game.width, game.height);
+				break;
 			}
 		}
 
@@ -289,9 +289,10 @@ Hack.overlay = function() {
 
 	// 初期値
 	Hack.ongameclear = function() {
-		var lay = Hack.overlay('rgba(0,0,0,0.4)', 'hackforplay/clear.png');
+		var lay = Hack.overlay('rgba(0,0,0,0.4)', 'resources/timeup');
 		lay.opacity = 0;
 		lay.moveTo(-game.rootScene.x, -game.rootScene.y);
+		lay.tl.fadeIn(30, enchant.Easing.LINEAR);
 		lay.tl.fadeIn(30, enchant.Easing.LINEAR);
 	};
 

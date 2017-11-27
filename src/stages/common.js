@@ -33,7 +33,7 @@ const common = () => {
 	});
 
 	// スコアの表示位置変更
-	Hack.scoreLabel.moveTo(180, 8);
+	Hack.scoreLabel.moveTo(160, 8);
 	Hack.scoreLabel.backgroundColor = 'rgba(0, 0, 0, 0.5)';
 
 	// 階層ラベル (同じマップになんども enter することを想定している)
