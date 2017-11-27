@@ -4,8 +4,9 @@ import * as sequence from 'sequence';
 /* ここの部分は選手には見えません
  * デバッグ中につき魔道書は最初から表示されています
  */
-var mDragonScore = 30; 
+var mDragonScore = 50;
 var mDragonHp = 1;
+var mOrbScore = 5;
 var flagGem1 = false;
 var flagGem2 = false;
 var flagGem3 = false;
@@ -36,7 +37,7 @@ async function gameFunc() {
 	window.WAIT_TIME = 3000;
 	
 	// ゲーム時間設定
-	window.TIME_LIMIT = 180 * 1000;
+	window.TIME_LIMIT = 300 * 1000;
 	
 	// タイマー開始
 	Hack.startTimer();
@@ -129,6 +130,7 @@ function resetMap() {
 			itemDragon.hp = mDragonHp;
 			itemBarrier.visible = false;
 		}
+		Hack.score += mOrbScore;
 	});
 
 
@@ -144,6 +146,7 @@ function resetMap() {
 			itemDragon.hp = mDragonHp;
 			itemBarrier.visible = false;
 		}
+		Hack.score += mOrbScore;
 	});
 
 
@@ -159,6 +162,7 @@ function resetMap() {
 			itemDragon.hp = mDragonHp;
 			itemBarrier.visible = false;
 		}
+		Hack.score += mOrbScore;
 	});
 	const itemBarrier = new Sprite(160, 96);
 	itemBarrier.image = game.assets['resources/barrier'];
