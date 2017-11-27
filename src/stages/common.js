@@ -16,9 +16,9 @@ const common = () => {
 	// Hack.menuGroup.addChild(stopButton);
 	
 	// ゲームリセットボタン
-	const resetButton = new enchant.Sprite(80, 20);
+	const resetButton = new enchant.Sprite(64, 64);
 	resetButton.image = game.assets['resources/reset_button'];
-	resetButton.moveTo(0, 296);
+	resetButton.moveTo(0, 320 - 64);
 	resetButton.ontouchstart = () => {
 		Hack.dispatchEvent(new Event('reset'));
 		// リセットはストップをかねる
