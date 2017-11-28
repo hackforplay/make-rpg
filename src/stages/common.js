@@ -4,6 +4,8 @@
 import Hack from 'hackforplay/hack';
 import { Event } from 'enchantjs/enchant';
 import { resetQueue } from 'sequence';
+import 'mod/coordinate';
+
 
 const common = () => {
 	// // 呪文詠唱を止めるボタン [一旦廃止]
