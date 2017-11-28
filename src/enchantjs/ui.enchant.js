@@ -49,7 +49,7 @@ require('enchantjs/enchant');
 /**
  * @type {Object}
  */
-enchant.ui = { assets: ['hackforplay/pad-white.png', 'enchantjs/apad.png', 'enchantjs/icon0.png', 'resources/font'] };
+enchant.ui = { assets: ['hackforplay/pad-white.png', /*'enchantjs/apad.png', 'enchantjs/icon0.png',*/ 'resources/font'] };
 
 /**
  * 方向キーパッドのクラス: Pad

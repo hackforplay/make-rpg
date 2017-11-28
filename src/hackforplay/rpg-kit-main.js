@@ -18,7 +18,8 @@ game.preload(
 );
 
 // 旧
-game.preload('enchantjs/monster1.gif', 'enchantjs/monster2.gif', 'enchantjs/monster3.gif', 'enchantjs/monster4.gif', 'enchantjs/bigmonster1.gif', 'enchantjs/bigmonster2.gif', 'enchantjs/x2/map1.gif', 'enchantjs/x2/dotmat.gif', 'enchantjs/x1.5/chara0.png', 'enchantjs/x1.5/chara5.png', 'hackforplay/enchantbook.png', 'enchantjs/icon0.png', 'enchantjs/x2/effect0.png', 'hackforplay/madosyo_small.png', 'enchantjs/shadow.gif', 'enchantjs/x1.5/chara7.png',
+game.preload(
+	'hackforplay/enchantbook.png',
 	'hackforplay/clear.png', 'hackforplay/gameover.png', 'hackforplay/button_retry.png', 'hackforplay/new_button_replay.png', 'hackforplay/new_button_retry.png', 'hackforplay/menu-button-menu.png', 'hackforplay/menu-button-restage.png', 'hackforplay/menu-button-hint.png', 'hackforplay/menu-button-comment.png', 'hackforplay/menu-button-retry.png', 'hackforplay/new_button_next.png', 'hackforplay/new_button_comment.png', 'hackforplay/new_button_restage.png', 'hackforplay/attack.png');
 
 game.keybind(' '.charCodeAt(0), 'a');
@@ -156,24 +157,6 @@ game.on('awake', () => {
 	Hack.textarea.moveTo(64, 0);
 	Hack.textarea.width = 340;
 	Hack.textarea.height = 32;
-
-	// Life label
-	const lifeLabel = new LifeLabel(Hack.menuGroup.x + 10, Hack.menuGroup.y + 72, 0);
-	Hack.lifeLabel = lifeLabel;
-	Hack.menuGroup.addChild(lifeLabel);
-	lifeLabel.onenterframe = function enterframe() {
-		if (!Hack.player) return;
-
-		var maxhp, hp;
-		maxhp = hp = this.life = Hack.player.hp;
-		Hack.player.on('hpchange', function() {
-			var hp = Hack.player.hp;
-			maxhp = Math.max(maxhp, hp);
-			Hack.lifeLabel.life = maxhp < Hack.lifeLabel._maxlife ? hp : (hp / maxhp) * Hack.lifeLabel._maxlife;
-		});
-
-		this.removeEventListener('enterframe', enterframe);
-	};
 
 	Hack.scoreLabel = (function(self, source) {
 		Object.keys(source).filter(function(key) {

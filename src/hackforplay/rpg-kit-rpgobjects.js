@@ -478,7 +478,6 @@ Hack.assets.explosion = function() {
 	this.frame = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4];
 };
 
-game.preload('enchantjs/monster5.gif');
 Hack.assets.ouroboros = function() {
 	this.image = game.assets['enchantjs/monster5.gif'];
 	this.width = 80;
