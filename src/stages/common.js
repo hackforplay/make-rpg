@@ -80,6 +80,24 @@ const common = () => {
 		Hack.world.addChild(scoreEffect);
 	});
 
+	// 魔道書に構文エラーがあったとき
+	Hack.on('error', ({ error }) => {
+		// エラーダイアログ（画像）を表示
+		const dialog = new enchant.Sprite(336, 240);
+		dialog.image = game.assets['resources/error_message'];
+		dialog.opacity = 0;
+		dialog.moveTo(72, 40);
+		dialog.ontouchstart = () => {
+			// クリックでとじる
+			// dialog.tl.fadeOut(30).removeFromScene();
+			Hack.menuGroup.removeChild(dialog);
+		};
+		Hack.menuGroup.addChild(dialog);
+		dialog.tl.fadeIn(30);
+		// 細かい内容はコンソールに出力する
+		console.error(error);
+	});
+
 };
 
 // タイマーをスタートさせる

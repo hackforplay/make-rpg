@@ -13,7 +13,8 @@ game.preload(
 	'resources/stop_button', 'resources/barrier', 'resources/reset_button', 
 	'resources/start_button', 'resources/next_button',
 	'resources/chant_effect', 'resources/timeup',
-	'resources/start_message_01', 'resources/start_message_02', 'resources/start_message_03'
+	'resources/start_message_01', 'resources/start_message_02', 'resources/start_message_03',
+	'resources/error_message'
 );
 
 // 旧
