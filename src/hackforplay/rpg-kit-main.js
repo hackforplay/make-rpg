@@ -1,5 +1,6 @@
 import 'hackforplay/enchantjs-kit';
 import 'mod/stop';
+import 'mod/coordinate';
 
 import 'hackforplay/hack';
 import 'hackforplay/rpg-kit-rpgobjects';
