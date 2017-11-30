@@ -2,6 +2,9 @@ import enchant from 'enchantjs/enchant';
 import RPGObject from './object';
 import Key from 'mod/key';
 
+// プレイヤーの入力をできなくするフラグ
+window.NO_INPUT = true;
+
 class Player extends RPGObject {
 	constructor() {
 		super();
@@ -42,10 +45,9 @@ class Player extends RPGObject {
 
 		if (!Hack.isPlaying) return;
 
-		// 魔道書の詠唱中or実行中フラグ
-		if (window.IS_CHANTING) {
-			// 入力を受け付けない
-			return;
+		if (window.NO_INPUT) {
+			// つねに入力を受け付けない
+			return ;
 		}
 
 		if (this.behavior === BehaviorTypes.Idle) {

@@ -3,7 +3,7 @@
 
 import Hack from 'hackforplay/hack';
 import { Event } from 'enchantjs/enchant';
-import { resetQueue } from 'sequence';
+import { kill } from 'feeles/eval';
 import 'mod/coordinate';
 
 
@@ -24,7 +24,7 @@ const common = () => {
 	resetButton.ontouchstart = () => {
 		Hack.dispatchEvent(new Event('reset'));
 		// リセットはストップをかねる
-		resetQueue();
+		kill();
 	};
 	Hack.menuGroup.addChild(resetButton);
 
