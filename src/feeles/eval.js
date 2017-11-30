@@ -1,6 +1,7 @@
 import enchant from '../enchantjs/enchant';
 import Hack from '../hackforplay/hack';
 import * as sequence from '../sequence';
+import workerJs from 'raw-loader!worker';
 
 // コードを受け取ってから実行を開始するまでの待機時間
 window.WAIT_TIME = 3000;
@@ -14,6 +15,9 @@ let timerId;
 export default function (code) {
 	// 魔道書の実行をフック
 
+	// 前回の Worker をとじる
+	kill();
+			
 	// ゲーム終了後は eval できない
 	if (!Hack.isPlaying) return;
 	
@@ -32,22 +36,47 @@ export default function (code) {
 	}, window.WAIT_TIME);	
 }
 
+// もう一つのスレッドを保持する変数
+// null でないとき: thread が running
+let worker = null;
+
 // ['attack', 'dash', ...]
 const asyncMethodKeywords = Object.keys(sequence);
 // 特定の関数がコールされているとき、そこに await キーワードを付け足す
-// /(attack|dash|...)\(\)/g
-const regExp = new RegExp(`($${asyncMethodKeywords.join('|')})\\(\\)`,  'g');
+// /(attack|dash|...)\(/g
+const regExp = new RegExp(`($${asyncMethodKeywords.join('|')})\\(`,  'g');
 
 function run(code) {
 	try {
-		// <<<< 全体を async function で囲み, await を補完 >>>>
-		code = `
+		// workerJs とがっちゃんこして,
+		// 全体を async function で囲み, await を補完
+		code = `${workerJs}
 (async function () {
-	${code.replace(regExp, 'await $1()')}
+	${code.replace(regExp, 'await $1(')}
 })()`;
 
-		// eval
-		eval(code);
+		// code (javascript) が取得できる URL
+		const url = URL.createObjectURL(
+			new Blob([code], { type: 'text/javascript' })
+		);
+
+		// 前回の Worker をとじる
+		kill();
+		
+		// 実行開始!
+		worker = new Worker(url);
+
+		// Worker から受け取ったリクエストを処理し,
+		// 終わり次第メッセージを返す
+		worker.addEventListener('message', event => {
+			const { id, name, args } = event.data;
+			// Worker 側から指定されたメソッドをコール
+			sequence[name](...args).then(() => {
+				event.target.postMessage({
+					id
+				});
+			});
+		});
 
 	} catch (error) {
 		// Hack.onerror を発火
@@ -63,6 +92,10 @@ function run(code) {
 export function kill () {
 	// 魔道書実行の強制停止フラグ
 	window.STOP_FLAG = true;
-	
-	// WIP
+
+	if (worker) {
+		// worker が running なら
+		worker.terminate();
+		worker = null;			
+	}
 }
