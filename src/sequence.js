@@ -17,7 +17,9 @@ const _player = new Promise((resolve, reject) => {
 });
 
 const sleep = player => new Promise(resolve => {
-	player.setTimeout(resolve, 1);
+	// ここの変数は調整できる
+	const commonFrameDelay = 3;
+	player.setTimeout(resolve, commonFrameDelay);
 });
 
 // second 秒 await する
@@ -56,7 +58,7 @@ export async function dash (num = 100) {
 		// 1 フレームで走れる最大距離に達したなら
 		if (!(moved % DASH_STEP_LIMIT)) {
 			// 1 フレーム待機する
-			await sleep(player);
+			await new Promise(resolve => player.setTimeout(resolve, 1));
 		}
 		if (player.mapX === mapX && player.mapY === mapY) {
 			break; // mapX, mapY が同じなら壁と判断して終了
