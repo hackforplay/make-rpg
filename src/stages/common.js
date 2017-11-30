@@ -31,7 +31,7 @@ const common = () => {
 	// タイムオーバー
 	Hack.on('gameclear', () => {
 		// 時間切れ！
-		window.STOP_FLAG = true;
+		kill();
 	});
 
 	// スコアの表示位置変更

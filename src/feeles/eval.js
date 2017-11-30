@@ -6,9 +6,6 @@ import workerJs from 'raw-loader!worker';
 // コードを受け取ってから実行を開始するまでの待機時間
 window.WAIT_TIME = 3000;
 
-// 魔道書実行の強制停止フラグ
-window.STOP_FLAG = false;
-
 // setTimeout の戻り値を保持する
 let timerId;
 
@@ -27,8 +24,6 @@ export default function (code) {
 	// 待機してからスタート
 	clearInterval(timerId);
 	timerId = feeles.setTimeout(() => {
-
-		window.STOP_FLAG = false;
 
 		// RUN!
 		run(code);
@@ -90,9 +85,6 @@ function run(code) {
 
 // 現在実行中のプロセス（Workerをkill）
 export function kill () {
-	// 魔道書実行の強制停止フラグ
-	window.STOP_FLAG = true;
-
 	if (worker) {
 		// worker が running なら
 		worker.terminate();
