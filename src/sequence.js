@@ -142,13 +142,6 @@ const wait = (time = 100) => new Promise(resolve => {
 	setTimeout(resolve, time);
 });
 
-// // num マス前に歩く
-// export const walk = num => {
-// 	queue.push(async player => {
-// 		await player.walk(num);
-// 	});
-// };
-
 // 右に回転
 export const turnRight = () => {
 	queue.push(async player => {
@@ -221,58 +214,6 @@ export const headLeft = () => {
 		await wait();
 	});
 };
-
-/*
-// 向き変更＋移動
-
-// 上に歩く
-export function walkUp(step) {
-	headUp();
-	walk(step);
-}
-
-// 下に歩く
-export function walkDown(step) {
-	headDown();
-	walk(step);
-}
-
-// 左に歩く
-export function walkLeft(step) {
-	headLeft();
-	walk(step);
-}
-
-// 右に歩く
-export function walkRight(step) {
-	headRight();
-	walk(step);
-}
-
-// 上に走る
-export function dashUp(step) {
-	headUp();
-	dash(step);
-}
-
-// 下に走る
-export function dashDown(step) {
-	headDown();
-	dash(step);
-}
-
-// 左に走る
-export function dashLeft(step) {
-	headLeft();
-	dash(step);
-}
-
-// 右に走る
-export function dashRight(step) {
-	headRight();
-	dash(step);
-}
-*/
 
 // num 回攻撃する
 export const attack = () => {
