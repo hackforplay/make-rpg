@@ -282,10 +282,11 @@ export const attack = () => {
 };
 
 // 絶対座標で移動する
+// x, y は小数点以下で切り捨てられる
 export const locate = (x, y) => {
 	queue.push(async player => {
 		await wait(); // 進んだことが見えるように
-		player.locate(x, y);
+		player.locate(x >> 0, y >> 0);
 		// 階段の先へ
 		player.dispatchEvent(new Event('walkend'));
 		await wait(); // 進んだことが見えるように
