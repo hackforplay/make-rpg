@@ -73,6 +73,11 @@ function run(code) {
 			});
 		});
 
+		worker.addEventListener('error', error => {
+			// もう一度メインスレッドで例外を投げる
+			throw error;
+		});
+
 	} catch (error) {
 		// Hack.onerror を発火
 		const Event = enchant.Event;
