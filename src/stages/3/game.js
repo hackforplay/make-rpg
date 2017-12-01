@@ -56,13 +56,6 @@ async function gameFunc() {
 	// 魔道書のコードをひらく
 	feeles.openCode('stages/3/code.js');
 
-	for (const key of Object.keys(sequence)) {
-		if (key !== 'resetQueue') {
-			// コード側から使えるようにする
-			feeles.setAlias(key, sequence[key]);
-		}
-	}
-
 	Hack.on('gameclear', function () {
 		// 一旦削除
 		const score = Hack.score;

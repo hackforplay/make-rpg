@@ -52,13 +52,6 @@ async function gameFunc() {
 	// 魔道書のコードをひらく
 	feeles.openCode('training/code.js');
 
-	for (const key of Object.keys(sequence)) {
-		if (key !== 'resetQueue') {
-			// コード側から使えるようにする
-			feeles.setAlias(key, sequence[key]);
-		}
-	}
-
 }
 
 function resetMap() {
