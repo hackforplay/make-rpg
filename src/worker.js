@@ -29,10 +29,9 @@ self.addEventListener('message', function(event) {
 	}
 });
 
-// { [name]: func() }
-const methods = {};
+// methodNames をグローバルにエクスポート
 for (const name of methodNames) {
-	methods[name] = (...args) => {
+	self[name] = (...args) => {
 		// ユニークな数値 (timeoutId) を生成するハック
 		const id = setTimeout(() => {});
 	
@@ -53,6 +52,3 @@ for (const name of methodNames) {
 		return promise;
 	};
 }
-
-// 変数に展開する (IDE の仕様をそのまま借りている)
-self.feeles = { exports: [methods] };
