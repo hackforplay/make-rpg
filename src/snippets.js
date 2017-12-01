@@ -1,4 +1,5 @@
 export default [
+	/* プレイヤーに命令する関数 */
 	{
 		prefix: 'wait',
 		text: 'wait(1) // やすめ\n'
@@ -38,5 +39,36 @@ export default [
 	{
 		prefix: 'locate',
 		text: 'locate(7, 5) // しゅんかんいどう\n'
+	},
+	/* ループ (策定中) */
+	{
+		prefix: 'for',
+		text: `
+// くりかえす
+for (let かず = 0; かず < 10; かず++) {
+
+}
+`
+	},
+	{
+		prefix: 'forfor',
+		text: `
+// くりかえす を くりかえす
+for (let よこ = 0; よこ < 10; よこ += 1) {
+	// くりかえす
+	for (let たて = 0; たて < 5; たて += 1) {
+
+	}
+}
+`
+	},
+	{
+		prefix: 'forof',
+		text: `
+// ひとつずつ とりだす
+for (const かず of [0, 1, 2, 3, 4, 5]) {
+
+}
+`
 	}
 ];
