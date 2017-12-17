@@ -22,10 +22,12 @@ game.on('load', () => {
 	// マウスの位置を追跡
 	game._element.addEventListener('mousemove', event => {
 		const { clientX, clientY } = event;
+		const rect = Hack.camera.getRenderRect();
+
 		// "2 3" のように表示
 		label.text = [
-			(clientX / 32) >> 0,
-			(clientY / 32) >> 0,
+			((clientX + rect.x) / 32) >> 0,
+			((clientY + rect.y) / 32) >> 0
 		].join(' ');
 		// マウスの位置より上にラベルをおく
 		const x = clientX - label.width / 2; // マウスの中心
