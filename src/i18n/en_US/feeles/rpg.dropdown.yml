@@ -1,4 +1,6 @@
 Costumes:
+  - body: Hack.assets.magician
+    label: まじょのスキン
   - body: Hack.assets.knight
     label: きしのスキン
   - body: Hack.assets.darkKnight

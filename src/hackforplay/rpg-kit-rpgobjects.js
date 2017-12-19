@@ -145,7 +145,22 @@ Hack.assets.darkKnight = function() {
 	this.image = game.assets['enchantjs/x1.5/chara7.png'];
 };
 
-
+Hack.assets.magician = function() {
+	this.image = game.assets['hackforplay/magician_girl.png'];
+	this.width = 48;
+	this.height = 48;
+	this.offset = {
+		x: -8,
+		y: -12
+	};
+	this.setFrameD9(BehaviorTypes.Idle, [1]);
+	this.setFrameD9(BehaviorTypes.Walk, [0, 0, 0, 1, 1, 1, 2, 2, 2, 1, null]);
+	this.setFrameD9(BehaviorTypes.Attack, [6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, null]);
+	this.setFrameD9(BehaviorTypes.Damaged, [2, -1, -1, -1, 2, 2, 2, -1, -1, -1]);
+	this.setFrameD9(BehaviorTypes.Dead, [1, null]);
+	this.directionType = 'quadruple';
+	this.forward = [0, 1];
+};
 
 Hack.assets.slime = function() {
 	this.image = game.assets['enchantjs/monster4.gif'];
