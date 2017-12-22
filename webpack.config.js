@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FeelesWebpackPlugin = require('./feeles-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
+const OfflinePlugin = require('offline-plugin');
 
 const cdn = 'https://assets.feeles.com/public/v1134/h4p.js';
 // const cdn = 'http://localhost:8081/h4p.js';
@@ -10,7 +11,7 @@ const port = process.env.PORT || 8082;
 const dist = 'public/';
 
 module.exports = {
-	entry: './support-hot-reload.js',
+	entry: './entry.js',
 	output: {
 		path: path.resolve(dist),
 		filename: '[name].js'
@@ -38,7 +39,10 @@ module.exports = {
 
 		new OpenBrowserPlugin({
 			url: `http://localhost:${port}`
-		})
+		}),
+
+		// Cache and proxy this whole site
+		new OfflinePlugin()
 	],
 	devServer: {
 		contentBase: dist,
