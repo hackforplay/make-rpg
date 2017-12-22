@@ -1,8 +1,10 @@
 // Support hot reloading
 if (process.env.NODE_ENV !== 'production') {
 	// In development, it loads JSON file and supports WDS's hot reloading
-	fetch('make-rpg.json');
+	fetch('hack-rpg.json');
 }
 
-// Offline plugin
-require('offline-plugin/runtime').install();
+if (process.env.NODE_ENV === 'production') {
+	// Offline plugin
+	require('offline-plugin/runtime').install();
+}
