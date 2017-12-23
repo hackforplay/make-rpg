@@ -665,3 +665,22 @@
         Hack.log('はなされたよ〜');
 
       });
+  - label: ゲーム内キーボード
+    code: |
+      // ゲームをストップ
+      Hack.world.stop();
+      Hack.textarea.hide();
+
+      // キーボードを表示
+      const value = await Hack.keyboard.get(7);
+
+      if (value) {
+        // 入力があったとき
+        Hack.log(value);
+      } else {
+        // キャンセルしたとき
+        Hack.log('キャンセルしました');
+      }
+
+      // ゲームを再開
+      Hack.world.resume();
