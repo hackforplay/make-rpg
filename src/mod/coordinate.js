@@ -27,11 +27,12 @@ game.on('load', () => {
 
 		// マウスが重なっている一番手前のカメラを取得
 		const camera = Camera.collection
-			.filter((camera) => camera.contains(clientX, clientY))
-			.pop();
+			.find((camera) => camera.contains(clientX, clientY));
 
 		// カメラがあるならマウス座標をゲーム内座標に変換
-		if (camera)[x, y] = camera.projection(clientX, clientY).map((pos) => Math.floor(pos / 32));
+		if (camera) {
+			[x, y] = camera.projection(clientX, clientY).map((pos) => Math.floor(pos / 32));
+		}
 
 		// "2 3" のように表示
 		label.text = x + ' ' + y;
