@@ -27,7 +27,8 @@ game.on('load', () => {
 
 		// マウスが重なっている一番手前のカメラを取得
 		const camera = Camera.collection
-			.find((camera) => camera.contains(clientX, clientY));
+			.filter((camera) => camera.contains(clientX, clientY))
+			.pop();
 
 		// カメラがあるならマウス座標をゲーム内座標に変換
 		if (camera) {
