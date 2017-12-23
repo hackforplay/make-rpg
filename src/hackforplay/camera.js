@@ -10,10 +10,7 @@ import 'enchantjs/ui.enchant';
 import 'enchantjs/fix';
 import 'hackforplay/rpg-kit-main';
 
-const clamp = function(value, min, max) {
-	return Math.max(min, Math.min(max, value));
-};
-
+import { clamp } from 'hackforplay/utils/math-utils';
 
 class Camera extends Sprite {
 

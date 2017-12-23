@@ -59,8 +59,117 @@ import Camera from 'hackforplay/camera';
 
 
 import { CanvasRenderer } from 'enchantjs/enchant';
+import { KeyClass } from 'mod/key';
+
+import Keyboard from 'hackforplay/keyboard';
+import { stringToArray, dakuten, handakuten } from 'hackforplay/utils/string-utils';
+
+/**
+ * デフォルトのキーボードを生成する
+ */
+function createDefaultKeyboard() {
+	// デフォルトのキーボード
+	const keyboard = new Keyboard();
+	Hack.keyboard = keyboard;
+	Hack.popupGroup.addChild(keyboard);
+
+	keyboard.registerKeys([
+		'あいうえお', 'はひふへほ',
+		'かきくけこ', 'まみむめも',
+		'さしすせそ', 'や　ゆ　よ',
+		'たちつてと', 'らりるれろ',
+		'なにぬねの', 'わ　を　ん',
+		'ぁぃぅぇぉ', 'っ　ゃゅょ',
+		'ー～…、。 ', '・！？「」'
+	], 0);
+
+	keyboard.registerKeys([
+		'アイウエオ', 'ハヒフヘホ',
+		'カキクケコ', 'マミムメモ',
+		'サシスセソ', 'ヤ　ユ　ヨ',
+		'タチツテト', 'ラリルレロ',
+		'ナニヌネノ', 'ワ　ヲ　ン',
+		'ァィゥェォ', 'ッ　ャュョ',
+		'ー～…、。 ', '♂♀#/&'
+	], 1);
+
+	keyboard.registerKeys([
+		'12345', '67890',
+		'ABCDE', 'FGHIJ',
+		'KLMNO', 'PQRST',
+		'UVWXY', 'Z()!?',
+		'abcde', 'fghij',
+		'klmno', 'pqrst',
+		'uvwxy', 'z @🍣😎'
+	], 2);
+
+	keyboard.registerFunctionKey('かな', 0).on('click', () => {
+		keyboard.pageIndex = 0;
+	});
+
+	keyboard.registerFunctionKey('カナ', 1).on('click', () => {
+		keyboard.pageIndex = 1;
+	});
+
+	keyboard.registerFunctionKey('A/1', 2).on('click', () => {
+		keyboard.pageIndex = 2;
+	});
+
+	keyboard.registerFunctionKey('゛　', 3).on('click', () => {
+		if (!keyboard.value) return;
+		const values = stringToArray(keyboard.value);
+		const char = values.pop();
+		values.push(dakuten(char));
+		keyboard.value = values.join('');
+	});
+
+	keyboard.registerFunctionKey('゜　', 4).on('click', () => {
+		if (!keyboard.value) return;
+		const values = stringToArray(keyboard.value);
+		const char = values.pop();
+		values.push(handakuten(char));
+		keyboard.value = values.join('');
+	});
+
+	keyboard.registerFunctionKey('←', 5).on('click', () => {
+		keyboard.value = stringToArray(keyboard.value).slice(0, stringToArray(keyboard.value).length - 1).join('');
+	});
+
+	keyboard.registerFunctionKey('スペース', 6).on('click', () => {
+		keyboard.value += ' ';
+	});
+}
 
 game.on('awake', () => {
+
+	// マウス座標
+	let mouseX = null;
+	let mouseY = null;
+	// 正規化されたマウス座標
+	let normalizedMouseX = null;
+	let normalizedMouseY = null;
+
+	game._element.onmousemove = function({ x, y }) {
+		const rect = this.getBoundingClientRect();
+		mouseX = x;
+		mouseY = y;
+		normalizedMouseX = x / rect.width;
+		normalizedMouseY = y / rect.height;
+	};
+
+	Object.defineProperties(Hack, {
+		mouseX: { get: () => mouseX },
+		mouseY: { get: () => mouseY },
+		normalizedMouseX: { get: () => normalizedMouseX },
+		normalizedMouseY: { get: () => normalizedMouseY }
+	});
+
+	// マウスの入力状態
+	Hack.mouseInput = new KeyClass();
+	let mousePressed = false;
+	game.rootScene.on('touchstart', () => mousePressed = true);
+	game.rootScene.on('touchend', () => mousePressed = false);
+	game.on('enterframe', () => Hack.mouseInput.update(mousePressed));
 
 	// カメラグループ
 	const cameraGroup = new Group();
@@ -130,8 +239,15 @@ game.on('awake', () => {
 	domGroup._element = {};
 	game.rootScene.addChild(domGroup);
 
+	// PopupGroup
+	const popupGroup = new Group();
+	popupGroup.name = 'PopupGroup';
+	popupGroup.order = 1500;
+	Hack.popupGroup = popupGroup;
+	game.rootScene.addChild(popupGroup);
 
-
+	// デフォルトのキーボードを生成する
+	createDefaultKeyboard();
 
 	const pad = new Pad();
 	pad.moveTo(20, 200);
