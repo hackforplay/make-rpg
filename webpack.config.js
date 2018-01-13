@@ -5,7 +5,7 @@ const FeelesWebpackPlugin = require('./feeles-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 
-const cdn = 'https://assets.feeles.com/public/v1146/h4p.js';
+const cdn = 'https://assets.feeles.com/public/v1151/h4p.js';
 // const cdn = 'http://localhost:8081/h4p.js';
 const port = process.env.PORT || 8082;
 const dist = 'public/';
