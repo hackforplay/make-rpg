@@ -282,7 +282,19 @@ Hack.overlay = function() {
 		var lay = Hack.overlay('rgba(0,0,0,0.4)', 'hackforplay/clear.png');
 		lay.opacity = 0;
 		lay.moveTo(-game.rootScene.x, -game.rootScene.y);
-		lay.tl.fadeIn(30, enchant.Easing.LINEAR);
+		lay.tl.fadeIn(30, enchant.Easing.LINEAR).then(function() {
+			// [RETRY]
+			Hack.createSprite(165, 69, {
+				x: 157 - game.rootScene.x,
+				y: 320 - game.rootScene.y,
+				image: game.assets['hackforplay/new_button_retry.png'],
+				defaultParentNode: Hack.overlayGroup,
+				ontouchend: function() {
+					// [RETRY] がクリックされたとき
+					feeles.reload(false);
+				}
+			}).tl.moveTo(157 - game.rootScene.x, 240 - game.rootScene.y, 20, enchant.Easing.CUBIC_EASEOUT);
+		});;
 	};
 
 	Hack.ongameover = function() {
