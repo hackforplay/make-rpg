@@ -1,4 +1,5 @@
 import {
+	Core,
 	Event,
 	EventTarget,
 	Node,
@@ -7,6 +8,14 @@ import {
 	Easing,
 	Timeline
 } from 'enchantjs/enchant';
+
+/**
+ * オブジェクトの生成通知を行う
+ * @param {object} instance 生成したインスタンス
+ */
+Core.prototype.emitConstruct = function emitConstruct(instance) {
+	this.dispatchEvent(new Event(`construct-${instance.constructor.name}`, instance));
+}
 
 /**
  * 1 度だけ呼ばれるイベントリスナーを追加する

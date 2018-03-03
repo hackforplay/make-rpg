@@ -46,6 +46,8 @@ class RPGMap extends EventTarget {
 		this.scene.name = 'MapScene';
 
 		this._surface = new enchant.Surface(tileWidth * mapWidth, tileHeight * mapHeight);
+
+		game.emitConstruct(this);
 	}
 	load() {
 		if (!this.image && this.imagePath) this.image = game.assets[this.imagePath];
