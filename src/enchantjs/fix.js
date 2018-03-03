@@ -11,10 +11,11 @@ import {
 
 /**
  * オブジェクトの生成通知を行う
+ * @param {string} name     クラス名
  * @param {object} instance 生成したインスタンス
  */
-Core.prototype.emitConstruct = function emitConstruct(instance) {
-	this.dispatchEvent(new Event(`construct-${instance.constructor.name}`, instance));
+Core.prototype.emitConstruct = function emitConstruct(name, instance) {
+	this.dispatchEvent(new Event(`construct-${name}`, { name, instance }));
 }
 
 /**
