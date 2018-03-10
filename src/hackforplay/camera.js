@@ -50,8 +50,8 @@ class Camera extends Sprite {
 		Hack.cameraGroup.addChild(this);
 		Camera.collection.push(this);
 
+		game.emitConstruct('Camera', this);
 	}
-
 
 	get w() { return this.width; }
 	set w(value) { this.width = value; }
@@ -284,6 +284,7 @@ class Camera extends Sprite {
 		var rect = this.getRenderRect();
 		var r = rect;
 
+		this.dispatchEvent(new Event('prerender'));
 
 		if (this.background) {
 			context.fillStyle = this.background;
@@ -295,6 +296,8 @@ class Camera extends Sprite {
 
 			r.x, r.y, r.width, r.height,
 			0, 0, this.w, this.h);
+
+		this.dispatchEvent(new Event('postrender'));
 
 		this.drawBorder();
 
