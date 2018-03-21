@@ -324,7 +324,7 @@ class TextArea extends Sprite {
             const ruby = rubyChars[0].style.ruby;
 
             // 文字の横幅を取得する
-            context.font = `${style.weight} ${rubyStyle.size}px ${rubyStyle.family}`;
+            context.font = `${rubyStyle.weight} ${rubyStyle.size}px ${rubyStyle.family}`;
 
             const rubysWidth = ruby.split('').map((char) => {
                 return context.measureText(char).width;
