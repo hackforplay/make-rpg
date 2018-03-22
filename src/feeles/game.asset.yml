@@ -561,8 +561,8 @@
       };
       Hack.menuGroup.addChild(item2);
       // カメラ
-      const camera2 = new Camera();
-      camera2.target = item1;
+      const item3 = new Camera();
+      item3.target = item1;
       // カメラを ヨコ 2 、タテ 1 のはいちにする
       Camera.layout(2, 1);
   - label: ズーム

@@ -1,5 +1,5 @@
 import 'hackforplay/enchantjs-kit';
-
+import TextArea from 'hackforplay/ui/textarea';
 
 function refocus() {
 	window.document.activeElement.blur(); // Blur an enchantBook
@@ -74,6 +74,15 @@ Hack.textarea = (function() {
 		this.visible = false;
 	};
 
+	// canvas のテキストエリアを生成
+	const textArea = new TextArea(380, 60);
+	textArea.moveTo(60, 5);
+	textArea.verticalNormalizedPosition = 0.5;
+	Hack.textArea = textArea;
+	game.on('awake', () => {
+		Hack.menuGroup.addChild(textArea);
+	});
+
 	return this;
 
 }).call(new enchant.Entity());
@@ -91,9 +100,15 @@ Hack.log = function() {
 					break;
 			}
 		}
+
+		/*
 		this.textarea.text = values.join(' ') + (this.textarea.text !== '' ? '\n' : '') + this.textarea.text;
 		this.textarea.show();
+		*/
 
+		this.textArea.clear();
+		this.textArea.push(values.join(' ') + (this.textarea.text !== '' ? '\n' : '') + this.textarea.text);
+		this.textArea.show();
 	} catch (e) {
 		Hack.log('Error', e.message);
 	}
@@ -282,7 +297,19 @@ Hack.overlay = function() {
 		var lay = Hack.overlay('rgba(0,0,0,0.4)', 'hackforplay/clear.png');
 		lay.opacity = 0;
 		lay.moveTo(-game.rootScene.x, -game.rootScene.y);
-		lay.tl.fadeIn(30, enchant.Easing.LINEAR);
+		lay.tl.fadeIn(30, enchant.Easing.LINEAR).then(function() {
+			// [RETRY]
+			Hack.createSprite(165, 69, {
+				x: 157 - game.rootScene.x,
+				y: 320 - game.rootScene.y,
+				image: game.assets['hackforplay/new_button_retry.png'],
+				defaultParentNode: Hack.overlayGroup,
+				ontouchend: function() {
+					// [RETRY] がクリックされたとき
+					feeles.reload(false);
+				}
+			}).tl.moveTo(157 - game.rootScene.x, 240 - game.rootScene.y, 20, enchant.Easing.CUBIC_EASEOUT);
+		});;
 	};
 
 	Hack.ongameover = function() {

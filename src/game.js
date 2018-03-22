@@ -8,11 +8,12 @@ async function gameFunc() {
 	self.player = new Player(); // プレイヤーをつくる
 	player.mod(('▼ スキン', _kきし)); // 見た目
 	player.locate(3, 5); // はじめの位置
-	/*+ スキル */
-
 
 
 	/*+ モンスター アイテム せっち システム */
+
+
+	/*+ スキル */
 }
 
 export default gameFunc;

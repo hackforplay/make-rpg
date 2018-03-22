@@ -45,6 +45,10 @@ Event.prototype.initialize = function $initialize(name, props) {
 
 };
 
+Node.prototype.contains = function contains(x, y) {
+	return this.x <= x && this.x + this.width >= x && this.y <= y && this.y + this.height >= y;
+};
+
 Node.prototype.name = 'Node';
 
 // Node#order を追加

@@ -211,6 +211,14 @@ class Camera extends Sprite {
 		return rect;
 	}
 
+	// スクリーン座標をゲーム内座標に変換する
+	projection(screenX, screenY) {
+		const renderRect = this.getRenderRect();
+		return [
+			renderRect.x + (screenX - this.x) * (renderRect.width / this.width),
+			renderRect.y + (screenY - this.y) * (renderRect.height / this.height)
+		];
+	}
 
 	// カメラ上の座標を計算する
 	getNodeRect(node) {

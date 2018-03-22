@@ -22,16 +22,24 @@ game.on('load', () => {
 	// マウスの位置を追跡
 	game._element.addEventListener('mousemove', event => {
 		const { clientX, clientY } = event;
-		const rect = Hack.camera.getRenderRect();
+		let x = '';
+		let y = '';
+
+		// マウスが重なっている一番手前のカメラを取得
+		const camera = Camera.collection
+			.filter((camera) => camera.contains(clientX, clientY))
+			.pop();
+
+		// カメラがあるならマウス座標をゲーム内座標に変換
+		if (camera) {
+			[x, y] = camera.projection(clientX, clientY).map((pos) => Math.floor(pos / 32));
+		}
 
 		// "2 3" のように表示
-		label.text = [
-			((clientX + rect.x) / 32) >> 0,
-			((clientY + rect.y) / 32) >> 0
-		].join(' ');
+		label.text = x + ' ' + y;
 		// マウスの位置より上にラベルをおく
-		const x = clientX - label.width / 2; // マウスの中心
-		label.moveTo(x, clientY);
+		const labelX = clientX - label.width / 2; // マウスの中心
+		label.moveTo(labelX, clientY);
 	});
 
 	// フォーカスが外れたら非表示にする

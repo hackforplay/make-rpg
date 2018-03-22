@@ -1,5 +1,5 @@
 const a_href = false;
-const img_src = true;
+const img_src = false;
 const audio_src = false;
 const script_src = false;
 const xhr_url = true;
@@ -186,7 +186,3 @@ function getOrigin(url) {
 	a.href = url;
 	return a.origin;
 }
-
-
-
-
