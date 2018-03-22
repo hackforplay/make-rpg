@@ -49,6 +49,7 @@ class TextArea extends Sprite {
             size: '20',
             family: 'PixelMplus, sans-serif',
             weight: 'bold',
+            align: 'left',
             ruby: null,
             rubyId: null
         };
@@ -78,6 +79,9 @@ class TextArea extends Sprite {
         this.resize(this.w, value)
         this.height = value;
     }
+
+    get drawAreaW() { return this.w - this.margin * 2 - this.padding * 2; }
+    get drawAreaH() { return this.h - this.margin * 2 - this.padding * 2; }
 
     resize(w, h) {
         if (this.w === w && this.h === h) return;
@@ -140,6 +144,11 @@ class TextArea extends Sprite {
 
             if (node.getAttribute) {
                 style[nodeName] = node.getAttribute('value');
+            }
+
+            // <left>, <center>, <right>
+            if (['left', 'center', 'right'].includes(nodeName)) {
+                style.align = nodeName;
             }
 
             if (style.ruby) style.rubyId = style.id;
@@ -232,6 +241,7 @@ class TextArea extends Sprite {
         let previousCharIsAlphabet = false;
         let previousCharStyleId = null;
         let previousCharRubyId = null;
+        let previousCharAlign = null;
 
         for (let i = 0; i < chars.length; ++i) {
             const char = chars[i];
@@ -278,6 +288,12 @@ class TextArea extends Sprite {
                 }
             }
 
+            // 文字列の並びが変化した場合は改行する
+            if (previousCharAlign && char.style.align !== previousCharAlign) {
+                ++addLine;
+                currentX = 0;
+            }
+
             const right = currentX + char.w;
 
             // 文字が描画範囲外なら改行
@@ -291,6 +307,7 @@ class TextArea extends Sprite {
             previousCharRubyId = char.style.rubyId;
             previousLineIndex = char.lineIndex;
             previousCharIsAlphabet = char.isAlphabet;
+            previousCharAlign = char.style.align;
 
             char.lineIndex += addLine;
             char.x = currentX;
@@ -313,8 +330,29 @@ class TextArea extends Sprite {
 
             // ルビを振るならサイズを考慮する
             maxFontSize += line.some((char) => char.style.ruby) ? rubyStyle.size : 0;
+            
+            let addX = 0;
+            // 行の横幅
+            const lineWidth = line.map((char) => char.w).reduce((a, b) => a + b);
+            // 余白
+            const space = this.drawAreaW - lineWidth;
+
+            // 1 文字目の align を見る ( 1 行に複数の align が含まれることはない )
+            switch (line[0].style.align) {
+                // 左揃え
+                case 'left': break;
+                // 中央揃え
+                case 'center':
+                    addX = space / 2;
+                    break;
+                // 右揃え
+                case 'right':
+                    addX = space;
+                    break;
+            }
 
             for (const char of line) {
+                char.x += addX;
                 char.y = currentY;
                 char.h = maxFontSize;
             }
@@ -400,19 +438,15 @@ class TextArea extends Sprite {
             this.margin + this.padding
         );
 
-        // 描画範囲
-        const drawAreaW = this.w - this.margin * 2 - this.padding * 2;
-        const drawAreaH = this.h - this.margin * 2 - this.padding * 2;
-
         if (this.debug) {
             context.lineWidth = 2;
             context.strokeStyle = '#f0f';
-            context.strokeRect(0, 0, drawAreaW, drawAreaH);
+            context.strokeRect(0, 0, this.drawAreaW, this.drawAreaH);
         }
 
         // スクロール
         context.translate(
-            0, -(this.getHeight() - drawAreaH) * this.verticalNormalizedPosition
+            0, -(this.getHeight() - this.drawAreaH) * this.verticalNormalizedPosition
         );
 
         context.textAlign = 'center';
