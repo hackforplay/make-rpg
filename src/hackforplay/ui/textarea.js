@@ -18,6 +18,9 @@ function parse(xml, retry = false) {
 class TextArea extends Sprite {
     constructor(w, h) {
         super(w, h);
+
+        this.source = '';
+
         this.image = new Surface(w, h);
         this.context = this.image.context;
 
@@ -99,14 +102,10 @@ class TextArea extends Sprite {
     }
 
     push(text) {
-        const height = this.getHeight();
-        const newValues = this.getValues(text);
-        for (const value of newValues) {
-            value.y += height;
-        }
-        this.values.push(...newValues);
+        const lineFeed = this.source.length ? '\n' : '';
+        this.source += `${lineFeed}<group>${text}</group>`;
+        this.updateValues();
     }
-
 
     getHeight() {
         if (!this.values.length) return 0;
@@ -115,8 +114,7 @@ class TextArea extends Sprite {
         }));
     }
 
-    getValues(text) {
-
+    updateValues() {
         const context = this.context;
 
         let styleId = 0;
@@ -144,7 +142,7 @@ class TextArea extends Sprite {
             }
         }
 
-        const document = parse(text);
+        const document = parse(this.source);
         const source = convertDocument(document);
 
         source.style = Object.assign({}, this.defaultStyle);
@@ -290,7 +288,8 @@ class TextArea extends Sprite {
 
         // 描画範囲が狭いと空の行が含まれる場合がある
         const checkedLines = lines.filter((line) => line);
-        const values = [];
+
+        this.values = [];
 
         for (const line of checkedLines) {
 
@@ -304,11 +303,11 @@ class TextArea extends Sprite {
                 char.h = maxFontSize;
             }
             currentY += maxFontSize;
-            values.push(...line);
+            this.values.push(...line);
         }
 
         // ルビを生成する
-        const rubyGroup = values.reduce((object, value) => {
+        const rubyGroup = this.values.reduce((object, value) => {
             if (!value.style.ruby) return object;
             if (!object[value.style.rubyId]) object[value.style.rubyId] = [];
             object[value.style.rubyId].push(value);
@@ -337,7 +336,7 @@ class TextArea extends Sprite {
             for (let i = 0; i < ruby.length; ++i) {
                 // 文字の横幅を取得する
                 const w = rubysWidth[i];
-                values.push({
+                this.values.push({
                     value: ruby[i],
                     h: rubyStyle.size,
                     w: w,
@@ -348,7 +347,6 @@ class TextArea extends Sprite {
                 currentX += w + unit;
             }
         }
-        return values;
     }
 
     render() {
