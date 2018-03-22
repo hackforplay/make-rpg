@@ -1,5 +1,5 @@
 import 'hackforplay/enchantjs-kit';
-
+import TextArea from 'hackforplay/ui/textarea';
 
 function refocus() {
 	window.document.activeElement.blur(); // Blur an enchantBook
@@ -74,6 +74,15 @@ Hack.textarea = (function() {
 		this.visible = false;
 	};
 
+	// canvas のテキストエリアを生成
+	const textArea = new TextArea(380, 60);
+	textArea.moveTo(60, 5);
+	textArea.verticalNormalizedPosition = 0.5;
+	Hack.textArea = textArea;
+	game.on('awake', () => {
+		Hack.menuGroup.addChild(textArea);
+	});
+
 	return this;
 
 }).call(new enchant.Entity());
@@ -91,9 +100,15 @@ Hack.log = function() {
 					break;
 			}
 		}
+
+		/*
 		this.textarea.text = values.join(' ') + (this.textarea.text !== '' ? '\n' : '') + this.textarea.text;
 		this.textarea.show();
+		*/
 
+		this.textArea.clear();
+		this.textArea.push(values.join(' ') + (this.textarea.text !== '' ? '\n' : '') + this.textarea.text);
+		this.textArea.show();
 	} catch (e) {
 		Hack.log('Error', e.message);
 	}
