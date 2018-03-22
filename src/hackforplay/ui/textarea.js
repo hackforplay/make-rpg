@@ -64,18 +64,20 @@ class TextArea extends Sprite {
     }
 
     get w() { return this.width; }
-    set w(value) { this.width = value; }
+    set w(value) {
+        this.resize(value, this.h);
+        this.width = value;
+    }
 
     get h() { return this.height; }
-    set h(value) { this.height = value; }
+    set h(value) {
+        this.resize(this.w, value)
+        this.height = value;
+    }
 
     resize(w, h) {
-        w = Math.ceil(w);
-        h = Math.ceil(h);
-
-        if (!w || !h) return;
         if (this.w === w && this.h === h) return;
-
+        
         this._width = w;
         this._height = h;
 
@@ -86,6 +88,9 @@ class TextArea extends Sprite {
             this.image._element.height = h;
         }
         this.dispatchEvent(new Event(Event.RESIZE));
+
+        this.updateValues();
+
         return this;
     }
 
