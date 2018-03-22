@@ -20,6 +20,7 @@ class TextArea extends Sprite {
         super(w, h);
 
         this.source = '';
+        this.document = null;
 
         this.image = new Surface(w, h);
         this.context = this.image.context;
@@ -104,11 +105,14 @@ class TextArea extends Sprite {
 
     clear(text) {
         this.values = [];
+        this.source = '';
+        this.docuemtn = null;
     }
 
     push(text) {
         const lineFeed = this.source.length ? '\n' : '';
         this.source += `${lineFeed}<group>${text}</group>`;
+        this.updateDocument();
         this.updateValues();
     }
 
@@ -119,9 +123,7 @@ class TextArea extends Sprite {
         }));
     }
 
-    updateValues() {
-        const context = this.context;
-
+    updateDocument() {
         let styleId = 0;
 
         function convertDocument(node) {
@@ -146,9 +148,15 @@ class TextArea extends Sprite {
                 style
             }
         }
+        
+        this.document = convertDocument(parse(this.source));
+    }
 
-        const document = parse(this.source);
-        const source = convertDocument(document);
+    updateValues() {
+        const context = this.context;
+        const source = this.document;
+
+        if (!source) return;
 
         source.style = Object.assign({}, this.defaultStyle);
 
