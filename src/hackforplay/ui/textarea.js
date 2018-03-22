@@ -408,6 +408,9 @@ class TextArea extends Sprite {
         }
     }
 
+    renderBackground(context) { }
+    renderBorder(context) { }
+
     render() {
 
         const context = this.context;
@@ -428,6 +431,8 @@ class TextArea extends Sprite {
             this.w - this.margin * 2,
             this.h - this.margin * 2,
             this.borderRadius).fill();
+
+        this.renderBackground(context);
 
         // 背景でクリップする
         context.clip();
@@ -476,6 +481,7 @@ class TextArea extends Sprite {
             this.w - this.margin * 2,
             this.h - this.margin * 2, this.borderRadius).stroke();
 
+        this.renderBorder(context);
     }
 }
 
