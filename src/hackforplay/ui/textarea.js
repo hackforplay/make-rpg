@@ -27,6 +27,9 @@ class TextArea extends Sprite {
 
         this.debug = false;
 
+        this.autoResizeVertical = false;
+        this.maxHeight = Infinity;
+
         this.background = 'rgba(0, 0, 0, .5)';
 
         this.borderColor = '#fff';
@@ -359,6 +362,11 @@ class TextArea extends Sprite {
                 });
                 currentX += w + unit;
             }
+        }
+        
+        // 文字列に合わせて高さを自動調整する
+        if (this.autoResizeVertical) {
+            this.h = Math.min(this.getHeight() + this.margin * 2 + this.padding * 2, this.maxHeight);
         }
     }
 

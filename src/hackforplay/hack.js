@@ -82,7 +82,9 @@ Hack.textarea = (function() {
 // canvas のテキストエリアを生成
 const textArea = new TextArea(380, 60);
 textArea.moveTo(60, 5);
-textArea.verticalNormalizedPosition = 0.5;
+textArea.verticalNormalizedPosition = 1;
+textArea.autoResizeVertical = true;
+textArea.maxHeight = 310;
 Hack.textArea = textArea;
 game.on('awake', () => {
 	Hack.menuGroup.addChild(textArea);
