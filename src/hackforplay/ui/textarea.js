@@ -1,5 +1,6 @@
 import { Sprite, Surface, Event } from 'enchantjs/enchant';
 import { roundRect } from 'hackforplay/utils/canvas2d-utils';
+import { stringToArray } from 'hackforplay/utils/string-utils';
 
 const parser = new DOMParser();
 
@@ -86,7 +87,7 @@ class TextArea extends Sprite {
 
     resize(w, h) {
         if (this.w === w && this.h === h) return;
-        
+
         this._width = w;
         this._height = h;
 
@@ -161,7 +162,7 @@ class TextArea extends Sprite {
                 style
             }
         }
-        
+
         this.document = convertDocument(parse(this.source));
     }
 
@@ -200,7 +201,7 @@ class TextArea extends Sprite {
                 // 文字列なら描画する
                 if (value.nodeName === '#text') {
 
-                    for (const char of value.value.split('')) {
+                    for (const char of stringToArray(value.value)) {
 
                         ++charIndex;
 
@@ -331,7 +332,7 @@ class TextArea extends Sprite {
 
             // ルビを振るならサイズを考慮する
             maxFontSize += line.some((char) => char.style.ruby) ? rubyStyle.size : 0;
-            
+
             let addX = 0;
             // 行の横幅
             const lineWidth = line.map((char) => char.w).reduce((a, b) => a + b);
@@ -380,7 +381,7 @@ class TextArea extends Sprite {
             // 文字の横幅を取得する
             context.font = `${rubyStyle.weight} ${rubyStyle.size}px ${rubyStyle.family}`;
 
-            const rubysWidth = ruby.split('').map((char) => {
+            const rubysWidth = stringToArray(ruby).map((char) => {
                 return context.measureText(char).width + rubyStyle.space;
             });
 
@@ -402,7 +403,7 @@ class TextArea extends Sprite {
                 currentX += w + unit;
             }
         }
-        
+
         // 文字列に合わせて高さを自動調整する
         if (this.autoResizeVertical) {
             this.h = Math.min(this.getHeight() + this.margin * 2 + this.padding * 2, this.maxHeight);
