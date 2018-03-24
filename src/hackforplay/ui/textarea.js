@@ -50,6 +50,7 @@ class TextArea extends Sprite {
             family: 'PixelMplus, sans-serif',
             weight: 'bold',
             align: 'left',
+            space: 0,
             ruby: null,
             rubyId: null
         };
@@ -211,7 +212,7 @@ class TextArea extends Sprite {
 
                         // 文字の横幅を取得する
                         context.font = `${style.weight} ${style.size}px ${style.family}`;
-                        const textWidth = context.measureText(char).width;
+                        const textWidth = context.measureText(char).width + style.space;
 
                         chars.push({
                             value: char,
@@ -380,7 +381,7 @@ class TextArea extends Sprite {
             context.font = `${rubyStyle.weight} ${rubyStyle.size}px ${rubyStyle.family}`;
 
             const rubysWidth = ruby.split('').map((char) => {
-                return context.measureText(char).width;
+                return context.measureText(char).width + rubyStyle.space;
             });
 
             const rubyWidth = rubysWidth.reduce((a, b) => a + b);
