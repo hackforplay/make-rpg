@@ -1,5 +1,5 @@
 import 'hackforplay/rpg-kit-main';
-import { Sprite } from 'enchantjs/enchant';
+import { Sprite, Event } from 'enchantjs/enchant';
 import 'enchantjs/ui.enchant';
 import 'hackforplay/hack';
 import * as synonyms from 'hackforplay/synonyms';
@@ -28,6 +28,27 @@ class RPGObject extends Sprite {
 			y: offsetY || 0
 		};
 
+		this.screenPositionX = 0;
+		this.screenPositionY = 0;
+
+		this.position = {};
+
+		// position.x, y, z の定義
+		for (const key of ['x', 'y', 'z']) {
+			let privateKey = '_position' + key.toUpperCase()
+			this[privateKey] = 0;
+			Object.defineProperty(this.position, key, {
+				get: () => {
+					return this[privateKey];
+				},
+				set: (value) => {
+					if (this[privateKey] === value) return;
+					this[privateKey] = value;
+					this.updateNormalizedPosition();
+				}
+			});
+		}
+		
 		this.speed = 1.0;
 
 		// マップの端に衝突判定があると見なすか
@@ -113,16 +134,44 @@ class RPGObject extends Sprite {
 		Hack.defaultParentNode.addChild(this);
 	}
 
+	get _x() { return this.screenPositionX; }
+	set _x(value) {
+		this.screenPositionX = value;
+		this.updateScreenPosition();
+	}
+
+	get _y() { return this.screenPositionY; }
+	set _y(value) {
+		this.screenPositionY = value;
+		this.updateScreenPosition();
+	}
+
+	updateScreenPosition() {
+		if (!this.offset) return;
+		this.position.x = (this.screenPositionX - this.offset.x) / 32;
+		this.position.y = ((this.screenPositionY + this.getScreenPositionZ()) - this.offset.y) / 32;
+	}
+
+	updateNormalizedPosition() {
+		this.screenPositionX = this.position.x * 32 + this.offset.x;
+		this.screenPositionY = this.position.y * 32 + this.offset.y - this.getScreenPositionZ();
+		this._dirty = true;
+	}
+
+	getScreenPositionZ() {
+		return this.position.z * 32;
+	}
+	
 	get map() {
 		return this.parentNode ? this.parentNode.ref : null;
 	}
 
 	get mapX() {
-		return Math.floor((this.x - this.offset.x + 16) / 32);
+		return Math.round(this.position.x);
 	}
 
 	get mapY() {
-		return Math.floor((this.y - this.offset.y + 16) / 32);
+		return Math.round(this.position.y);
 	}
 
 	get center() {
@@ -166,9 +215,8 @@ class RPGObject extends Sprite {
 		} else {
 			Hack.log(`${mapName} は まだつくられていない`);
 		}
-		this.moveTo(
-			fromLeft * 32 + this.offset.x,
-			fromTop * 32 + this.offset.y);
+		this.position.x = fromLeft;
+		this.position.y = fromTop;
 	}
 
 	destroy(delay) {
@@ -353,7 +401,7 @@ class RPGObject extends Sprite {
 
 		// 歩く
 		this.behavior = BehaviorTypes.Walk;
-		this.dispatchEvent(new enchant.Event('walkstart'));
+		this.dispatchEvent(new Event('walkstart'));
 
 		// 衝突リストを初期化
 		this._collidedNodes = [];
@@ -373,22 +421,19 @@ class RPGObject extends Sprite {
 		const endFrame = Math.ceil(1.0 / move);
 
 		// 移動開始座標
-		const beginX = this.x;
-		const beginY = this.y;
-
+		const beginX = this.position.x;
+		const beginY = this.position.y;
 
 		for (let frame = 1; frame <= endFrame; ++frame) {
 
 			// アニメーション番号を算出
 			this.frame = animation[Math.round(animation.length / endFrame * frame)];
 
-			const x = beginX + move * tw * frame * forward.x;
-			const y = beginY + move * th * frame * forward.y;
-
 			// 移動
-			this.moveTo(x, y);
+			this.position.x = beginX + move * frame * forward.x;
+			this.position.y = beginY + move * frame * forward.y;
 
-			this.dispatchEvent(new enchant.Event('walkmove'));
+			this.dispatchEvent(new Event('walkmove'));
 
 			// 最終フレームなら待たない
 			if (frame === endFrame) break;
@@ -399,8 +444,8 @@ class RPGObject extends Sprite {
 		}
 
 		// 移動の誤差を修正
-		this.x = beginX + tw * forward.x;
-		this.y = beginY + th * forward.y;
+		this.position.x = beginX + forward.x;
+		this.position.y = beginY + forward.y;
 
 		this.dispatchEvent(new Event('walkend'));
 
@@ -410,14 +455,14 @@ class RPGObject extends Sprite {
 
 	dispatchCollidedEvent(hits, map) {
 		// 衝突イベントを dispatch
-		const event = new enchant.Event('collided');
+		const event = new Event('collided');
 		event.map = map;
 		event.hit = hits[0];
 		event.hits = hits;
 		this.dispatchEvent(event);
 		if (hits.length) {
 			// 相手に対してイベントを dispatch
-			const event = new enchant.Event('collided');
+			const event = new Event('collided');
 			event.map = false;
 			event.hit = this;
 			event.hits = [this];
