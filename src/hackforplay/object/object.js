@@ -157,11 +157,14 @@ class RPGObject extends Sprite {
 	}
 
 	locate(fromLeft, fromTop, mapName) {
-		if (mapName in Hack.maps &&
-			Hack.maps[mapName] instanceof RPGMap &&
-			this.map !== Hack.maps[mapName]) {
-			// this.destroy();
-			Hack.maps[mapName].scene.addChild(this);
+		if (mapName in Hack.maps) {
+			if (Hack.maps[mapName] instanceof RPGMap &&
+				this.map !== Hack.maps[mapName]) {
+				// this.destroy();
+				Hack.maps[mapName].scene.addChild(this);
+			}
+		} else if (typeof mapName === 'string') {
+			Hack.log(`${mapName} は まだつくられていない`);
 		}
 		this.moveTo(
 			fromLeft * 32 + this.offset.x,
@@ -677,7 +680,7 @@ class RPGObject extends Sprite {
 
 	start(virtual) {
 		let count = 1;
-		const override = async() => {
+		const override = async () => {
 			// １フレームだけディレイを入れる
 			await this.wait();
 			// count をインクリメントして同じ関数をコール
