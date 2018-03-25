@@ -111,6 +111,8 @@ class RPGObject extends Sprite {
 		this._layer = RPGMap.Layer.Middle;
 
 		Hack.defaultParentNode.addChild(this);
+
+		game.emitConstruct('RPGObject', this);
 	}
 
 	get map() {

@@ -1,4 +1,5 @@
 import {
+	Core,
 	Event,
 	EventTarget,
 	Node,
@@ -7,6 +8,15 @@ import {
 	Easing,
 	Timeline
 } from 'enchantjs/enchant';
+
+/**
+ * オブジェクトの生成通知を行う
+ * @param {string} name     クラス名
+ * @param {object} instance 生成したインスタンス
+ */
+Core.prototype.emitConstruct = function emitConstruct(name, instance) {
+	this.dispatchEvent(new Event(`construct-${name}`, { name, instance }));
+}
 
 /**
  * 1 度だけ呼ばれるイベントリスナーを追加する
@@ -70,6 +80,13 @@ Object.defineProperty(Node.prototype, 'order', {
 
 	}
 });
+
+// destroy イベントの実装
+const _remove = Node.prototype.remove;
+Node.prototype.remove = function remove() {
+	this.dispatchEvent(new Event('destroy'));
+	_remove.apply(this, arguments);
+}
 
 // 子要素を order でソートする
 Group.prototype.sortChildren = function sortChildren() {
