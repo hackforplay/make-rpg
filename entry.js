@@ -1,10 +1,12 @@
-// Support hot reloading
-if (process.env.NODE_ENV !== 'production') {
-	// In development, it loads JSON file and supports WDS's hot reloading
-	fetch('make-rpg.json');
-}
+var h4p = require("feeles-ide").h4p;
 
-if (process.env.NODE_ENV === 'production') {
-	// Offline plugin
-	require('offline-plugin/runtime').install();
+// Feeles を起動する
+h4p({
+  jsonURL: "make-rpg.json",
+  rootElement: document.querySelector('h4p__app')
+});
+
+if (process.env.NODE_ENV === "production") {
+  // Offline plugin
+  require("offline-plugin/runtime").install();
 }
