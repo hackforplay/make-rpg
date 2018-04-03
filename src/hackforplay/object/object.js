@@ -163,7 +163,11 @@ class RPGObject extends Sprite {
 				// this.destroy();
 				Hack.maps[mapName].scene.addChild(this);
 			}
+<<<<<<< HEAD
 		} else if (typeof mapName === 'string') {
+=======
+		} else {
+>>>>>>> 7b9fa333a9a72900404134754b48ed0b7fcae146
 			Hack.log(`${mapName} は まだつくられていない`);
 		}
 		this.moveTo(
