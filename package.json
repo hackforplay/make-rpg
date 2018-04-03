@@ -23,16 +23,16 @@
 	"homepage": "https://github.com/hackforplay/make-rpg#readme",
 	"devDependencies": {
 		"es6-promisify": "^5.0.0",
-		"handlebars": "^4.0.10",
-		"handlebars-loader": "^1.5.0",
+		"handlebars": "^4.0.11",
+		"handlebars-loader": "^1.7.0",
 		"html-webpack-plugin": "^2.30.1",
-		"offline-plugin": "^4.8.5",
+		"offline-plugin": "^4.9.0",
 		"open-browser-webpack-plugin": "0.0.5",
 		"unorm": "^1.4.1",
-		"webpack": "^3.5.4",
-		"webpack-dev-server": "^2.7.1"
+		"webpack": "^3.11.0",
+		"webpack-dev-server": "^2.11.2"
 	},
 	"dependencies": {
-		"feeles-ide": "^0.2.0"
+		"feeles-ide": "^0.2.1"
 	}
 }
