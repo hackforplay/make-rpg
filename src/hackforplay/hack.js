@@ -1,5 +1,5 @@
 import 'hackforplay/enchantjs-kit';
-
+import TextArea from 'hackforplay/ui/textarea';
 
 function refocus() {
 	window.document.activeElement.blur(); // Blur an enchantBook
@@ -33,6 +33,7 @@ Hack.fun2str = function(func) {
 	return '';
 };
 
+// 【旧ログ機能】
 // textarea : 画面全体をおおう半透明のテキストエリア(DOM)
 Hack.textarea = (function() {
 	// scope: new Entity
@@ -78,6 +79,18 @@ Hack.textarea = (function() {
 
 }).call(new enchant.Entity());
 
+// canvas のテキストエリアを生成
+const textArea = new TextArea(380, 60);
+textArea.moveTo(60, 5);
+textArea.verticalNormalizedPosition = 1;
+textArea.autoResizeVertical = true;
+textArea.maxHeight = 310;
+Hack.textArea = textArea;
+game.on('awake', () => {
+	Hack.menuGroup.addChild(textArea);
+});
+
+// 画面に文字を表示する（次の行に追加）
 Hack.log = function() {
 	try {
 		var values = [];
@@ -91,16 +104,24 @@ Hack.log = function() {
 					break;
 			}
 		}
-		this.textarea.text = values.join(' ') + (this.textarea.text !== '' ? '\n' : '') + this.textarea.text;
-		this.textarea.show();
 
+		this.textArea.push(values.join(' ') + (this.textarea.text !== '' ? '\n' : '') + this.textarea.text);
+		this.textArea.show();
 	} catch (e) {
 		Hack.log('Error', e.message);
 	}
 };
 
+// 画面に文字を表示する（上書き）
+Hack.show = function () {
+	Hack.textArea.clear();
+	Hack.log.apply(this, arguments);
+};
+
 Hack.clearLog = function() {
-	this.textarea.text = '';
+	Hack.textarea.text = '';
+	Hack.textArea.clear();
+	Hack.textArea.hide();
 };
 
 // enchantBook
